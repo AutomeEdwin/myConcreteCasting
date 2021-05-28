@@ -61,9 +61,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = (
-    'htpp://localhost:8081',
+    'htpp://localhost:8080',
 )
 
 ROOT_URLCONF = 'backend.urls'
