@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 
 import { AccountService } from '../services/account.service';
 
@@ -9,17 +9,34 @@ import { AccountService } from '../services/account.service';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
-  constructor(private accountService: AccountService) {}
+  form: any;
+  passwordMatching = true;
 
-  ngOnInit(): void {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private accountService: AccountService
+  ) {}
 
-  onSubmit(form: NgForm) {
-    const user = {
-      firstName: form.value['firstName'],
-      lastName: form.value['lastName'],
-      email: form.value['email'],
-      password: form.value['password'],
-    };
-    this.accountService.signupUser(user);
+  ngOnInit() {
+    this.form = this.formBuilder.group({
+      firstName: ['', [Validators.required, Validators.pattern('^[a-zA-Z]+$')]],
+      lastName: ['', [Validators.required, Validators.pattern('^[a-zA-Z]+$')]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      passwordConfirm: ['', [Validators.required]],
+    });
+  }
+
+  onSubmit() {
+    console.log(this.form);
+    if (this.form.valid) {
+      if (this.form.value['password'] === this.form.value['passwordConfirm']) {
+        this.accountService.signupUser(this.form.value);
+      } else {
+        this.passwordMatching = false;
+      }
+    } else {
+      console.error('not valid');
+    }
   }
 }
