@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import {
+  AbstractControlOptions,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { MustMatch } from '../helpers/must-match.validator';
 
 import { AccountService } from '../services/account.service';
 
@@ -9,8 +15,8 @@ import { AccountService } from '../services/account.service';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
-  form: any;
-  passwordMatching = true;
+  form!: FormGroup;
+  submitted = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -18,25 +24,30 @@ export class RegisterComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.form = this.formBuilder.group({
-      firstName: ['', [Validators.required, Validators.pattern('^[a-zA-Z]+$')]],
-      lastName: ['', [Validators.required, Validators.pattern('^[a-zA-Z]+$')]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
-      passwordConfirm: ['', [Validators.required]],
-    });
+    this.form = this.formBuilder.group(
+      {
+        firstName: ['', Validators.required, Validators.pattern('^[a-zA-Z]+$')],
+        lastName: ['', Validators.required, Validators.pattern('^[a-zA-Z]+$')],
+        email: ['', Validators.required, Validators.email],
+        password: ['', Validators.required, Validators.minLength(8)],
+        passwordConfirm: ['', Validators.required],
+      },
+      {
+        validator: MustMatch('password', 'passwordConfirm'), // Cross field validator
+      } as AbstractControlOptions
+    );
+  }
+
+  get f() {
+    return this.form.controls;
   }
 
   onSubmit() {
-    console.log(this.form);
-    if (this.form.valid) {
-      if (this.form.value['password'] === this.form.value['passwordConfirm']) {
-        this.accountService.signupUser(this.form.value);
-      } else {
-        this.passwordMatching = false;
-      }
-    } else {
-      console.error('not valid');
+    this.submitted = true;
+
+    if (this.form.invalid) {
+      return;
     }
+    this.accountService.signupUser(this.form.value);
   }
 }

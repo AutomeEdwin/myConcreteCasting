@@ -1,4 +1,4 @@
-<div class="container form shadow">
+<div class="container shadow">
   <h2 class="text-center"><strong>Create an account</strong></h2>
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="text-center">
     <div class="row form-group">
@@ -10,7 +10,11 @@
           id="firstName"
           class="form-control"
           placeholder="First name"
+          [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }"
         />
+        <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+          <div *ngIf="f.firstName.errors.required">First name is required</div>
+        </div>
       </div>
 
       <!--Last name-->
@@ -21,7 +25,11 @@
           formControlName="lastName"
           class="form-control"
           placeholder="Last name"
+          [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"
         />
+        <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+          <div *ngIf="f.firstName.errors.required">Last Name is required</div>
+        </div>
       </div>
     </div>
 
@@ -33,7 +41,14 @@
         formControlName="email"
         class="form-control"
         placeholder="Email"
+        [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
       />
+      <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+        <div *ngIf="f.email.errors.required">Email is required</div>
+        <div *ngIf="f.email.errors.email">
+          Email must be a valid email address
+        </div>
+      </div>
     </div>
 
     <!--Password-->
@@ -44,10 +59,14 @@
         formControlName="password"
         class="form-control"
         placeholder="Password"
+        [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
       />
-      <small id="passwordHelpBlock" class="d-flex form-text text-muted">
-        Your password must be 8-32 characters long.
-      </small>
+      <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+        <div *ngIf="f.password.errors.required">Password is required</div>
+        <div *ngIf="f.password.errors.minlength">
+          Password must be at least 8 characters
+        </div>
+      </div>
     </div>
 
     <!--Password Confirmation-->
@@ -58,9 +77,18 @@
         formControlName="passwordConfirm"
         class="form-control"
         placeholder="Confirm password"
+        [ngClass]="{ 'is-invalid': submitted && f.passwordConfirm.errors }"
       />
-      <div *ngIf="!passwordMatching" class="d-flex text-red">
-        <small>Password doesn't match</small>
+      <div
+        *ngIf="submitted && f.passwordConfirm.errors"
+        class="invalid-feedback"
+      >
+        <div *ngIf="f.passwordConfirm.errors.required">
+          Confirm Password is required
+        </div>
+        <div *ngIf="f.passwordConfirm.errors.mustMatch">
+          Passwords must match
+        </div>
       </div>
     </div>
 
