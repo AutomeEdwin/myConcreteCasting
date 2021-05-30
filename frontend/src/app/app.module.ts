@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 // Components import
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,7 @@ import { RegisterComponent } from './register/register.component';
     FormsModule,
     ReactiveFormsModule,
   ],
-  declarations: [AppComponent, RegisterComponent],
+  declarations: [AppComponent, RegisterComponent, LoginComponent],
   providers: [],
   bootstrap: [AppComponent],
 })

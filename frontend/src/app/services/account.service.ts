@@ -24,4 +24,8 @@ export class AccountService {
         }
       );
   }
+
+  signinUser(user: any) {
+    console.log(user);
+  }
 }
