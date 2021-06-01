@@ -18,8 +18,17 @@ from django.http import HttpResponse
 def signup(request):
     """test"""
     data = JSONParser().parse(request)
-    data_serializer = ConcretetrackerSerializer(data=data)
 
+    # Check if all fields are filled
+    if 'firstName' not in data or 'lastName' not in data or 'email' not in data or 'password' not in data:
+        return JsonResponse({'success': False, 'message': 'All fields required'}, status=status.HTTP_412_PRECONDITION_FAILED)
+
+    # Check if new user doesn't already exists based on the email
+    new_user = User.objects.all().filter(email__exact=data.get("email"))
+    if new_user.exists():
+        return JsonResponse({'success': False, 'message': 'This user already exists'}, status=status.HTTP_412_PRECONDITION_FAILED)
+
+    data_serializer = ConcretetrackerSerializer(data=data)
     if data_serializer.is_valid():
         data_serializer.save()
         return JsonResponse(data_serializer.data, status=status.HTTP_201_CREATED)
