@@ -17,6 +17,7 @@ import { AccountService } from '../services/account.service';
 export class RegisterComponent implements OnInit {
   form!: FormGroup;
   submitted = false;
+  returnValue = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -26,10 +27,16 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
     this.form = this.formBuilder.group(
       {
-        firstName: ['', Validators.required, Validators.pattern('^[a-zA-Z]+$')],
-        lastName: ['', Validators.required, Validators.pattern('^[a-zA-Z]+$')],
-        email: ['', Validators.required, Validators.email],
-        password: ['', Validators.required, Validators.minLength(8)],
+        firstName: [
+          '',
+          [Validators.required, Validators.pattern('^[a-zA-Z]+$')],
+        ],
+        lastName: [
+          '',
+          [Validators.required, Validators.pattern('^[a-zA-Z]+$')],
+        ],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(8)]],
         passwordConfirm: ['', Validators.required],
       },
       {

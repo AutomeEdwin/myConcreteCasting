@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { AccountService } from '../services/account.service';
 
@@ -14,16 +15,20 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private router: Router
   ) {}
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      email: ['', Validators.required, Validators.email],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
     });
   }
 
+  /**
+   * Helper function for easier access to form fields
+   */
   get f() {
     return this.form.controls;
   }
@@ -35,6 +40,22 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.accountService.signinUser(this.form.value);
+    this.accountService.signinUser(this.form.value).subscribe(
+      (response) => this.handleHttpResponse(response),
+      (error) => this.handleHttpResponse(error)
+    );
+  }
+
+  /**
+   * Handle the treatement of the response returned by the API
+   *
+   * The Response contains a field 'success' which may be true of false
+   *
+   * @param response Response from the API
+   */
+  handleHttpResponse(response: any) {
+    if (response.success === true) {
+      this.router.navigate(['/signup']);
+    }
   }
 }
