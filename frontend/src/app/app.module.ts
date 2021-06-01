@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
+import { JobsiteDashboardComponent } from './jobsite-dashboard/jobsite-dashboard.component';
 
 @NgModule({
   imports: [
@@ -19,7 +20,7 @@ import { LoginComponent } from './login/login.component';
     FormsModule,
     ReactiveFormsModule,
   ],
-  declarations: [AppComponent, RegisterComponent, LoginComponent],
+  declarations: [AppComponent, RegisterComponent, LoginComponent, JobsiteDashboardComponent],
   providers: [],
   bootstrap: [AppComponent],
 })

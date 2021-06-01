@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
    */
   handleHttpResponse(response: any) {
     if (response.success === true) {
-      this.router.navigate(['/signup']);
+      this.router.navigate(['/dashboard']);
     }
   }
 }
