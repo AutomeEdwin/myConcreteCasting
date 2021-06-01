@@ -11,6 +11,8 @@ from rest_framework.decorators import api_view
 
 import json
 
+from django.http import HttpResponse
+
 
 @api_view(['POST'])
 def signup(request):
@@ -33,10 +35,10 @@ def signin(request):
 
     # Check if all fields are filled
     if 'email' not in request_body or 'password' not in request_body:
-        return JsonResponse({'message': 'All fields required'}, status=status.HTTP_412_PRECONDITION_FAILED)
+        return JsonResponse({'success': False, 'message': 'All fields required'}, status=status.HTTP_412_PRECONDITION_FAILED)
 
     # Check if email exist in DB and if password matches
     if not user.exists() or (request_body.get('password') != user.values()[0]['password']):
         return JsonResponse({'success': False, 'message': 'Authentification failed'}, status=status.HTTP_412_PRECONDITION_FAILED)
 
-    return JsonResponse({'success': 'true', 'message': 'Authentification successful', 'token': 'JWT token'}, status=status.HTTP_200_OK)
+    return JsonResponse({'success': True, 'message': 'Authentification successful', 'token': 'JWT token'}, status=status.HTTP_200_OK)
