@@ -1,7 +1,8 @@
-from django.conf.urls import url
-from concretetracker import views
+from .views import RegisterAPI, LoginAPI
+from knox import views as knox_views
+from django.urls import path
 
 urlpatterns = [
-    url(r'^api/signup', views.signup),
-    url(r'^api/signin', views.signin)
+    path('api/register/', RegisterAPI.as_view(), name='register'),
+    path('api/login/', LoginAPI.as_view(), name='login'),
 ]
