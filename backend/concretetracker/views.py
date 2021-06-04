@@ -22,8 +22,8 @@ class RegisterAPI(generics.GenericAPIView):
         return Response({
             "success": True,
             "message": "User created sucessfully",
-            "user": UserSerializer(user, context=self.get_serializer_context()).data,
-            "token": AuthToken.objects.create(user)[1]
+            #"user": UserSerializer(user, context=self.get_serializer_context()).data,
+            # "token": AuthToken.objects.create(user)[1]
         })
 
 # Login API
