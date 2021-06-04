@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     # CORS
     'corsheaders',
 
-    'concretetracker.apps.ConcretetrackerConfig',
+    'concretetracker',
 ]
 
 MIDDLEWARE = [
@@ -147,3 +147,5 @@ REST_FRAMEWORK = {
         'knox.auth.TokenAuthentication',
     ]
 }
+
+AUTH_USER_MODEL = 'concretetracker.User'
