@@ -40,7 +40,12 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.accountService.signinUser(this.form.value).subscribe(
+    let json = {
+      username: this.form.value['email'],
+      password: this.form.value['password'],
+    };
+
+    this.accountService.signinUser(json).subscribe(
       (response) => this.handleHttpResponse(response),
       (error) => this.handleHttpResponse(error)
     );
@@ -54,7 +59,7 @@ export class LoginComponent implements OnInit {
    * @param response Response from the API
    */
   handleHttpResponse(response: any) {
-    if (response.success === true) {
+    if (response.hasOwnProperty('token') && response.hasOwnProperty('expiry')) {
       this.router.navigate(['/dashboard']);
     }
   }

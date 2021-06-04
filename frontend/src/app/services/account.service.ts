@@ -13,13 +13,13 @@ export class AccountService {
   constructor(private httpClient: HttpClient) {}
 
   signupUser(user: any) {
-    return this.httpClient.post('http://127.0.0.1:8000/api/signup', user, {
+    return this.httpClient.post('http://127.0.0.1:8000/api/register/', user, {
       headers,
     });
   }
 
   signinUser(user: any) {
-    return this.httpClient.post('http://127.0.0.1:8000/api/signin', user, {
+    return this.httpClient.post('http://127.0.0.1:8000/api/login/', user, {
       headers,
     });
   }

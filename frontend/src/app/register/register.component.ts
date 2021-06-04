@@ -61,7 +61,14 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    this.accountService.signupUser(this.form.value).subscribe(
+    let json = {
+      first_name: this.form.value['firstName'],
+      last_name: this.form.value['lastName'],
+      email: this.form.value['email'],
+      password: this.form.value['password'],
+    };
+
+    this.accountService.signupUser(json).subscribe(
       (response) => this.handleHttpResponse(response),
       (error) => this.handleHttpResponse(error)
     );
@@ -75,8 +82,12 @@ export class RegisterComponent implements OnInit {
    * @param response Response from the API
    */
   handleHttpResponse(response: any) {
-    if (response.success === true) {
-      this.router.navigate(['']);
+    if (
+      response.hasOwnProperty('token') &&
+      response.hasOwnProperty('success') &&
+      response.success === true
+    ) {
+      this.router.navigate(['/dashboard']);
     }
   }
 }
