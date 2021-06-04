@@ -82,12 +82,9 @@ export class RegisterComponent implements OnInit {
    * @param response Response from the API
    */
   handleHttpResponse(response: any) {
-    if (
-      response.hasOwnProperty('token') &&
-      response.hasOwnProperty('success') &&
-      response.success === true
-    ) {
-      this.router.navigate(['/dashboard']);
+    console.log(response);
+    if (response.hasOwnProperty('success') && response.success === true) {
+      this.router.navigate(['']);
     }
   }
 }

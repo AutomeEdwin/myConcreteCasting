@@ -59,7 +59,9 @@ export class LoginComponent implements OnInit {
    * @param response Response from the API
    */
   handleHttpResponse(response: any) {
+    console.log(response);
     if (response.hasOwnProperty('token') && response.hasOwnProperty('expiry')) {
+      this.accountService.storeToken(response.token);
       this.router.navigate(['/dashboard']);
     }
   }
