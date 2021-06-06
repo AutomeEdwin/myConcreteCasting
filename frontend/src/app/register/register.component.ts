@@ -62,7 +62,7 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    this.accountService.signupUser(this.makeRequestBody(this.form)).subscribe(
+    this.accountService.registerUser(this.makeRequestBody(this.form)).subscribe(
       (response) => this.handleHttpResponse(response),
       (error) => this.handleHttpResponse(error)
     );

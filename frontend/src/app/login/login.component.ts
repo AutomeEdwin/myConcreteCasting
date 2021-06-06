@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.accountService.signinUser(this.makeRequestBody(this.form)).subscribe(
+    this.accountService.loginUser(this.makeRequestBody(this.form)).subscribe(
       (response) => this.handleHttpResponse(response),
       (error) => this.handleHttpResponse(error)
     );
