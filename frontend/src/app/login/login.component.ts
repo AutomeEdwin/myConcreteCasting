@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { AccountService } from '../services/account.service';
@@ -21,8 +26,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', Validators.required),
     });
   }
 
@@ -40,15 +45,23 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    let json = {
-      username: this.form.value['email'],
-      password: this.form.value['password'],
-    };
-
-    this.accountService.signinUser(json).subscribe(
+    this.accountService.signinUser(this.makeRequestBody(this.form)).subscribe(
       (response) => this.handleHttpResponse(response),
       (error) => this.handleHttpResponse(error)
     );
+  }
+
+  /**
+   * Create the json body for the registration request
+   *
+   * @param form
+   * @returns the informations contained in the form in json format
+   */
+  makeRequestBody(form: FormGroup) {
+    return JSON.stringify({
+      username: form.get('email')?.value,
+      password: form.get('password')?.value,
+    });
   }
 
   /**
@@ -59,7 +72,6 @@ export class LoginComponent implements OnInit {
    * @param response Response from the API
    */
   handleHttpResponse(response: any) {
-    console.log(response);
     if (response.hasOwnProperty('token') && response.hasOwnProperty('expiry')) {
       this.accountService.storeToken(response.token);
       this.router.navigate(['/dashboard']);
