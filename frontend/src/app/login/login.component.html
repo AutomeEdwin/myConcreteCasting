@@ -4,9 +4,9 @@
     <!--Email-->
     <div class="form-group py-2">
       <input
+        formControlName="email"
         type="email"
         id="email"
-        formControlName="email"
         class="form-control"
         placeholder="Email"
         [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
@@ -18,9 +18,9 @@
     <!--Password-->
     <div class="form-group py-2">
       <input
+        formControlName="password"
         type="password"
         id="password"
-        formControlName="password"
         class="form-control"
         placeholder="Password"
         [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
@@ -30,8 +30,8 @@
       </div>
     </div>
     <div class="form-group">
-      <button class="btn btn-primary" type="submit">Sign in</button>
-      <a routerLink="signup">Create your account</a>
+      <button class="btn btn-primary" type="submit" name="submitButton">Sign in</button>
+      <a routerLink="/register">Create your account</a>
     </div>
   </form>
 </div>

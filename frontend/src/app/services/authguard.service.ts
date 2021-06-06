@@ -28,7 +28,7 @@ export class AuthguardService implements CanActivate {
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
     if (this.localStorageService.get('token') === null) {
-      this.router.navigate(['']);
+      this.router.navigate(['login']);
       return false;
     }
     return true;
