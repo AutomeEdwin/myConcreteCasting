@@ -3,10 +3,19 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
+import { JobsiteDashboardComponent } from './jobsite-dashboard/jobsite-dashboard.component';
 
-const routes: Routes = [
-  { path: '', component: LoginComponent },
-  { path: 'signup', component: RegisterComponent },
+import { AuthguardService } from './services/authguard.service';
+
+export const routes: Routes = [
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  {
+    path: 'dashboard',
+    canActivate: [AuthguardService],
+    component: JobsiteDashboardComponent,
+  },
 ];
 
 @NgModule({

@@ -1,10 +1,18 @@
-"""test"""
+from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
+
+from .managers import UserManager
 
 
-class User(models.Model):
-    """test"""
-    firstName = models.CharField(max_length=20, blank=False, default='')
-    lastName = models.CharField(max_length=20, blank=False, default='')
-    email = models.CharField(max_length=50, blank=False, default='')
-    password = models.CharField(max_length=32, blank=False, default='')
+class User(AbstractUser):
+    username = None
+    email = models.EmailField(_('email address'), unique=True)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
+    objects = UserManager()
+
+    def __str__(self):
+        return self.email
