@@ -58,33 +58,41 @@ export class RegisterComponent implements OnInit {
     this.submitted = true;
 
     if (this.form.invalid) {
+      this.submitted = false;
       return;
     }
 
-    let json = {
-      first_name: this.form.value['firstName'],
-      last_name: this.form.value['lastName'],
-      email: this.form.value['email'],
-      password: this.form.value['password'],
-    };
-
-    this.accountService.signupUser(json).subscribe(
+    this.accountService.signupUser(this.makeRequestBody(this.form)).subscribe(
       (response) => this.handleHttpResponse(response),
       (error) => this.handleHttpResponse(error)
     );
   }
 
   /**
+   * Create the body for the registration request
+   *
+   * @param form
+   * @returns the informations contained in the form in json format
+   */
+  makeRequestBody(form: FormGroup) {
+    return JSON.stringify({
+      first_name: form.get('firstName')?.value,
+      last_name: form.get('lastName')?.value,
+      email: form.get('email')?.value,
+      password: form.get('password')?.value,
+    });
+  }
+
+  /**
    * Handle the treatement of the response returned by the API
    *
-   * The Response contains a field 'success' which may be true of false
+   * The Response should contain a field 'success' which may be true of false
    *
    * @param response Response from the API
    */
   handleHttpResponse(response: any) {
-    console.log(response);
     if (response.hasOwnProperty('success') && response.success === true) {
-      this.router.navigate(['']);
+      this.router.navigate(['login']);
     }
   }
 }

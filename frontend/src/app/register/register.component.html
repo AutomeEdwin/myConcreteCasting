@@ -5,8 +5,8 @@
       <!--First name-->
       <div class="col py-2">
         <input
-          type="text"
           formControlName="firstName"
+          type="text"
           id="firstName"
           class="form-control"
           placeholder="First name"
@@ -20,9 +20,9 @@
       <!--Last name-->
       <div class="col py-2 form-group">
         <input
-          type="text"
-          id="Lastname"
           formControlName="lastName"
+          type="text"
+          id="lastName"
           class="form-control"
           placeholder="Last name"
           [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"
@@ -36,9 +36,9 @@
     <!--Email-->
     <div class="py-2 form-group">
       <input
+        formControlName="email"
         type="email"
         id="email"
-        formControlName="email"
         class="form-control"
         placeholder="Email"
         [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
@@ -54,9 +54,9 @@
     <!--Password-->
     <div class="form-group py-2">
       <input
+        formControlName="password"
         type="password"
         id="password"
-        formControlName="password"
         class="form-control"
         placeholder="Password"
         [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
@@ -72,9 +72,9 @@
     <!--Password Confirmation-->
     <div class="py-2 form-group">
       <input
+        formControlName="passwordConfirm"
         type="password"
         id="passwordConfirm"
-        formControlName="passwordConfirm"
         class="form-control"
         placeholder="Confirm password"
         [ngClass]="{ 'is-invalid': submitted && f.passwordConfirm.errors }"
@@ -100,7 +100,7 @@
       </div>
 
       <div class="col">
-        <p><a routerLink="">Login to your account</a></p>
+        <p><a routerLink="/login">Login to your account</a></p>
       </div>
     </div>
   </form>
