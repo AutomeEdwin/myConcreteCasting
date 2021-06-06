@@ -11,19 +11,20 @@ const headers = new HttpHeaders().set(
   providedIn: 'root',
 })
 export class AccountService {
+  readonly serverURL = 'http://127.0.0.1:8000/';
   constructor(
     private httpClient: HttpClient,
     private localStorageService: LocalStorageService
   ) {}
 
-  signupUser(user: any) {
-    return this.httpClient.post('http://127.0.0.1:8000/api/register/', user, {
+  registerUser(user: any) {
+    return this.httpClient.post(this.serverURL + 'api/register/', user, {
       headers,
     });
   }
 
-  signinUser(user: any) {
-    return this.httpClient.post('http://127.0.0.1:8000/api/login/', user, {
+  loginUser(user: any) {
+    return this.httpClient.post(this.serverURL + 'api/login/', user, {
       headers,
     });
   }
