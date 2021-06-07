@@ -1,0 +1,9 @@
+version: "3.4"
+
+services:
+  app:
+    build: ./frontend/
+    container_name: concretetracker_app
+    ports:
+      - "4200:4200"
+    restart: unless-stopped
