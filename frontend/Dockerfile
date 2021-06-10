@@ -1,16 +1,13 @@
-# Create image for the frontend of the app
 FROM node:latest
 
-RUN mkdir -p /app
+RUN mkdir /usr/src/app
+WORKDIR /usr/src/app
 
-WORKDIR /app
-
-COPY ./package*.json /app/
-
+COPY package.json /usr/src/app/
 RUN npm install
 
-COPY . /app/
+COPY . /usr/src/app/
 
 EXPOSE 4200
 
-CMD ["npm", "start"]
+CMD npm start
