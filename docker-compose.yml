@@ -20,8 +20,16 @@ services:
       - 8000:8000
     depends_on:
       - mongo
+    links:
+      - mongo
 
   mongo:
-    image: mongo
+    image: mongo:latest
     container_name: concretetracker_db
     hostname: concretetracker_db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: mongoadmin
+      MONGO_INITDB_DATABASE: concretetracker
+    ports:
+      - 27017:27017
