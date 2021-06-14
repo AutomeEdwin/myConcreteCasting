@@ -35,10 +35,10 @@
       <!--Right row-->
       <div class="col">
         <!--Right row header-->
-        <div class="d-flex">
+        <div class="d-flex justify-content-between">
           <h3>Concrete Areas</h3>
           <button (click)="addConcreteArea()" class="btn btn-primary">
-            add area
+            Add
           </button>
         </div>
 
@@ -48,29 +48,39 @@
           *ngFor="let area of getAreasControls.controls; let i = index"
           class="form-group py-2"
         >
-          <div class="d-flex">
+          <div class="d-flex justify-content-between">
             <h5>Area {{ i + 1 }}</h5>
-            <button (click)="removeConcreteArea(i)" class="btn btn-primary">
-              -
+            <button
+              (click)="removeConcreteArea(i)"
+              class="btn btn-danger"
+              [disabled]="lastArea()"
+            >
+              delete
             </button>
           </div>
-
-          <input
-            formControlName="area_name"
-            class="form-control"
-            placeholder="Area name"
-          />
-          <textarea
-            formControlName="area_description"
-            class="form-control"
-            placeholder="Area description"
-          >
-          </textarea>
-          <input
-            formControlName="area_infos"
-            class="form-control"
-            placeholder="Area infos"
-          />
+          <div [formGroupName]="i">
+            <div class="py-1 form-group">
+              <input
+                formControlName="area_name"
+                placeholder="Name"
+                class="form-control"
+              />
+            </div>
+            <div class="py-1 form-group">
+              <textarea
+                formControlName="area_description"
+                placeholder="Description"
+                class="form-control"
+              ></textarea>
+            </div>
+            <div class="py-1 form-group">
+              <input
+                formControlName="area_infos"
+                placeholder="Infos"
+                class="form-control"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>

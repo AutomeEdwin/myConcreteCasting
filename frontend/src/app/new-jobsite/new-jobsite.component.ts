@@ -76,9 +76,12 @@ export class NewJobsiteComponent implements OnInit {
     this.concreteArray.removeAt(i);
   }
 
+  lastArea(): boolean {
+    return this.getAreasControls.controls.length === 1;
+  }
+
   onSubmit() {
     console.log(this.form.value);
-    console.log(this.form.controls);
   }
 
   // MAP
