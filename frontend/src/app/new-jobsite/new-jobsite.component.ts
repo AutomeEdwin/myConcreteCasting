@@ -22,7 +22,7 @@ import { MapBrowserEvent } from 'ol';
 export class NewJobsiteComponent implements OnInit {
   form!: FormGroup;
 
-  concreteAreas!: FormArray;
+  concreteArray!: FormArray;
 
   map!: Map;
   lattitude: number = 0;
@@ -43,33 +43,42 @@ export class NewJobsiteComponent implements OnInit {
   }
 
   get getAreasControls() {
-    return <FormArray>this.form.get('concreteArray');
+    return <FormArray>this.form.get('concreteAreas');
   }
 
   initForm(): void {
     this.form = this.formBuilder.group({
-      name: new FormControl('', [Validators.required]),
+      jobsite_name: new FormControl('', [Validators.required]),
       jobsite_description: new FormControl(''),
-      coordinates: new FormControl(''),
-      concreteArray: this.formBuilder.array([this.createConcreteArea()]),
+      jobsite_coordinates: new FormControl(''),
+      concreteAreas: this.formBuilder.array(
+        [this.createConcreteArea()],
+        [Validators.required]
+      ),
     });
   }
 
   createConcreteArea(): FormGroup {
     return this.formBuilder.group({
-      area_name: new FormControl('', [Validators.required]),
-      area_description: new FormControl('', [Validators.required]),
-      area_infos: new FormControl('', [Validators.required]),
+      area_name: new FormControl(''),
+      area_description: new FormControl(''),
+      area_infos: new FormControl(''),
     });
   }
 
   addConcreteArea(): void {
-    this.concreteAreas = this.form.get('concreteArray') as FormArray;
-    this.concreteAreas.push(this.createConcreteArea());
+    this.concreteArray = this.form.get('concreteAreas') as FormArray;
+    this.concreteArray.push(this.createConcreteArea());
+  }
+
+  removeConcreteArea(i: number): void {
+    this.concreteArray = this.form.get('concreteAreas') as FormArray;
+    this.concreteArray.removeAt(i);
   }
 
   onSubmit() {
     console.log(this.form.value);
+    console.log(this.form.controls);
   }
 
   // MAP
