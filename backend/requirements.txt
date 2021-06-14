@@ -6,3 +6,4 @@ djangorestframework==3.12.4
 djangorestframework-jsonapi==4.2.0
 djangorestframework-jwt==1.11.0
 djongo
+gunicorn

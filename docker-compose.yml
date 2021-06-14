@@ -12,11 +12,11 @@ services:
 
   backend:
     build: ./backend
-    command: python /usr/src/app/backend/manage.py runserver 0.0.0.0:8000
+    command: gunicorn --bind 0.0.0.0:8000 backend.wsgi
     container_name: concretetracker_api
     hostname: concretetracker_api
     volumes:
-      - .:/usr/src/app/
+      - ./backend:/usr/src/app/
     ports:
       - 8000:8000
     depends_on:
