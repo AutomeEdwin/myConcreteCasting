@@ -1,9 +1,11 @@
 <div class="container shadow">
-  <h2 class="text-center">Create a new jobsite</h2>
+  <h1 class="text-center">Create a new jobsite</h1>
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="row">
       <!--Left row-->
       <div class="col">
+        <h3>Jobsite Infos</h3>
+
         <!--Name-->
         <div class="form-group py-2">
           <input
@@ -32,24 +34,24 @@
 
       <!--Right row-->
       <div class="col">
-        <div formArrayName="concreteAreas">
-          <!--Make a ngFor-->
-          <div class="form-group py-2">
-            <input
-              formControlName="name"
-              class="form-control"
-              placeholder="concreteArea name"
-            />
-          </div>
-          <div class="form-group py-2">
-            <input
-              formControlName="concreteare_description"
-              class="form-control"
-              placeholder="concreteArea name"
-            />
-          </div>
+        <!--Right row header-->
+        <div class="d-flex">
+          <h3>Concrete Areas</h3>
+          <button (click)="addConcreteArea()" class="btn btn-primary">
+            add area
+          </button>
         </div>
-        <button class="btn btn-info">+</button>
+
+        <!--Right row items-->
+        <div
+          formArrayName="concreteArray"
+          *ngFor="let area of getAreasControls.controls; let i = index"
+        >
+          <h5>Area {{ i + 1 }}</h5>
+          <input class="form-control" placeholder="area name" />
+          <input class="form-control" placeholder="area description" />
+          <input class="form-control" placeholder="area infos" />
+        </div>
       </div>
     </div>
 

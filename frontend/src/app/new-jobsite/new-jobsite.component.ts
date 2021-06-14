@@ -21,6 +21,7 @@ import { MapBrowserEvent } from 'ol';
 })
 export class NewJobsiteComponent implements OnInit {
   form!: FormGroup;
+
   concreteAreas!: FormArray;
 
   map!: Map;
@@ -29,20 +30,49 @@ export class NewJobsiteComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.initMap();
     this.initForm();
   }
 
-  initForm() {
+  /**
+   * Helper function for easier access to form fields
+   */
+  get f() {
+    return this.form.controls;
+  }
+
+  get getAreasControls() {
+    return <FormArray>this.form.get('concreteArray');
+  }
+
+  initForm(): void {
     this.form = this.formBuilder.group({
       name: new FormControl('', [Validators.required]),
       jobsite_description: new FormControl(''),
       coordinates: new FormControl(''),
-      concreteAreas: this.formBuilder.array([this.createConcreteArea()]),
+      concreteArray: this.formBuilder.array([this.createConcreteArea()]),
     });
   }
 
+  createConcreteArea(): FormGroup {
+    return this.formBuilder.group({
+      area_name: new FormControl('', [Validators.required]),
+      area_description: new FormControl('', [Validators.required]),
+      area_infos: new FormControl('', [Validators.required]),
+    });
+  }
+
+  addConcreteArea(): void {
+    this.concreteAreas = this.form.get('concreteArray') as FormArray;
+    this.concreteAreas.push(this.createConcreteArea());
+  }
+
+  onSubmit() {
+    console.log(this.form.value);
+  }
+
+  // MAP
   initMap() {
     const osmLayer = new TileLayer({ source: new OSM() });
     const source = new VectorSource();
@@ -60,8 +90,7 @@ export class NewJobsiteComponent implements OnInit {
     this.map.on('singleclick', (event) => {
       // get new coordinates
       this.getClickCoordinates(event);
-      // remove old point
-      // draw new point
+      // TODO draw marker on coordinates
     });
   }
 
@@ -73,21 +102,5 @@ export class NewJobsiteComponent implements OnInit {
     );
     this.lattitude = convertedCoordinates[0];
     this.longitude = convertedCoordinates[1];
-  }
-
-  createConcreteArea(): FormGroup {
-    return this.formBuilder.group({
-      name: '',
-      concreteare_description: '',
-    });
-  }
-
-  addConcreteArea(): void {
-    this.concreteAreas = this.form.get('concreteAreas') as FormArray;
-    this.concreteAreas.push(this.createConcreteArea());
-  }
-
-  onSubmit() {
-    console.log(this.form.value);
   }
 }
