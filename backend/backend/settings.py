@@ -25,7 +25,7 @@ SECRET_KEY = '*969_*_haa+my#w$xi45+-q-saovpfuf2+bcvg$=s^x=1rnde)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -95,8 +95,11 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'NAME': 'concretetracker',
-        'HOST': '127.0.0.1',
-        'PORT': 27017,
+        "CLIENT": {
+            'host': 'mongodb://concretetracker_db:27017',
+            "username": "root",
+            "password": "mongoadmin",
+        }
     }
 }
 

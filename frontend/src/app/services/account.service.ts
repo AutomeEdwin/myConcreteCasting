@@ -11,7 +11,7 @@ const headers = new HttpHeaders().set(
   providedIn: 'root',
 })
 export class AccountService {
-  readonly serverURL = 'http://127.0.0.1:8000/';
+  readonly serverURL = 'http://localhost:8000/';
   constructor(
     private httpClient: HttpClient,
     private localStorageService: LocalStorageService

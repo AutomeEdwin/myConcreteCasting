@@ -1,0 +1,9 @@
+cryptography==2.6.1
+Django==2.2.23
+django-cors-headers==3.7.0
+django-rest-knox==4.1.0
+djangorestframework==3.12.4
+djangorestframework-jsonapi==4.2.0
+djangorestframework-jwt==1.11.0
+djongo
+gunicorn
