@@ -18,13 +18,13 @@ export class AccountService {
   ) {}
 
   registerUser(user: any) {
-    return this.httpClient.post(this.serverURL + 'api/register/', user, {
+    return this.httpClient.post(this.serverURL + 'register/', user, {
       headers,
     });
   }
 
   loginUser(user: any) {
-    return this.httpClient.post(this.serverURL + 'api/login/', user, {
+    return this.httpClient.post(this.serverURL + 'login/', user, {
       headers,
     });
   }
