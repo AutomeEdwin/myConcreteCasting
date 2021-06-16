@@ -1,7 +1,6 @@
 version: "3.4"
 
 services:
-  #DONT TOUCH
   frontend:
     build: ./frontend
     container_name: concretetracker_frontend
