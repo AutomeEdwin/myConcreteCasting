@@ -1,13 +1,12 @@
 version: "3.4"
 
 services:
-  #DONT TOUCH
   frontend:
     build: ./frontend
     container_name: concretetracker_frontend
     hostname: concretetracker_frontend
     ports:
-      - "4200:4200"
+      - "4200:80"
     restart: always
 
   backend:
