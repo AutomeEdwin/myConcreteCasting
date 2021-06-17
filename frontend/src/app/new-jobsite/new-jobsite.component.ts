@@ -22,6 +22,8 @@ import { MapBrowserEvent } from 'ol';
 export class NewJobsiteComponent implements OnInit {
   form!: FormGroup;
 
+  jobsiteForm!: FormGroup;
+
   concreteArray!: FormArray;
 
   map!: Map;
@@ -31,9 +33,23 @@ export class NewJobsiteComponent implements OnInit {
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
-    this.initMap();
-    this.initForm();
+    this.initJobsiteForm();
   }
+
+  ngAfterViewInit() {
+    this.initMap();
+  }
+
+  // FIRST FORM FOR JOBSITE CREATION
+  initJobsiteForm(): void {
+    this.jobsiteForm = this.formBuilder.group({
+      jobsite_name: new FormControl('', [Validators.required]),
+      jobsite_description: new FormControl(''),
+      jobsite_coordinates: new FormControl(''),
+    });
+  }
+
+  // SECOND FORM FOR CONCRETE CASTING CREATION
 
   /**
    * Helper function for easier access to form fields

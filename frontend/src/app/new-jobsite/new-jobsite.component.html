@@ -1,93 +1,39 @@
 <div class="container shadow">
-  <h1 class="text-center">Create a new jobsite</h1>
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div class="row">
-      <!--Left row-->
-      <div class="col">
-        <h3>Jobsite Infos</h3>
+  <mat-horizontal-stepper #stepper>
+    <!-- STEP 1 : Jobsite creation-->
+    <mat-step [stepControl]="jobsiteForm">
+      <ng-template matStepLabel>Create a jobsite</ng-template>
 
-        <!--Name-->
-        <div class="form-group py-2">
-          <input
-            formControlName="jobsite_name"
-            type="jobsite_name"
-            id="jobsite_name"
-            class="form-control"
-            placeholder="Jobsite name"
-          />
-        </div>
-        <!--Description-->
-        <div class="form-group py-2">
-          <textarea
-            formControlName="jobsite_description"
-            type="jobsite_description"
-            id="jobsite_description"
-            class="form-control"
-            placeholder="Jobsite Description"
-          ></textarea>
-        </div>
-        <div id="map" class="map-container form-group"></div>
+      <form [formGroup]="jobsiteForm">
         <div>
+          <mat-form-field appearance="outline" MatFormFieldControl="">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="placeholder" />
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field appearance="outline" MatFormFieldControl="">
+            <mat-label>Description</mat-label>
+            <textarea matInput placeholder="placeholder"></textarea>
+          </mat-form-field>
+        </div>
+        <div>
+          <div id="map" class="map-container form-group"></div>
           <p>Lattitude : {{ lattitude }} -- Longitude : {{ longitude }}</p>
         </div>
-      </div>
+      </form>
+    </mat-step>
 
-      <!--Right row-->
-      <div class="col">
-        <!--Right row header-->
-        <div class="d-flex justify-content-between">
-          <h3>Concrete casting</h3>
-          <button (click)="addConcreteArea()" class="btn btn-primary">
-            Add
-          </button>
-        </div>
+    <!-- STEP 2 : Concrete casting-->
+    <mat-step>
+      <form>
+        <ng-template matStepLabel>Create concrete casting</ng-template>
+      </form>
+    </mat-step>
 
-        <!--Right row items-->
-        <div
-          formArrayName="concreteAreas"
-          *ngFor="let area of getAreasControls.controls; let i = index"
-          class="form-group py-2"
-        >
-          <div class="d-flex justify-content-between">
-            <h5>Casting {{ i + 1 }}</h5>
-            <button
-              (click)="removeConcreteArea(i)"
-              class="btn btn-danger"
-              [disabled]="lastArea()"
-            >
-              delete
-            </button>
-          </div>
-          <div [formGroupName]="i">
-            <div class="py-1 form-group">
-              <input
-                formControlName="area_name"
-                placeholder="Name"
-                class="form-control"
-              />
-            </div>
-            <div class="py-1 form-group">
-              <textarea
-                formControlName="area_description"
-                placeholder="Description"
-                class="form-control"
-              ></textarea>
-            </div>
-            <div class="py-1 form-group">
-              <input
-                formControlName="area_infos"
-                placeholder="Infos"
-                class="form-control"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!--Button-->
-    <div class="form-group d-flex justify-content-end">
-      <button class="btn btn-info my-4 btn-block" type="submit">Create</button>
-    </div>
-  </form>
+    <!-- STEP 3 : Overview-->
+    <mat-step>
+      <ng-template matStepLabel>Overview</ng-template>
+    </mat-step>
+  </mat-horizontal-stepper>
 </div>

@@ -4,6 +4,10 @@ import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 // Components import
 import { AppComponent } from './app.component';
@@ -20,6 +24,10 @@ import { NewJobsiteComponent } from './new-jobsite/new-jobsite.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatStepperModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   declarations: [
     AppComponent,
