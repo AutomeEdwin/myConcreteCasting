@@ -20,9 +20,8 @@ import { MapBrowserEvent } from 'ol';
   styleUrls: ['./new-jobsite.component.scss'],
 })
 export class NewJobsiteComponent implements OnInit {
-  form!: FormGroup;
-
   jobsiteForm!: FormGroup;
+  concreteCastingForm!: FormGroup;
 
   concreteArray!: FormArray;
 
@@ -34,6 +33,7 @@ export class NewJobsiteComponent implements OnInit {
 
   ngOnInit(): void {
     this.initJobsiteForm();
+    this.initConcreteCastingForm();
   }
 
   ngAfterViewInit() {
@@ -49,29 +49,22 @@ export class NewJobsiteComponent implements OnInit {
     });
   }
 
+  get jobsitef() {
+    return this.jobsiteForm.controls;
+  }
+
   // SECOND FORM FOR CONCRETE CASTING CREATION
-
-  /**
-   * Helper function for easier access to form fields
-   */
-  get f() {
-    return this.form.controls;
-  }
-
-  get getAreasControls() {
-    return <FormArray>this.form.get('concreteAreas');
-  }
-
-  initForm(): void {
-    this.form = this.formBuilder.group({
-      jobsite_name: new FormControl('', [Validators.required]),
-      jobsite_description: new FormControl(''),
-      jobsite_coordinates: new FormControl(''),
+  initConcreteCastingForm(): void {
+    this.concreteCastingForm = this.formBuilder.group({
       concreteAreas: this.formBuilder.array(
         [this.createConcreteArea()],
         [Validators.required]
       ),
     });
+  }
+
+  get concretef() {
+    return <FormArray>this.concreteCastingForm.get('concreteAreas');
   }
 
   createConcreteArea(): FormGroup {
@@ -83,21 +76,25 @@ export class NewJobsiteComponent implements OnInit {
   }
 
   addConcreteArea(): void {
-    this.concreteArray = this.form.get('concreteAreas') as FormArray;
+    this.concreteArray = this.concreteCastingForm.get(
+      'concreteAreas'
+    ) as FormArray;
     this.concreteArray.push(this.createConcreteArea());
   }
 
   removeConcreteArea(i: number): void {
-    this.concreteArray = this.form.get('concreteAreas') as FormArray;
+    this.concreteArray = this.concreteCastingForm.get(
+      'concreteAreas'
+    ) as FormArray;
     this.concreteArray.removeAt(i);
   }
 
   lastArea(): boolean {
-    return this.getAreasControls.controls.length === 1;
+    return this.concretef.controls.length === 1;
   }
 
   onSubmit() {
-    console.log(this.form.value);
+    //console.log(this.form.value);
   }
 
   // MAP
