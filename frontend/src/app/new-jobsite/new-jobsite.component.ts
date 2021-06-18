@@ -21,9 +21,9 @@ import { MapBrowserEvent } from 'ol';
 })
 export class NewJobsiteComponent implements OnInit {
   jobsiteForm!: FormGroup;
-  concreteCastingForm!: FormGroup;
+  concreteCastingsForm!: FormGroup;
 
-  concreteArray!: FormArray;
+  concreteCastings!: FormArray;
 
   map!: Map;
   lattitude: number = 0;
@@ -33,7 +33,7 @@ export class NewJobsiteComponent implements OnInit {
 
   ngOnInit(): void {
     this.initJobsiteForm();
-    this.initConcreteCastingForm();
+    this.initConcreteCastingsForm();
   }
 
   ngAfterViewInit() {
@@ -45,7 +45,10 @@ export class NewJobsiteComponent implements OnInit {
     this.jobsiteForm = this.formBuilder.group({
       jobsite_name: new FormControl('', [Validators.required]),
       jobsite_description: new FormControl(''),
-      jobsite_coordinates: new FormControl(''),
+      jobsite_coordinates: new FormControl({
+        lattitude: Number,
+        longitude: Number,
+      }),
     });
   }
 
@@ -54,47 +57,48 @@ export class NewJobsiteComponent implements OnInit {
   }
 
   // SECOND FORM FOR CONCRETE CASTING CREATION
-  initConcreteCastingForm(): void {
-    this.concreteCastingForm = this.formBuilder.group({
-      concreteAreas: this.formBuilder.array(
-        [this.createConcreteArea()],
+  initConcreteCastingsForm(): void {
+    this.concreteCastingsForm = this.formBuilder.group({
+      concreteCastings: this.formBuilder.array(
+        [this.createConcreteCasting()],
         [Validators.required]
       ),
     });
   }
 
   get concretef() {
-    return <FormArray>this.concreteCastingForm.get('concreteAreas');
+    return <FormArray>this.concreteCastingsForm.get('concreteCastings');
   }
 
-  createConcreteArea(): FormGroup {
+  createConcreteCasting(): FormGroup {
     return this.formBuilder.group({
-      area_name: new FormControl(''),
-      area_description: new FormControl(''),
-      area_infos: new FormControl(''),
+      casting_name: new FormControl(''),
+      casting_description: new FormControl(''),
+      casting_infos: new FormControl(''),
     });
   }
 
-  addConcreteArea(): void {
-    this.concreteArray = this.concreteCastingForm.get(
-      'concreteAreas'
+  addConcreteCasting(): void {
+    this.concreteCastings = this.concreteCastingsForm.get(
+      'concreteCastings'
     ) as FormArray;
-    this.concreteArray.push(this.createConcreteArea());
+    this.concreteCastings.push(this.createConcreteCasting());
   }
 
-  removeConcreteArea(i: number): void {
-    this.concreteArray = this.concreteCastingForm.get(
-      'concreteAreas'
+  removeConcreteCasting(i: number): void {
+    this.concreteCastings = this.concreteCastingsForm.get(
+      'concreteCastings'
     ) as FormArray;
-    this.concreteArray.removeAt(i);
+    this.concreteCastings.removeAt(i);
   }
 
-  lastArea(): boolean {
+  isLastArea(): boolean {
     return this.concretef.controls.length === 1;
   }
 
   onSubmit() {
-    //console.log(this.form.value);
+    console.log(this.jobsiteForm.value);
+    console.log(this.concreteCastingsForm.value);
   }
 
   // MAP
@@ -125,6 +129,8 @@ export class NewJobsiteComponent implements OnInit {
       'EPSG:3857',
       'EPSG:4326'
     );
+
+    this.jobsiteForm.get('jobsite_coordinates')?.setValue(convertedCoordinates);
     this.lattitude = convertedCoordinates[0];
     this.longitude = convertedCoordinates[1];
   }
