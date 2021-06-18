@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     # CORS
     'corsheaders',
 
-    'concretetracker',
+    'myconcretecasting',
 ]
 
 MIDDLEWARE = [
@@ -94,9 +94,9 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'concretetracker',
+        'NAME': 'myconcretecasting',
         "CLIENT": {
-            'host': 'mongodb://concretetracker_db:27017',
+            'host': 'mongodb://myconcretecasting_db:27017',
             "username": "root",
             "password": "mongoadmin",
         }
@@ -151,4 +151,4 @@ REST_FRAMEWORK = {
     ]
 }
 
-AUTH_USER_MODEL = 'concretetracker.User'
+AUTH_USER_MODEL = 'myconcretecasting.User'
