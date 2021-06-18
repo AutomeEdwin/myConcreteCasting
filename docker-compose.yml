@@ -22,7 +22,6 @@ services:
       - db
     links:
       - db
-      - frontend
 
   db:
     image: mongo:latest
