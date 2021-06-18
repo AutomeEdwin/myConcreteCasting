@@ -96,7 +96,8 @@ DATABASES = {
         'ENGINE': 'djongo',
         'NAME': 'concretetracker',
         "CLIENT": {
-            'host': 'mongodb://concretetracker_db:27017',
+            'host': 'localhost:27017',
+            #'host': 'mongodb://concretetracker_db:27017',
             "username": "root",
             "password": "mongoadmin",
         }
