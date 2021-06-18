@@ -11,12 +11,13 @@ RUN npm install
 
 COPY . /usr/src/app/
 
-RUN ng build
+RUN ng build --prod
 
 # prod server
 FROM nginx:alpine
 
 COPY --from=frontend-build /usr/src/app/dist/frontend/ /usr/share/nginx/html
+COPY default.conf /etc/nginx/conf.d/
 
 EXPOSE 80
 
