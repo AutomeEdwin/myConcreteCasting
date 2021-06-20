@@ -52,6 +52,7 @@ export class NewJobsiteComponent implements OnInit {
   initJobsiteForm(): void {
     this.jobsiteForm = this.formBuilder.group({
       jobsite_name: new FormControl('', [Validators.required]),
+      jobsite_address: new FormControl('', [Validators.required]),
       jobsite_description: new FormControl(''),
       jobsite_coordinates: new FormControl(
         {

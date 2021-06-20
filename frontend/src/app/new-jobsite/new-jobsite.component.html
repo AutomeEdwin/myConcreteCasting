@@ -5,8 +5,8 @@
       <ng-template matStepLabel>Create a jobsite</ng-template>
 
       <form [formGroup]="jobsiteForm">
+        <!-- Jobsite name -->
         <div>
-          <!-- Jobsite name -->
           <mat-form-field
             appearance="outline"
             MatFormFieldControl="jobsite_name"
@@ -15,8 +15,28 @@
             <input matInput formControlName="jobsite_name" />
           </mat-form-field>
         </div>
+
+        <!-- Jobsite address -->
         <div>
-          <!-- Jobsite description -->
+          <mat-form-field
+            appearance="outline"
+            MatFormFieldControl="jobsite_address"
+            class="w-75"
+          >
+            <mat-label>Address *</mat-label>
+            <input matInput formControlName="jobsite_address" />
+          </mat-form-field>
+          <button mat-raised-button color="primary" class="ms-2">Search</button>
+        </div>
+
+        <!-- Map displayer -->
+        <div>
+          <div id="map" class="map-container"></div>
+          <p>Lattitude : {{ lattitude }} -- Longitude : {{ longitude }} *</p>
+        </div>
+
+        <!-- Jobsite description -->
+        <div>
           <mat-form-field
             appearance="outline"
             MatFormFieldControl=""
@@ -26,12 +46,8 @@
             <textarea matInput formControlName="jobsite_description"></textarea>
           </mat-form-field>
         </div>
-        <div>
-          <!-- Map displayer -->
-          <div id="map" class="map-container"></div>
-          <p>Lattitude : {{ lattitude }} -- Longitude : {{ longitude }} *</p>
-        </div>
       </form>
+
       <div class="d-flex justify-content-around">
         <button mat-button matStepperNext>Next</button>
       </div>
@@ -105,22 +121,33 @@
       </div>
     </mat-step>
 
-    <!-- Overview -->
+    <!-- STEP 3 : Overview -->
     <mat-step>
       <ng-template matStepLabel>Overview</ng-template>
-      <div>
-        <h1>Jobsite</h1>
-        <p>Jobsite name: {{ getJobsiteDatas("jobsite_name") }}</p>
-        <p>Jobsite description:{{ getJobsiteDatas("jobsite_description") }}</p>
-        <p>Jobsite coordinates:[{{ lattitude }} , {{ longitude }}]</p>
-      </div>
 
-      <div *ngFor="let area of concretef.controls; let i = index">
-        <h2>Casting {{ i + 1 }}</h2>
-        <p>Name: {{ getCastingsDatas(i, 0) }}</p>
-        <p>Description:{{ getCastingsDatas(i, 1) }}</p>
-        <p>Infos:{{ getCastingsDatas(i, 2) }}</p>
-      </div>
+      <mat-grid-list cols="2" rowHeigth="2:1">
+        <mat-grid-tile [colspan]="2">
+          <mat-grid-tile-header class="text-center"
+            >Jobsite</mat-grid-tile-header
+          >
+          Jobsite name: {{ getJobsiteDatas("jobsite_name") }}
+
+          Jobsite address : {{ getJobsiteDatas("jobsite_address") }}
+
+          Jobsite description:{{ getJobsiteDatas("jobsite_description") }}
+
+          Jobsite coordinates:[{{ lattitude }} , {{ longitude }}]
+        </mat-grid-tile>
+      </mat-grid-list>
+
+      <mat-grid-list cols="2" rowHeigth="fit" gutterSize="3px">
+        <mat-grid-tile *ngFor="let area of concretef.controls; let i = index">
+          <mat-grid-tile-header>Casting {{ i + 1 }}</mat-grid-tile-header>
+          <p>Name: {{ getCastingsDatas(i, 0) }}</p>
+          <p>Description:{{ getCastingsDatas(i, 1) }}</p>
+          <p>Infos:{{ getCastingsDatas(i, 2) }}</p>
+        </mat-grid-tile>
+      </mat-grid-list>
 
       <div class="d-flex justify-content-around">
         <button mat-button matStepperPrevious>Back</button>
