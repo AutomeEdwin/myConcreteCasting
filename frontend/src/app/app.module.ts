@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { JobsiteDashboardComponent } from './jobsite-dashboard/jobsite-dashboard.component';
+import { LogoutComponent } from './logout/logout.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,7 @@ import { JobsiteDashboardComponent } from './jobsite-dashboard/jobsite-dashboard
     FormsModule,
     ReactiveFormsModule,
   ],
-  declarations: [AppComponent, RegisterComponent, LoginComponent, JobsiteDashboardComponent],
+  declarations: [AppComponent, RegisterComponent, LoginComponent, JobsiteDashboardComponent, LogoutComponent],
   providers: [],
   bootstrap: [AppComponent],
 })

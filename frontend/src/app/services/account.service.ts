@@ -11,8 +11,15 @@ const headers = new HttpHeaders().set(
   providedIn: 'root',
 })
 export class AccountService {
-  readonly serverURL = 'https://api.concast.digitalconstruction.cloud/';
-  //readonly serverURL = 'http://localhost:8000/';
+  //readonly serverURL = 'https://api.concast.digitalconstruction.cloud/';
+  readonly serverURL = 'http://localhost:8000/';
+
+  readonly authHeaders = {
+    headers: new HttpHeaders({
+      'Content-type': 'application/json',
+      Authorization: 'Token ' + this.localStorageService.get('token'),
+    }),
+  };
 
   constructor(
     private httpClient: HttpClient,
@@ -29,6 +36,16 @@ export class AccountService {
     return this.httpClient.post(this.serverURL + 'login/', user, {
       headers,
     });
+  }
+
+  logoutUser() {
+    this.httpClient.post(this.serverURL + 'logout/', null, {
+      headers: new HttpHeaders({
+        'Content-type': 'application/json',
+        Authorization: 'Token ' + this.localStorageService.get('token'),
+      }),
+    });
+    this.localStorageService.remove('token');
   }
 
   storeToken(token: string) {
