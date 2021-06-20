@@ -4,7 +4,7 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework import permissions
 from django.shortcuts import render
 
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, viewsets
 from rest_framework.response import Response
 from knox.models import AuthToken
 from .serializers import UserSerializer, RegisterSerializer
@@ -22,7 +22,7 @@ class RegisterAPI(generics.GenericAPIView):
         return Response({
             "success": True,
             "message": "User created sucessfully",
-            #"user": UserSerializer(user, context=self.get_serializer_context()).data,
+            # "user": UserSerializer(user, context=self.get_serializer_context()).data,
             # "token": AuthToken.objects.create(user)[1]
         })
 
@@ -40,5 +40,11 @@ class LoginAPI(KnoxLoginView):
         return super(LoginAPI, self).post(request, format=None)
 
 
-def jobsite():
-    return 'hi'
+class JobsitesAPI(viewsets.ModelViewSet):
+    #    permission_classes = (permisions.IsAuthenticated)
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request, format=None):
+        return Response({
+            'message': 'hi'
+        })
