@@ -41,6 +41,10 @@ describe('AccountService', () => {
     // TODO
   }));
 
+  it('should logout user', fakeAsync(() => {
+    //TODO
+  }));
+
   it('should store token', () => {
     accountService.storeToken('testToken');
     expect(localStorage.getItem('token')).toEqual('testToken');
