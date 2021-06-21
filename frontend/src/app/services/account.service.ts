@@ -14,13 +14,6 @@ export class AccountService {
   //readonly serverURL = 'https://api.concast.digitalconstruction.cloud/';
   readonly serverURL = 'http://localhost:8000/';
 
-  readonly authHeaders = {
-    headers: new HttpHeaders({
-      'Content-type': 'application/json',
-      Authorization: 'Token ' + this.localStorageService.get('token'),
-    }),
-  };
-
   constructor(
     private httpClient: HttpClient,
     private localStorageService: LocalStorageService
@@ -39,12 +32,18 @@ export class AccountService {
   }
 
   logoutUser() {
-    this.httpClient.post(this.serverURL + 'logout/', null, {
-      headers: new HttpHeaders({
-        'Content-type': 'application/json',
-        Authorization: 'Token ' + this.localStorageService.get('token'),
-      }),
-    });
+    this.httpClient
+      .post(this.serverURL + 'logout/', null, {
+        headers: new HttpHeaders({
+          Authorization: 'Token ' + this.localStorageService.get('token'),
+        }),
+      })
+      .subscribe(
+        () => {},
+        (error) => {
+          console.log(error);
+        }
+      );
     this.localStorageService.remove('token');
   }
 
