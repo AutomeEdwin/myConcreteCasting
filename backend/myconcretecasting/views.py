@@ -9,6 +9,9 @@ from rest_framework.response import Response
 from knox.models import AuthToken
 from .serializers import UserSerializer, RegisterSerializer
 
+from django.http import JsonResponse
+from django.views import View
+
 # Register API
 
 
@@ -40,11 +43,15 @@ class LoginAPI(KnoxLoginView):
         return super(LoginAPI, self).post(request, format=None)
 
 
-class JobsitesAPI(viewsets.ModelViewSet):
-    #    permission_classes = (permisions.IsAuthenticated)
-    permission_classes = (permissions.AllowAny,)
+class JobsitesAPI(View):
 
-    def post(self, request, format=None):
-        return Response({
-            'message': 'hi'
+    def post(self, request, *args, **kwargs):
+        return JsonResponse({
+            'message': request.data,
+        })
+
+    def get(self, request):
+
+        return JsonResponse({
+            'message': 'get',
         })

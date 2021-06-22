@@ -49,7 +49,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    # CORS
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
 
@@ -63,9 +62,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
-CORS_ORIGIN_WHITELIST = (
-    'htpp://localhost:8080',
-)
+CORS_ORIGIN_WHITELIST = ()
 
 ROOT_URLCONF = 'backend.urls'
 
