@@ -31,7 +31,6 @@ import { JobsitesService } from '../services/jobsites.service';
 })
 export class NewJobsiteComponent implements OnInit {
   form!: FormGroup;
-
   concreteCastings!: FormArray;
 
   map!: Map;
@@ -76,8 +75,9 @@ export class NewJobsiteComponent implements OnInit {
     return <FormArray>this.form.get('concreteCastings');
   }
 
-  getJobsiteDatas(key: string) {
-    return this.form.get(key)?.value;
+  getCasting(i: number, prop: string) {
+    this.concreteCastings = this.form.get('concreteCastings') as FormArray;
+    return this.concreteCastings.at(i).get(prop)?.value;
   }
 
   createConcreteCasting(): FormGroup {
@@ -99,20 +99,20 @@ export class NewJobsiteComponent implements OnInit {
   }
 
   isLastArea(): boolean {
-    return this.getCastingsControls.length === 1;
+    this.concreteCastings = this.form.get('concreteCastings') as FormArray;
+    return this.concreteCastings.length === 1;
   }
 
   onSubmit() {
     console.log(this.form.value);
-
-    /*this.jobsitesService.createJobsite().subscribe(
+    this.jobsitesService.createJobsite().subscribe(
       (res) => {
         console.log(res);
       },
       (err) => {
         console.log(err);
       }
-    );*/
+    );
   }
 
   // MAP

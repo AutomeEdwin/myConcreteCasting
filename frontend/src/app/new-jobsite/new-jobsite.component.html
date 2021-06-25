@@ -130,18 +130,21 @@
           <mat-grid-tile-header class="text-center"
             >Jobsite</mat-grid-tile-header
           >
-          Jobsite name: Jobsite address : Jobsite description: Jobsite
-          coordinates:[{{ lattitude }} , {{ longitude }}]
+          <p>Jobsite name:</p>
+          <p>Jobsite address :</p>
+          <p>Jobsite description:</p>
+          <p>coordinates:[{{ lattitude }} , {{ longitude }}]</p>
         </mat-grid-tile>
       </mat-grid-list>
 
       <mat-grid-list cols="2" rowHeigth="fit" gutterSize="3px">
-        <!--<mat-grid-tile *ngFor="let area of concretef.controls; let i = index">-->
-        <mat-grid-tile>
-          <mat-grid-tile-header>Casting X</mat-grid-tile-header>
-          <p>Name:</p>
-          <p>Description:</p>
-          <p>Infos:</p>
+        <mat-grid-tile
+          *ngFor="let area of getCastingsControls.controls; let i = index"
+        >
+          <mat-grid-tile-header>Casting {{ i + 1 }}</mat-grid-tile-header>
+          <p>Name:{{ getCasting(i, "casting_name") }}</p>
+          <p>Description:{{ getCasting(i, "casting_description") }}</p>
+          <p>Infos:{{ getCasting(i, "casting_infos") }}</p>
         </mat-grid-tile>
       </mat-grid-list>
 
