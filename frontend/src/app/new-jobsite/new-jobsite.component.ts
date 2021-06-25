@@ -16,6 +16,8 @@ import * as olProj from 'ol/proj';
 import VectorSource from 'ol/source/Vector';
 import { MapBrowserEvent } from 'ol';
 
+import { JobsitesService } from '../services/jobsites.service';
+
 @Component({
   selector: 'app-new-jobsite',
   templateUrl: './new-jobsite.component.html',
@@ -28,8 +30,7 @@ import { MapBrowserEvent } from 'ol';
   ],
 })
 export class NewJobsiteComponent implements OnInit {
-  jobsiteForm!: FormGroup;
-  concreteCastingsForm!: FormGroup;
+  form!: FormGroup;
 
   concreteCastings!: FormArray;
 
@@ -37,11 +38,13 @@ export class NewJobsiteComponent implements OnInit {
   lattitude!: number;
   longitude!: number;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private jobsitesService: JobsitesService
+  ) {}
 
   ngOnInit(): void {
-    this.initJobsiteForm();
-    this.initConcreteCastingsForm();
+    this.initForm();
   }
 
   ngAfterViewInit() {
@@ -49,8 +52,8 @@ export class NewJobsiteComponent implements OnInit {
   }
 
   // FIRST FORM FOR JOBSITE CREATION
-  initJobsiteForm(): void {
-    this.jobsiteForm = this.formBuilder.group({
+  initForm(): void {
+    this.form = this.formBuilder.group({
       jobsite_name: new FormControl('', [Validators.required]),
       jobsite_address: new FormControl('', [Validators.required]),
       jobsite_description: new FormControl(''),
@@ -61,37 +64,20 @@ export class NewJobsiteComponent implements OnInit {
         },
         [Validators.required]
       ),
-    });
-  }
-
-  get jobsitef() {
-    return this.jobsiteForm.controls;
-  }
-
-  getJobsiteDatas(key: string) {
-    return this.jobsiteForm.get(key)?.value;
-  }
-
-  // SECOND FORM FOR CONCRETE CASTING CREATION
-  initConcreteCastingsForm(): void {
-    this.concreteCastingsForm = this.formBuilder.group({
       concreteCastings: this.formBuilder.array([this.createConcreteCasting()]),
     });
   }
 
-  get concretef() {
-    return <FormArray>this.concreteCastingsForm.get('concreteCastings');
+  get f() {
+    return this.form.controls;
   }
 
-  getCastingsDatas(i: number, key: number) {
-    this.concreteCastings = this.concreteCastingsForm.get(
-      'concreteCastings'
-    ) as FormArray;
-    let val = this.concreteCastings.at(i).value;
+  get getCastingsControls() {
+    return <FormArray>this.form.get('concreteCastings');
+  }
 
-    val = Object.keys(val).map((key) => val[key]);
-
-    return val[key];
+  getJobsiteDatas(key: string) {
+    return this.form.get(key)?.value;
   }
 
   createConcreteCasting(): FormGroup {
@@ -103,26 +89,30 @@ export class NewJobsiteComponent implements OnInit {
   }
 
   addConcreteCasting(): void {
-    this.concreteCastings = this.concreteCastingsForm.get(
-      'concreteCastings'
-    ) as FormArray;
+    this.concreteCastings = this.form.get('concreteCastings') as FormArray;
     this.concreteCastings.push(this.createConcreteCasting());
   }
 
   removeConcreteCasting(i: number): void {
-    this.concreteCastings = this.concreteCastingsForm.get(
-      'concreteCastings'
-    ) as FormArray;
+    this.concreteCastings = this.form.get('concreteCastings') as FormArray;
     this.concreteCastings.removeAt(i);
   }
 
   isLastArea(): boolean {
-    return this.concretef.controls.length === 1;
+    return this.getCastingsControls.length === 1;
   }
 
   onSubmit() {
-    console.log(this.jobsiteForm.value);
-    console.log(this.concreteCastingsForm.value);
+    console.log(this.form.value);
+
+    /*this.jobsitesService.createJobsite().subscribe(
+      (res) => {
+        console.log(res);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );*/
   }
 
   // MAP
@@ -154,7 +144,7 @@ export class NewJobsiteComponent implements OnInit {
       'EPSG:4326'
     );
 
-    this.jobsiteForm.get('jobsite_coordinates')?.setValue(convertedCoordinates);
+    this.form.get('jobsite_coordinates')?.setValue(convertedCoordinates);
     this.lattitude = convertedCoordinates[0];
     this.longitude = convertedCoordinates[1];
   }

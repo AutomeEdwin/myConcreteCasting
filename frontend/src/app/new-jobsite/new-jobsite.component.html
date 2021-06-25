@@ -1,10 +1,10 @@
 <div class="container shadow">
   <mat-horizontal-stepper #stepper>
     <!-- STEP 1 : Jobsite creation -->
-    <mat-step [stepControl]="jobsiteForm">
+    <mat-step [stepControl]="form">
       <ng-template matStepLabel>Create a jobsite</ng-template>
 
-      <form [formGroup]="jobsiteForm">
+      <form [formGroup]="form">
         <!-- Jobsite name -->
         <div>
           <mat-form-field
@@ -54,10 +54,10 @@
     </mat-step>
 
     <!-- STEP 2 : Concrete casting -->
-    <mat-step [stepControl]="concreteCastingsForm">
+    <mat-step [stepControl]="form">
       <ng-template matStepLabel>Create concrete casting</ng-template>
 
-      <form [formGroup]="concreteCastingsForm">
+      <form [formGroup]="form">
         <button
           mat-raised-button
           color="primary"
@@ -69,15 +69,15 @@
         <div
           formArrayName="concreteCastings"
           class="form-group py-2"
-          *ngFor="let area of concretef.controls; let i = index"
+          *ngFor="let area of getCastingsControls.controls; let i = index"
         >
           <div class="d-flex justify-content-between">
             <h1>Casting {{ i + 1 }}</h1>
             <button
               mat-fab
               color="warn"
-              (click)="removeConcreteCasting(i)"
               [disabled]="isLastArea()"
+              (click)="removeConcreteCasting(i)"
             >
               <mat-icon>delete</mat-icon>
             </button>
@@ -130,22 +130,18 @@
           <mat-grid-tile-header class="text-center"
             >Jobsite</mat-grid-tile-header
           >
-          Jobsite name: {{ getJobsiteDatas("jobsite_name") }}
-
-          Jobsite address : {{ getJobsiteDatas("jobsite_address") }}
-
-          Jobsite description:{{ getJobsiteDatas("jobsite_description") }}
-
-          Jobsite coordinates:[{{ lattitude }} , {{ longitude }}]
+          Jobsite name: Jobsite address : Jobsite description: Jobsite
+          coordinates:[{{ lattitude }} , {{ longitude }}]
         </mat-grid-tile>
       </mat-grid-list>
 
       <mat-grid-list cols="2" rowHeigth="fit" gutterSize="3px">
-        <mat-grid-tile *ngFor="let area of concretef.controls; let i = index">
-          <mat-grid-tile-header>Casting {{ i + 1 }}</mat-grid-tile-header>
-          <p>Name: {{ getCastingsDatas(i, 0) }}</p>
-          <p>Description:{{ getCastingsDatas(i, 1) }}</p>
-          <p>Infos:{{ getCastingsDatas(i, 2) }}</p>
+        <!--<mat-grid-tile *ngFor="let area of concretef.controls; let i = index">-->
+        <mat-grid-tile>
+          <mat-grid-tile-header>Casting X</mat-grid-tile-header>
+          <p>Name:</p>
+          <p>Description:</p>
+          <p>Infos:</p>
         </mat-grid-tile>
       </mat-grid-list>
 
