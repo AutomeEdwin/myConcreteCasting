@@ -52,11 +52,12 @@ class JobsitesAPI(View):
     def post(self, request, *args, **kwargs):
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
-        jobsite = Jobsite(jobsite_owner='', jobsite_name=body['jobsite_name'],
+        jobsite = Jobsite(jobsite_owner=body['jobsite_owner'], jobsite_name=body['jobsite_name'],
                           jobsite_address=body['jobsite_address'],
                           jobsite_coordinates=body['jobsite_coordinates'],
                           jobsite_description=body['jobsite_description'],
-                          jobsite_castings=body['jobsite_castings'])
+                          #jobsite_castings=body['jobsite_castings']
+                          )
         jobsite.save()
 
         return JsonResponse({
