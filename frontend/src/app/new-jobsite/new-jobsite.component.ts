@@ -53,6 +53,7 @@ export class NewJobsiteComponent implements OnInit {
   // FIRST FORM FOR JOBSITE CREATION
   initForm(): void {
     this.form = this.formBuilder.group({
+      jobsite_owner: localStorage.getItem('email'),
       jobsite_name: new FormControl('', [Validators.required]),
       jobsite_address: new FormControl('', [Validators.required]),
       jobsite_description: new FormControl(''),
@@ -104,7 +105,6 @@ export class NewJobsiteComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.form.value);
     this.jobsitesService.createJobsite(this.form.value).subscribe(
       (res) => {
         console.log(res);
