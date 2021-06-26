@@ -10,7 +10,7 @@ export class JobsitesService {
 
   constructor(private httpClient: HttpClient) {}
 
-  createJobsite() {
-    return this.httpClient.post(this.serverURL + 'jobsites/', null, {});
+  createJobsite(data: any) {
+    return this.httpClient.post(this.serverURL + 'jobsites/', data);
   }
 }

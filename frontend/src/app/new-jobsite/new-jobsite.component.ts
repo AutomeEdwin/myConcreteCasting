@@ -105,7 +105,7 @@ export class NewJobsiteComponent implements OnInit {
 
   onSubmit() {
     console.log(this.form.value);
-    this.jobsitesService.createJobsite().subscribe(
+    this.jobsitesService.createJobsite(this.form.value).subscribe(
       (res) => {
         console.log(res);
       },

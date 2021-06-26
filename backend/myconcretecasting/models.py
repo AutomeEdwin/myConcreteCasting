@@ -19,6 +19,12 @@ class User(AbstractUser):
 
 
 class Jobsite(models.Model):
-    name = models.CharField(max_length=255)
-    description = models.TextField()
-    castings = models.JSONField(null=False)
+    class Meta:
+        db_table: "Jobsites"
+
+    jobsite_owner = models.CharField(max_length=50)
+    jobsite_name = models.CharField(max_length=255)
+    jobsite_address = models.CharField(max_length=255)
+    jobsite_coordinates = models.CharField(max_length=50)
+    jobsite_description = models.TextField()
+    jobsite_castings = models.JSONField()
