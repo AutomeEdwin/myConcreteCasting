@@ -64,7 +64,7 @@ export class NewJobsiteComponent implements OnInit {
         },
         [Validators.required]
       ),
-      concreteCastings: this.formBuilder.array([this.createConcreteCasting()]),
+      jobsite_castings: this.formBuilder.array([this.createConcreteCasting()]),
     });
   }
 
@@ -73,11 +73,11 @@ export class NewJobsiteComponent implements OnInit {
   }
 
   get getCastingsControls() {
-    return <FormArray>this.form.get('concreteCastings');
+    return <FormArray>this.form.get('jobsite_castings');
   }
 
   getCasting(i: number, prop: string) {
-    this.concreteCastings = this.form.get('concreteCastings') as FormArray;
+    this.concreteCastings = this.form.get('jobsite_castings') as FormArray;
     return this.concreteCastings.at(i).get(prop)?.value;
   }
 
@@ -90,17 +90,17 @@ export class NewJobsiteComponent implements OnInit {
   }
 
   addConcreteCasting(): void {
-    this.concreteCastings = this.form.get('concreteCastings') as FormArray;
+    this.concreteCastings = this.form.get('jobsite_castings') as FormArray;
     this.concreteCastings.push(this.createConcreteCasting());
   }
 
   removeConcreteCasting(i: number): void {
-    this.concreteCastings = this.form.get('concreteCastings') as FormArray;
+    this.concreteCastings = this.form.get('jobsite_castings') as FormArray;
     this.concreteCastings.removeAt(i);
   }
 
   isLastArea(): boolean {
-    this.concreteCastings = this.form.get('concreteCastings') as FormArray;
+    this.concreteCastings = this.form.get('jobsite_castings') as FormArray;
     return this.concreteCastings.length === 1;
   }
 

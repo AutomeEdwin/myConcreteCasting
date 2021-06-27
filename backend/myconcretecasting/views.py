@@ -56,7 +56,7 @@ class JobsitesAPI(View):
                           jobsite_address=body['jobsite_address'],
                           jobsite_coordinates=body['jobsite_coordinates'],
                           jobsite_description=body['jobsite_description'],
-                          #jobsite_castings=body['jobsite_castings']
+                          jobsite_castings=body['jobsite_castings']
                           )
         jobsite.save()
 
