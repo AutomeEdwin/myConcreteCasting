@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Jobsite
+from .models import User, Jobsite, Casting
 
 # User Serializer
 
@@ -30,3 +30,9 @@ class JobsiteSerializer(serializers.ModelSerializer):
         model = Jobsite
         fields = ['id', 'jobsite_owner', 'jobsite_name', 'jobsite_address',
                   'jobsite_coordinates', 'jobsite_description', 'jobsite_castings']
+
+
+class CastingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Casting
+        fields = ['id', 'casting_name', 'casting_description', 'casting_infos']

@@ -53,7 +53,6 @@ class LoginAPI(KnoxLoginView):
 
 
 class JobsitesAPI(APIView):
-    parser_classes = [JSONParser]
 
     def post(self, request, format=None):
         data = JSONParser().parse(request)
@@ -62,6 +61,4 @@ class JobsitesAPI(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-        return JsonResponse({
-            'message': "nope",
-        })
+        return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
