@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User
+from .models import User, Jobsite
 
 # User Serializer
 
@@ -23,3 +23,10 @@ class RegisterSerializer(serializers.ModelSerializer):
             validated_data['email'], validated_data['password'], validated_data['first_name'], validated_data['last_name'])
 
         return user
+
+
+class JobsiteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Jobsite
+        fields = ['id', 'jobsite_owner', 'jobsite_name', 'jobsite_address',
+                  'jobsite_coordinates', 'jobsite_description', 'jobsite_castings']

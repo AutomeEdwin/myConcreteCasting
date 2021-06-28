@@ -19,8 +19,6 @@ class User(AbstractUser):
 
 
 class Jobsite(models.Model):
-    class Meta:
-        db_table: "Jobsites"
 
     jobsite_owner = models.CharField(max_length=50)
     jobsite_name = models.CharField(max_length=255)
