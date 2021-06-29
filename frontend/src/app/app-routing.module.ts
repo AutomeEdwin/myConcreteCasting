@@ -8,12 +8,12 @@ import { JobsiteDashboardComponent } from './jobsite-dashboard/jobsite-dashboard
 import { AuthguardService } from './services/authguard.service';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   {
     path: 'dashboard',
-    //canActivate: [AuthguardService],
+    canActivate: [AuthguardService],
     component: JobsiteDashboardComponent,
   },
 ];
