@@ -8,6 +8,7 @@ import {
 import { Router } from '@angular/router';
 
 import { AccountService } from '../services/account.service';
+import { LocalStorageService } from '../services/localstorage.service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private accountService: AccountService,
-    private router: Router
+    private router: Router,
+    private localStorageService: LocalStorageService
   ) {}
 
   ngOnInit() {
@@ -74,6 +76,7 @@ export class LoginComponent implements OnInit {
   handleHttpResponse(response: any) {
     if (response.hasOwnProperty('token') && response.hasOwnProperty('expiry')) {
       this.accountService.storeToken(response.token);
+      this.localStorageService.set('email', this.form.get('email')?.value);
       this.router.navigate(['/dashboard']);
     }
   }

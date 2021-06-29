@@ -4,9 +4,12 @@ import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
-import {MatButtonModule} from '@angular/material/button';
-
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 // Components import
 import { AppComponent } from './app.component';
@@ -15,6 +18,7 @@ import { LoginComponent } from './login/login.component';
 import { JobsiteDashboardComponent } from './jobsite-dashboard/jobsite-dashboard.component';
 import { LogoutComponent } from './logout/logout.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NewJobsiteComponent } from './new-jobsite/new-jobsite.component';
 
 @NgModule({
   imports: [
@@ -25,9 +29,22 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FormsModule,
     ReactiveFormsModule,
     MatButtonModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatStepperModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatGridListModule,
   ],
-  declarations: [AppComponent, RegisterComponent, LoginComponent, JobsiteDashboardComponent, LogoutComponent],
+  declarations: [
+    AppComponent,
+    RegisterComponent,
+    LoginComponent,
+    JobsiteDashboardComponent,
+    NewJobsiteComponent,
+    LogoutComponent
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

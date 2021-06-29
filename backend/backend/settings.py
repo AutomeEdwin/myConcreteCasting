@@ -49,22 +49,20 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    # CORS
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
 
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
-CORS_ORIGIN_WHITELIST = (
-)
+CORS_ORIGIN_WHITELIST = ()
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -95,7 +93,8 @@ DATABASES = {
         'ENGINE': 'djongo',
         'NAME': 'myconcretecasting',
         "CLIENT": {
-            'host': 'mongodb://myconcretecasting_db:27017',
+            'host': 'localhost:27017',
+            # 'host': 'mongodb://concretetracker_db:27017',
             "username": "root",
             "password": "mongoadmin",
         }
