@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 // Components import
 import { AppComponent } from './app.component';
@@ -19,6 +20,7 @@ import { JobsiteDashboardComponent } from './jobsite-dashboard/jobsite-dashboard
 import { LogoutComponent } from './logout/logout.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NewJobsiteComponent } from './new-jobsite/new-jobsite.component';
+import { JobsiteViewerComponent } from './jobsite-viewer/jobsite-viewer.component';
 
 @NgModule({
   imports: [
@@ -36,6 +38,7 @@ import { NewJobsiteComponent } from './new-jobsite/new-jobsite.component';
     MatButtonModule,
     MatIconModule,
     MatGridListModule,
+    MatExpansionModule,
   ],
   declarations: [
     AppComponent,
@@ -43,7 +46,8 @@ import { NewJobsiteComponent } from './new-jobsite/new-jobsite.component';
     LoginComponent,
     JobsiteDashboardComponent,
     NewJobsiteComponent,
-    LogoutComponent
+    LogoutComponent,
+    JobsiteViewerComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],

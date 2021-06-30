@@ -13,4 +13,10 @@ export class JobsitesService {
   createJobsite(data: any) {
     return this.httpClient.post(this.serverURL + 'jobsites/', data);
   }
+
+  getJobsites() {
+    return this.httpClient.get(
+      this.serverURL + 'jobsites/' + localStorage.getItem('email')
+    );
+  }
 }
