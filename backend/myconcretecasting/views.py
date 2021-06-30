@@ -63,10 +63,8 @@ class JobsitesAPI(APIView):
 
         return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def get(self, request, format=None):
-        jobsite_owner = JSONParser().parse(request)
-        print(jobsite_owner['jobsite_owner'])
+    def get(self, *args, **kwargs):
         jobsistes = Jobsite.objects.filter(
-            jobsite_owner=jobsite_owner['jobsite_owner'])
+            jobsite_owner=kwargs['jobsite_owner'])
         serializer = JobsiteSerializer(jobsistes, many=True)
         return JsonResponse(serializer.data, safe=False)
