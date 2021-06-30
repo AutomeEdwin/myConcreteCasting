@@ -25,6 +25,9 @@ class Casting(models.Model):
     casting_description = models.TextField()
     casting_infos = models.TextField()
 
+    class Meta:
+        abstract = True
+
 
 class Jobsite(models.Model):
 
