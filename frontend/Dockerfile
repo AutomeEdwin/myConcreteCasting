@@ -2,6 +2,10 @@
 FROM node:latest as frontend-build
 
 RUN mkdir /usr/src/app
+
+# temporary fix while packge @angular-devkit/build-angular is being fixed
+RUN mkdir -p /usr/src/app/dist/frontend 
+
 WORKDIR /usr/src/app
 
 RUN npm install -g @angular/cli
