@@ -11,7 +11,7 @@ RUN npm install
 
 COPY . /usr/src/app/
 
-RUN ng build --prod
+RUN ng build
 
 # prod server
 FROM nginx:alpine
