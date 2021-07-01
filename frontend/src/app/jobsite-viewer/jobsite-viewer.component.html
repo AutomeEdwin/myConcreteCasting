@@ -1,11 +1,13 @@
 <button (click)="getJobsites()">refresh</button>
 <mat-accordion>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title> Jobsite Name </mat-panel-title>
-      <mat-panel-description> description </mat-panel-description>
-    </mat-expansion-panel-header>
+  <div *ngFor="let jobsite of data">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title> Jobsite Name </mat-panel-title>
+        <mat-panel-description> description </mat-panel-description>
+      </mat-expansion-panel-header>
 
-    <p>I'm visible because I am open</p>
-  </mat-expansion-panel>
+      <p>I'm visible because I am open</p>
+    </mat-expansion-panel>
+  </div>
 </mat-accordion>

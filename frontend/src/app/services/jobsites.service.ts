@@ -15,8 +15,10 @@ export class JobsitesService {
   }
 
   getJobsites() {
+    let header = new HttpHeaders().set('Accept', 'application/json');
     return this.httpClient.get(
-      this.serverURL + 'jobsites/' + localStorage.getItem('email')
+      this.serverURL + 'jobsites/' + localStorage.getItem('email'),
+      { headers: header }
     );
   }
 }

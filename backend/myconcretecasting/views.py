@@ -67,4 +67,4 @@ class JobsitesAPI(APIView):
         jobsistes = Jobsite.objects.filter(
             jobsite_owner=kwargs['jobsite_owner'])
         serializer = JobsiteSerializer(jobsistes, many=True)
-        return JsonResponse(serializer.data, safe=False)
+        return Response(serializer.data, status=status.HTTP_200_OK)
