@@ -10,8 +10,8 @@ import { JobsitesService } from '../services/jobsites.service';
 })
 export class JobsiteViewerComponent implements OnInit {
   data: any;
-
   jobsiteArray: Array<Jobsite> = [];
+
   constructor(private jobsitesService: JobsitesService) {}
 
   ngOnInit(): void {
@@ -19,6 +19,7 @@ export class JobsiteViewerComponent implements OnInit {
   }
 
   getJobsites() {
+    this.jobsiteArray.length = 0;
     this.jobsitesService.getJobsites().subscribe(
       (response) => {
         this.data = response;
@@ -41,5 +42,21 @@ export class JobsiteViewerComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  getJobsiteName(i: number) {
+    return this.jobsiteArray[i].getName();
+  }
+
+  getJobsiteDescription(i: number) {
+    return this.jobsiteArray[i].getDescription();
+  }
+
+  getJobsiteAddress(i: number) {
+    return this.jobsiteArray[i].getAddress();
+  }
+
+  getCastings(i: number) {
+    return this.jobsiteArray[i].getCastings();
   }
 }
