@@ -46,13 +46,13 @@ describe('LoginComponent', () => {
     const compiled = fixture.debugElement.nativeElement;
     const emailInput = compiled.querySelector('input[id="email"]');
     const passwordInput = compiled.querySelector('input[id="password"]');
-    const submitButton = compiled.querySelector('button');
-    const link = compiled.querySelector('a');
+    const submitButton = compiled.querySelector('.signInBtn');
+    const signUpButton = compiled.querySelector('.signUpBtn');
 
     expect(emailInput).toBeTruthy();
     expect(passwordInput).toBeTruthy();
     expect(submitButton).toBeTruthy();
-    expect(link).toBeTruthy();
+    expect(signUpButton).toBeTruthy();
   });
 
   it('should test form validity', () => {
