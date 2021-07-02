@@ -31,7 +31,6 @@ import { JobsiteViewerComponent } from './jobsite-viewer/jobsite-viewer.componen
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    MatButtonModule,
     BrowserAnimationsModule,
     MatStepperModule,
     MatFormFieldModule,
