@@ -94,7 +94,7 @@ DATABASES = {
         'NAME': 'myconcretecasting',
         "CLIENT": {
             #'host': 'localhost:27017',
-            'host': 'mongodb://myconcretecasting:27017',
+            'host': 'mongodb://myconcretecasting_db:27017',
             "username": "root",
             "password": "mongoadmin",
         }
