@@ -4,12 +4,24 @@ import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDialogModule } from '@angular/material/dialog';
 
 // Components import
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { JobsiteDashboardComponent } from './jobsite-dashboard/jobsite-dashboard.component';
+import { LogoutComponent } from './logout/logout.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NewJobsiteComponent } from './new-jobsite/new-jobsite.component';
+import { JobsiteViewerComponent } from './jobsite-viewer/jobsite-viewer.component';
 
 @NgModule({
   imports: [
@@ -19,8 +31,25 @@ import { JobsiteDashboardComponent } from './jobsite-dashboard/jobsite-dashboard
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatStepperModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatGridListModule,
+    MatExpansionModule,
+    MatDialogModule,
   ],
-  declarations: [AppComponent, RegisterComponent, LoginComponent, JobsiteDashboardComponent],
+  declarations: [
+    AppComponent,
+    RegisterComponent,
+    LoginComponent,
+    JobsiteDashboardComponent,
+    NewJobsiteComponent,
+    LogoutComponent,
+    JobsiteViewerComponent,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

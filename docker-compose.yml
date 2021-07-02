@@ -1,0 +1,35 @@
+version: "3.4"
+
+services:
+  frontend:
+    build: ./frontend
+    container_name: myconcretecasting_frontend
+    hostname: myconcretecasting_frontend
+    ports:
+      - "4200:80"
+    restart: always
+
+  backend:
+    build: ./backend
+    command: gunicorn --bind 0.0.0.0:8000 backend.wsgi
+    container_name: myconcretecasting_api
+    hostname: myconcretecasting_api
+    volumes:
+      - ./backend:/usr/src/app/
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    links:
+      - db
+
+  db:
+    image: mongo:latest
+    container_name: myconcretecasting_db
+    hostname: myconcretecasting_db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: mongoadmin
+      MONGO_INITDB_DATABASE: myconcretecasting
+    ports:
+      - 27017:27017

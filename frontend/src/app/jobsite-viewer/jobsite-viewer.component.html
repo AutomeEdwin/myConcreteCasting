@@ -1,0 +1,16 @@
+<button (click)="getJobsites()">refresh</button>
+<mat-accordion>
+  <div *ngFor="let jobsite of jobsiteArray; let i = index">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title> {{ getJobsiteName(i) }} </mat-panel-title>
+        <mat-panel-description>
+          {{ getJobsiteDescription(i) }}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p>Address : {{ getJobsiteAddress(i) }}</p>
+
+      <p>{{ getCastings(i) }}</p>
+    </mat-expansion-panel>
+  </div>
+</mat-accordion>
