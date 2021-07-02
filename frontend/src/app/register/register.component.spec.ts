@@ -51,8 +51,8 @@ describe('RegisterComponent', () => {
     const passwordConfirmInput = compiled.querySelector(
       'input[id="passwordConfirm"]'
     );
-    const submitButton = compiled.querySelector('button');
-    const link = compiled.querySelector('a');
+    const submitButton = compiled.querySelector('.signUpBtn');
+    const signInButton = compiled.querySelector('.signInBtn');
 
     expect(firstNameInput).toBeTruthy();
     expect(lastNameInput).toBeTruthy();
@@ -60,7 +60,7 @@ describe('RegisterComponent', () => {
     expect(passwordInput).toBeTruthy();
     expect(passwordConfirmInput).toBeTruthy();
     expect(submitButton).toBeTruthy();
-    expect(link).toBeTruthy();
+    expect(signInButton).toBeTruthy();
   });
 
   it('should test form validity', () => {

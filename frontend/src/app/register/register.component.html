@@ -1,6 +1,7 @@
 <div class="container shadow">
-  <h2 class="text-center"><strong>Create an account</strong></h2>
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="text-center">
+    <h1 class="text-center"><strong>Create an account</strong></h1>
+
     <div class="row form-group">
       <!--First name-->
       <div class="col py-2">
@@ -92,16 +93,14 @@
       </div>
     </div>
 
-    <div class="row form-group">
-      <div class="col">
-        <button class="btn btn-info my-4 btn-block" type="submit">
-          Sign up
-        </button>
-      </div>
+    <div class="py-2">
+      <button class="signUpBtn" type="submit">Sign up</button>
+    </div>
 
-      <div class="col">
-        <p><a routerLink="/login">Login to your account</a></p>
-      </div>
+    <div class="text-divider">OR</div>
+
+    <div class="py-2">
+      <button [routerLink]="'/login'" class="signInBtn">Sign in</button>
     </div>
   </form>
 </div>
