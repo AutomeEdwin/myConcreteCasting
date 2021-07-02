@@ -1,0 +1,5 @@
+frontend/nodes_modules/
+frontend/.gitignore
+frontend/*.zip
+frontend/*.md
+frontend/.editorconfig

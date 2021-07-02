@@ -25,7 +25,7 @@ SECRET_KEY = '*969_*_haa+my#w$xi45+-q-saovpfuf2+bcvg$=s^x=1rnde)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -45,27 +45,24 @@ INSTALLED_APPS = [
     # CORS
     'corsheaders',
 
-    'concretetracker',
+    'myconcretecasting',
 ]
 
 MIDDLEWARE = [
-    # CORS
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
 
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
-CORS_ORIGIN_WHITELIST = (
-    'htpp://localhost:8080',
-)
+CORS_ORIGIN_WHITELIST = ()
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -94,9 +91,13 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'concretetracker',
-        'HOST': '127.0.0.1',
-        'PORT': 27017,
+        'NAME': 'myconcretecasting',
+        "CLIENT": {
+            #'host': 'localhost:27017',
+            'host': 'mongodb://myconcretecasting_db:27017',
+            "username": "root",
+            "password": "mongoadmin",
+        }
     }
 }
 
@@ -148,4 +149,4 @@ REST_FRAMEWORK = {
     ]
 }
 
-AUTH_USER_MODEL = 'concretetracker.User'
+AUTH_USER_MODEL = 'myconcretecasting.User'
