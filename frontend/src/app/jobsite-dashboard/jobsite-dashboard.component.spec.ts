@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { JobsiteDashboardComponent } from './jobsite-dashboard.component';
 
@@ -8,9 +9,9 @@ describe('JobsiteDashboardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ JobsiteDashboardComponent ]
-    })
-    .compileComponents();
+      imports: [MatDialogModule],
+      declarations: [JobsiteDashboardComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

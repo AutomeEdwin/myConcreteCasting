@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { JobsiteViewerComponent } from './jobsite-viewer.component';
 
@@ -8,9 +9,9 @@ describe('JobsiteViewerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ JobsiteViewerComponent ]
-    })
-    .compileComponents();
+      imports: [HttpClientTestingModule],
+      declarations: [JobsiteViewerComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
