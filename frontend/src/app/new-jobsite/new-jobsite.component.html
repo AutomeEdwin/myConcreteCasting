@@ -1,8 +1,43 @@
-<h1 mat-dialog-title>Create a new jobsite</h1>
 <div mat-dialog-content class="mat-dialog-content">
-  <mat-horizontal-stepper>
+  <mat-horizontal-stepper class="mat-horizontal-stepper">
+    <!-- STEP 3 : Overview -->
+    <mat-step class="mat-step">
+      <ng-template matStepLabel>Overview</ng-template>
+
+      <mat-grid-list cols="2" rowHeigth="2:1">
+        <mat-grid-tile [colspan]="2">
+          <mat-grid-tile-header class="text-center"
+            >Jobsite</mat-grid-tile-header
+          >
+          <div class="jobsiteGridContent">
+            <p>Jobsite name:</p>
+            <p>Jobsite address :</p>
+            <p>Jobsite description:</p>
+            <p>coordinates:[{{ lattitude }} , {{ longitude }}]</p>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+
+      <mat-grid-list cols="2" rowHeigth="fit" gutterSize="3px">
+        <mat-grid-tile
+          *ngFor="let casting of getCastingsControls.controls; let i = index"
+        >
+          <mat-grid-tile-header>Casting {{ i + 1 }}</mat-grid-tile-header>
+          <div>
+            <p>Name:{{ getCasting(i, "casting_name") }}</p>
+            <p>Description:{{ getCasting(i, "casting_description") }}</p>
+            <p>Infos:{{ getCasting(i, "casting_infos") }}</p>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+
+      <div class="d-flex justify-content-around">
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="onSubmit()">Create</button>
+      </div>
+    </mat-step>
     <!-- STEP 1 : Jobsite creation -->
-    <mat-step [stepControl]="form">
+    <mat-step [stepControl]="form" class="mat-step">
       <ng-template matStepLabel>Create a jobsite</ng-template>
 
       <form [formGroup]="form">
@@ -31,8 +66,8 @@
         </div>
 
         <!-- Map displayer -->
-        <div>
-          <div id="map" class="map-container"></div>
+        <div class="map-container">
+          <div id="map" class="map"></div>
           <p>Lattitude : {{ lattitude }} -- Longitude : {{ longitude }} *</p>
         </div>
 
@@ -55,7 +90,7 @@
     </mat-step>
 
     <!-- STEP 2 : Concrete casting -->
-    <mat-step [stepControl]="form">
+    <mat-step [stepControl]="form" class="mat-step">
       <ng-template matStepLabel>Create concrete casting</ng-template>
 
       <form [formGroup]="form">
@@ -119,39 +154,6 @@
       <div class="d-flex justify-content-around">
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button matStepperNext>Next</button>
-      </div>
-    </mat-step>
-
-    <!-- STEP 3 : Overview -->
-    <mat-step>
-      <ng-template matStepLabel>Overview</ng-template>
-
-      <mat-grid-list cols="2" rowHeigth="2:1">
-        <mat-grid-tile [colspan]="2">
-          <mat-grid-tile-header class="text-center"
-            >Jobsite</mat-grid-tile-header
-          >
-          <p>Jobsite name:</p>
-          <p>Jobsite address :</p>
-          <p>Jobsite description:</p>
-          <p>coordinates:[{{ lattitude }} , {{ longitude }}]</p>
-        </mat-grid-tile>
-      </mat-grid-list>
-
-      <mat-grid-list cols="2" rowHeigth="fit" gutterSize="3px">
-        <mat-grid-tile
-          *ngFor="let casting of getCastingsControls.controls; let i = index"
-        >
-          <mat-grid-tile-header>Casting {{ i + 1 }}</mat-grid-tile-header>
-          <p>Name:{{ getCasting(i, "casting_name") }}</p>
-          <p>Description:{{ getCasting(i, "casting_description") }}</p>
-          <p>Infos:{{ getCasting(i, "casting_infos") }}</p>
-        </mat-grid-tile>
-      </mat-grid-list>
-
-      <div class="d-flex justify-content-around">
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="onSubmit()">Create</button>
       </div>
     </mat-step>
   </mat-horizontal-stepper>
