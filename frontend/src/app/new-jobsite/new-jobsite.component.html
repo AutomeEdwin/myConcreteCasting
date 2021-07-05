@@ -18,19 +18,23 @@
 
         <!-- Jobsite address -->
         <div>
-          <mat-form-field
-            appearance="outline"
-            MatFormFieldControl="jobsite_address"
-            class="w-75"
-          >
+          <mat-form-field appearance="outline" class="w-75">
             <mat-label>Address *</mat-label>
             <input matInput formControlName="jobsite_address" />
+            <mat-hint>make a research or click on the map</mat-hint>
           </mat-form-field>
-          <button mat-raised-button color="primary" class="ms-2">Search</button>
+          <button
+            mat-raised-button
+            color="primary"
+            class="ms-2"
+            (click)="getAddressCoordinates()"
+          >
+            Search
+          </button>
         </div>
 
         <!-- Map displayer -->
-        <div class="map-container">
+        <div class="map-container pt-2">
           <div id="map" class="map"></div>
           <p>Lattitude : {{ lattitude }} -- Longitude : {{ longitude }}</p>
         </div>
@@ -39,7 +43,7 @@
         <div>
           <mat-form-field
             appearance="outline"
-            MatFormFieldControl=""
+            MatFormFieldControl="jobsite_description"
             class="w-100"
           >
             <mat-label>Description</mat-label>
@@ -156,5 +160,5 @@
       </div>
     </mat-step>
   </mat-horizontal-stepper>
-  <p>* : required fields</p>
+  <mat-hint>required fields* </mat-hint>
 </div>

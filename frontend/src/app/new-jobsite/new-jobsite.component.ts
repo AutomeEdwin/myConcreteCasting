@@ -16,7 +16,10 @@ import * as olProj from 'ol/proj';
 import VectorSource from 'ol/source/Vector';
 import { MapBrowserEvent } from 'ol';
 
+import { timeout } from 'rxjs/operators';
+
 import { JobsitesService } from '../services/jobsites.service';
+import { NominatimService } from '../services/nominatim.service';
 
 @Component({
   selector: 'app-new-jobsite',
@@ -32,7 +35,6 @@ import { JobsitesService } from '../services/jobsites.service';
 export class NewJobsiteComponent implements OnInit {
   form!: FormGroup;
   concreteCastings!: FormArray;
-
   map!: Map;
 
   // Hardcoded data that point the Grand Place of Brussels
@@ -41,7 +43,8 @@ export class NewJobsiteComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private jobsitesService: JobsitesService
+    private jobsitesService: JobsitesService,
+    private nominatomService: NominatimService
   ) {}
 
   ngOnInit(): void {
@@ -52,7 +55,6 @@ export class NewJobsiteComponent implements OnInit {
     this.initMap();
   }
 
-  // FIRST FORM FOR JOBSITE CREATION
   initForm(): void {
     this.form = this.formBuilder.group({
       jobsite_owner: localStorage.getItem('email'),
@@ -149,5 +151,30 @@ export class NewJobsiteComponent implements OnInit {
     this.form.get('jobsite_coordinates')?.setValue(convertedCoordinates);
     this.lattitude = convertedCoordinates[0];
     this.longitude = convertedCoordinates[1];
+  }
+
+  getAddressCoordinates() {
+    this.nominatomService
+      .query(this.form.get('jobsite_address')?.value)
+      .pipe(timeout(1000))
+      .subscribe(
+        (res) => {
+          let data = JSON.stringify(res);
+          data = data.substring(1, data.length - 1);
+          let json = JSON.parse(data);
+          console.log(json.display_name);
+
+          this.form.get('jobsite_address')?.setValue(json.display_name);
+          this.form
+            .get('jobsite_coordinates')
+            ?.setValue([+json.lon, +json.lat]);
+
+          this.lattitude = json.lon;
+          this.longitude = json.lat;
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
   }
 }

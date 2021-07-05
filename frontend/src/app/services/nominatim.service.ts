@@ -10,6 +10,9 @@ export class NominatimService {
   constructor(private httpClient: HttpClient) {}
 
   query(query: string) {
-    return this.httpClient.get(this.nominatimURL);
+    query = query.replace(/ /g, '+');
+    return this.httpClient.get(
+      this.nominatimURL + 'q=' + query + '&format=json&limit=1'
+    );
   }
 }
