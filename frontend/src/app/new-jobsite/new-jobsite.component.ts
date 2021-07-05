@@ -147,22 +147,20 @@ export class NewJobsiteComponent implements OnInit {
       'EPSG:3857',
       'EPSG:4326'
     );
-
     this.form.get('jobsite_coordinates')?.setValue(convertedCoordinates);
     this.lattitude = convertedCoordinates[0];
     this.longitude = convertedCoordinates[1];
   }
 
-  getAddressCoordinates() {
+  getCoordinateFromAddress() {
     this.nominatomService
-      .query(this.form.get('jobsite_address')?.value)
+      .search(this.form.get('jobsite_address')?.value)
       .pipe(timeout(1000))
       .subscribe(
         (res) => {
           let data = JSON.stringify(res);
           data = data.substring(1, data.length - 1);
           let json = JSON.parse(data);
-          console.log(json.display_name);
 
           this.form.get('jobsite_address')?.setValue(json.display_name);
           this.form

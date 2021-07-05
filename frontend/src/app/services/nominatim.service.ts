@@ -5,14 +5,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root',
 })
 export class NominatimService {
-  readonly nominatimURL = 'https://nominatim.openstreetmap.org/search?';
+  readonly nominatimURL = 'https://nominatim.openstreetmap.org/';
 
   constructor(private httpClient: HttpClient) {}
 
-  query(query: string) {
+  search(query: string) {
     query = query.replace(/ /g, '+');
     return this.httpClient.get(
-      this.nominatimURL + 'q=' + query + '&format=json&limit=1'
+      this.nominatimURL + 'search?q=' + query + '&format=json&limit=1'
     );
   }
 }
