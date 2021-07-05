@@ -34,8 +34,10 @@ export class NewJobsiteComponent implements OnInit {
   concreteCastings!: FormArray;
 
   map!: Map;
-  lattitude!: number;
-  longitude!: number;
+
+  // Hardcoded data that point the Grand Place of Brussels
+  lattitude = 4.352530764849208;
+  longitude = 50.846642213471654;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -124,8 +126,8 @@ export class NewJobsiteComponent implements OnInit {
     this.map = new Map({
       layers: [osmLayer, drawLayer],
       view: new View({
-        center: olProj.fromLonLat([37.41, 8.82]),
-        zoom: 2,
+        center: olProj.fromLonLat([4.352530764849208, 50.846642213471654]),
+        zoom: 9,
       }),
       target: 'map',
     });
