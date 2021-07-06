@@ -73,13 +73,17 @@ export class NewJobsiteComponent implements OnInit {
       ),
       jobsite_castings: this.formBuilder.array([this.createConcreteCasting()]),
     });
+
+    this.form
+      .get('jobsite_coordinates')
+      ?.setValue([this.lattitude, this.longitude]);
   }
 
   get f() {
     return this.form.controls;
   }
 
-  getForm(field: string): string {
+  getJobsite(field: string): string {
     return this.form.get(field)?.value;
   }
 
@@ -116,7 +120,7 @@ export class NewJobsiteComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.form.value);
+    console.log(this.getCastingsControls);
 
     if (this.form.invalid) {
       return;

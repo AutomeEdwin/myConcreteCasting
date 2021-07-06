@@ -13,7 +13,7 @@
             MatFormFieldControl="jobsite_name"
           >
             <mat-label>Name *</mat-label>
-            <input matInput formControlName="jobsite_name" />
+            <input matInput formControlName="jobsite_name" id="jobsite_name" />
           </mat-form-field>
         </div>
 
@@ -25,7 +25,11 @@
             class="w-75"
           >
             <mat-label>Address *</mat-label>
-            <input matInput formControlName="jobsite_address" />
+            <input
+              matInput
+              formControlName="jobsite_address"
+              id="jobsite_address"
+            />
             <mat-hint
               >Enter the address and click "search" to get the coordinates ...
               or click on the map to get the coordinates but you still have to
@@ -56,7 +60,11 @@
             class="w-100"
           >
             <mat-label>Description</mat-label>
-            <textarea matInput formControlName="jobsite_description"></textarea>
+            <textarea
+              matInput
+              formControlName="jobsite_description"
+              id="jobsite_description"
+            ></textarea>
           </mat-form-field>
         </div>
       </form>
@@ -100,7 +108,11 @@
             <div>
               <mat-form-field appearance="outline" MatFormFieldControl="">
                 <mat-label>Name*</mat-label>
-                <input matInput formControlName="casting_name" />
+                <input
+                  matInput
+                  formControlName="casting_name"
+                  id="casting_name"
+                />
               </mat-form-field>
             </div>
             <div>
@@ -113,6 +125,7 @@
                 <textarea
                   matInput
                   formControlName="casting_description"
+                  id="casting_description"
                 ></textarea>
               </mat-form-field>
             </div>
@@ -123,7 +136,11 @@
                 class="w-100"
               >
                 <mat-label>Infos*</mat-label>
-                <textarea matInput formControlName="casting_infos"></textarea>
+                <textarea
+                  matInput
+                  formControlName="casting_infos"
+                  id="casting_infos"
+                ></textarea>
               </mat-form-field>
             </div>
           </div>
@@ -142,10 +159,10 @@
       <mat-grid-list cols="2" rowHeigth="2:1">
         <mat-grid-tile [colspan]="2">
           <mat-grid-tile-header>Jobsite</mat-grid-tile-header>
-          <div class="jobsiteGridContent">
-            <p>Jobsite name: {{ getForm("jobsite_name") }}</p>
-            <p>Jobsite address : {{ getForm("jobsite_address") }}</p>
-            <p>Jobsite description: {{ getForm("jobsite_description") }}</p>
+          <div class="jobsiteGridContent" id="jobsite_overview">
+            <p>Jobsite name: {{ getJobsite("jobsite_name") }}</p>
+            <p>Jobsite address : {{ getJobsite("jobsite_address") }}</p>
+            <p>Jobsite description: {{ getJobsite("jobsite_description") }}</p>
             <p>coordinates:[{{ lattitude }} , {{ longitude }}]</p>
           </div>
         </mat-grid-tile>
@@ -156,7 +173,7 @@
           *ngFor="let casting of getCastingsControls.controls; let i = index"
         >
           <mat-grid-tile-header>Casting {{ i + 1 }}</mat-grid-tile-header>
-          <div>
+          <div id="castings_overview">
             <p>Name:{{ getCasting(i, "casting_name") }}</p>
             <p>Description:{{ getCasting(i, "casting_description") }}</p>
             <p>Infos:{{ getCasting(i, "casting_infos") }}</p>
@@ -166,7 +183,7 @@
 
       <div class="d-flex justify-content-around">
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="onSubmit()">Create</button>
+        <button mat-button (click)="onSubmit()" id="submit">Create</button>
       </div>
     </mat-step>
   </mat-stepper>
