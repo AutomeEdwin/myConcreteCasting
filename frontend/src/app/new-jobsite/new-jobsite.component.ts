@@ -16,6 +16,7 @@ import * as olProj from 'ol/proj';
 import VectorSource from 'ol/source/Vector';
 import { Feature, MapBrowserEvent } from 'ol';
 import Point from 'ol/geom/Point';
+import { Fill, Stroke, Circle, Style } from 'ol/style';
 
 import { timeout } from 'rxjs/operators';
 
@@ -139,6 +140,29 @@ export class NewJobsiteComponent implements OnInit {
     this.marker = new Feature({
       geometry: new Point(olProj.fromLonLat([this.lattitude, this.longitude])),
     });
+    var markerStyles = [
+      new Style({
+        image: new Circle({
+          fill: new Fill({
+            color: 'rgba(255, 0, 0,0.8)',
+          }),
+          stroke: new Stroke({
+            color: 'rgba(255, 0, 0,0.8)',
+            width: 10,
+          }),
+          radius: 10,
+        }),
+        fill: new Fill({
+          color: 'rgba(255, 0, 0,0.8)',
+        }),
+        stroke: new Stroke({
+          color: 'rgba(255, 0, 0,0.8)',
+          width: 1,
+        }),
+      }),
+    ];
+    this.marker.setStyle(markerStyles);
+
     let markerSource = new VectorSource({
       features: [this.marker],
     });
@@ -149,7 +173,7 @@ export class NewJobsiteComponent implements OnInit {
     this.map = new Map({
       layers: [osmLayer, markerLayer],
       view: new View({
-        center: olProj.fromLonLat([4.352530764849208, 50.846642213471654]),
+        center: olProj.fromLonLat([this.lattitude, this.longitude]),
         zoom: 9,
       }),
       target: 'map',
@@ -158,6 +182,7 @@ export class NewJobsiteComponent implements OnInit {
     this.map.on('singleclick', (event) => {
       // get new coordinates
       this.getClickCoordinates(event);
+      this.updateMarker();
     });
   }
 
@@ -176,8 +201,6 @@ export class NewJobsiteComponent implements OnInit {
     this.form.get('jobsite_coordinates')?.setValue(convertedCoordinates);
     this.lattitude = convertedCoordinates[0];
     this.longitude = convertedCoordinates[1];
-
-    this.updateMarker();
   }
 
   getCoordinateFromAddress() {
