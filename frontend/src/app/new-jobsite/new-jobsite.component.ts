@@ -14,7 +14,8 @@ import OSM from 'ol/source/OSM';
 import View from 'ol/View';
 import * as olProj from 'ol/proj';
 import VectorSource from 'ol/source/Vector';
-import { MapBrowserEvent } from 'ol';
+import { Feature, MapBrowserEvent } from 'ol';
+import Point from 'ol/geom/Point';
 
 import { timeout } from 'rxjs/operators';
 
@@ -36,6 +37,7 @@ export class NewJobsiteComponent implements OnInit {
   form!: FormGroup;
   concreteCastings!: FormArray;
   map!: Map;
+  marker!: Feature;
 
   // Hardcoded data that point the Grand Place of Brussels
   lattitude = 4.352530764849208;
@@ -76,6 +78,10 @@ export class NewJobsiteComponent implements OnInit {
     return this.form.controls;
   }
 
+  getForm(field: string): string {
+    return this.form.get(field)?.value;
+  }
+
   get getCastingsControls() {
     return <FormArray>this.form.get('jobsite_castings');
   }
@@ -109,6 +115,13 @@ export class NewJobsiteComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.form.value);
+
+    if (this.form.invalid) {
+      return;
+    }
+
+    /*
     this.jobsitesService.createJobsite(this.form.value).subscribe(
       (res) => {
         console.log(res);
@@ -116,17 +129,25 @@ export class NewJobsiteComponent implements OnInit {
       (err) => {
         console.log(err);
       }
-    );
+    );*/
   }
 
   // MAP
   initMap() {
     const osmLayer = new TileLayer({ source: new OSM() });
-    const source = new VectorSource();
-    const drawLayer = new VectorLayer({ source: source });
+
+    this.marker = new Feature({
+      geometry: new Point(olProj.fromLonLat([this.lattitude, this.longitude])),
+    });
+    let markerSource = new VectorSource({
+      features: [this.marker],
+    });
+    let markerLayer = new VectorLayer({
+      source: markerSource,
+    });
 
     this.map = new Map({
-      layers: [osmLayer, drawLayer],
+      layers: [osmLayer, markerLayer],
       view: new View({
         center: olProj.fromLonLat([4.352530764849208, 50.846642213471654]),
         zoom: 9,
@@ -137,8 +158,13 @@ export class NewJobsiteComponent implements OnInit {
     this.map.on('singleclick', (event) => {
       // get new coordinates
       this.getClickCoordinates(event);
-      // TODO draw marker on coordinates
     });
+  }
+
+  updateMarker() {
+    this.marker.setGeometry(
+      new Point(olProj.fromLonLat([this.lattitude, this.longitude]))
+    );
   }
 
   getClickCoordinates(event: MapBrowserEvent) {
@@ -150,6 +176,8 @@ export class NewJobsiteComponent implements OnInit {
     this.form.get('jobsite_coordinates')?.setValue(convertedCoordinates);
     this.lattitude = convertedCoordinates[0];
     this.longitude = convertedCoordinates[1];
+
+    this.updateMarker();
   }
 
   getCoordinateFromAddress() {
@@ -169,6 +197,8 @@ export class NewJobsiteComponent implements OnInit {
 
           this.lattitude = json.lon;
           this.longitude = json.lat;
+
+          this.updateMarker();
         },
         (err) => {
           console.log(err);
