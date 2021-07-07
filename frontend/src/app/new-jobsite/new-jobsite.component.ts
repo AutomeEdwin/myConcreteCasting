@@ -124,7 +124,6 @@ export class NewJobsiteComponent implements OnInit {
       return;
     }
 
-    /*
     this.jobsitesService.createJobsite(this.form.value).subscribe(
       (res) => {
         console.log(res);
@@ -132,7 +131,7 @@ export class NewJobsiteComponent implements OnInit {
       (err) => {
         console.log(err);
       }
-    );*/
+    );
   }
 
   // MAP

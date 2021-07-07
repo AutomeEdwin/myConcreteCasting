@@ -254,4 +254,5 @@ describe('NewJobsiteComponent', () => {
   });
 
   // TODO test angular material components
+  // TODO test map
 });
