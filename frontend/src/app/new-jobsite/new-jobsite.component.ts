@@ -91,7 +91,7 @@ export class NewJobsiteComponent implements OnInit {
     return <FormArray>this.form.get('jobsite_castings');
   }
 
-  getCasting(i: number, prop: string) {
+  getCasting(i: number, prop: string): string {
     this.concreteCastings = this.form.get('jobsite_castings') as FormArray;
     return this.concreteCastings.at(i).get(prop)?.value;
   }
@@ -120,8 +120,6 @@ export class NewJobsiteComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.getCastingsControls);
-
     if (this.form.invalid) {
       return;
     }
