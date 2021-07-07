@@ -10,9 +10,7 @@ import { NewJobsiteComponent } from '../new-jobsite/new-jobsite.component';
 export class JobsiteDashboardComponent implements OnInit {
   constructor(public dialog: MatDialog) {}
 
-  ngOnInit(): void {
-    this.openForm();
-  }
+  ngOnInit(): void {}
 
   openForm() {
     const dialog = this.dialog.open(NewJobsiteComponent, {
