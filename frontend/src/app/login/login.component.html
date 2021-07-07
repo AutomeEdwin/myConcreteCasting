@@ -1,43 +1,59 @@
-<div class="container shadow">
+<div class="container">
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <h1>MyConcreteCasting</h1>
+
     <!--Email-->
-    <div class="form-group py-2">
-      <input
-        formControlName="email"
-        type="email"
-        id="email"
-        class="form-control"
-        placeholder="Email"
-        [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
-      />
-      <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-        <div *ngIf="f.email.errors.required">Email is required</div>
-      </div>
+    <div>
+      <mat-form-field
+        appearance="fill"
+        MatFormFieldControl="email"
+        class="w-100"
+      >
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          formControlName="email"
+          type="email"
+          id="email"
+          [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+        />
+        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+          <div *ngIf="f.email.errors.required">Email is required</div>
+        </div>
+      </mat-form-field>
     </div>
+
     <!--Password-->
-    <div class="form-group py-2">
-      <input
-        formControlName="password"
-        type="password"
-        id="password"
-        class="form-control"
-        placeholder="Password"
-        [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
-      />
-      <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-        <div *ngIf="f.password.errors.required">Password is required</div>
-      </div>
+    <div>
+      <mat-form-field
+        appearance="fill"
+        MatFormFieldControl="password"
+        class="w-100"
+      >
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          formControlName="password"
+          type="password"
+          id="password"
+          [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+        />
+        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+          <div *ngIf="f.password.errors.required">Password is required</div>
+        </div>
+      </mat-form-field>
     </div>
-    
+
     <div class="py-2">
-      <button type="submit" class="signInBtn">Sign in</button>
+      <button mat-button type="submit" class="signInBtn">Sign in</button>
     </div>
 
     <div class="text-divider">OR</div>
 
     <div class="py-2">
-      <button [routerLink]="'/register'" class="signUpBtn">Sign up</button>
+      <button mat-button [routerLink]="'/register'" class="signUpBtn">
+        Sign up
+      </button>
     </div>
   </form>
 </div>
