@@ -42,7 +42,8 @@ class Login(APIView):
         if user is not None:
             token = Token.objects.create(user=user)
 
-            return Response({"token": token.key,
+            return Response({"status": status.HTTP_200_OK,
+                             "token": token.key,
                              "user": user.email,
                              "user_id": user.id}, status=status.HTTP_200_OK)
 
