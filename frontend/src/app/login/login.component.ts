@@ -6,7 +6,6 @@ import {
   FormControl,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { using } from 'rxjs';
 
 import { AccountService } from '../services/account.service';
 import { LocalStorageService } from '../services/localstorage.service';
@@ -51,23 +50,10 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.accountService.loginUser(this.makeRequestBody(this.form)).subscribe(
+    this.accountService.loginUser(JSON.stringify(this.form.value)).subscribe(
       (response) => this.handleHttpResponse(response),
       (error) => this.handleHttpResponse(error)
     );
-  }
-
-  /**
-   * Create the json body for the registration request
-   *
-   * @param form
-   * @returns the informations contained in the form in json format
-   */
-  makeRequestBody(form: FormGroup) {
-    return JSON.stringify({
-      username: form.get('email')?.value,
-      password: form.get('password')?.value,
-    });
   }
 
   /**
@@ -78,15 +64,15 @@ export class LoginComponent implements OnInit {
    * @param response Response from the API
    */
   handleHttpResponse(response: any) {
-    console.log(response);
     if (response.status === 400) {
       this.responseError = true;
-      this.responseErrorMessage = response.error.non_field_errors[0];
+      this.responseErrorMessage = response.error.message;
     }
 
-    if (response.hasOwnProperty('token') && response.hasOwnProperty('expiry')) {
-      this.accountService.storeToken(response.token);
-      this.localStorageService.set('email', this.form.get('email')?.value);
+    if (response.status === 200) {
+      this.accountService.storeToken('Token ' + response.token);
+      this.localStorageService.set('email', response.user);
+      this.localStorageService.set('userID', response.user_id);
       this.router.navigate(['/dashboard']);
     }
   }

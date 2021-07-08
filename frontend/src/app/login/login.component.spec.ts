@@ -104,22 +104,7 @@ describe('LoginComponent', () => {
     expect(component.onSubmit).toHaveBeenCalled();
   }));
 
-  it('should create the request body', () => {
-    const emailInput = component.form.controls.email;
-    const passwordInput = component.form.controls.password;
-
-    emailInput.setValue('testMail@gmail.com');
-    passwordInput.setValue('12345678');
-
-    const expectedJson = JSON.stringify({
-      username: 'testMail@gmail.com',
-      password: '12345678',
-    });
-
-    expect(component.makeRequestBody(component.form)).toEqual(expectedJson);
-  });
-
-  it('should test request response', fakeAsync(() => {
+  /*it('should test request response', fakeAsync(() => {
     const APIResponse = {
       expiry: '2021-06-06T20:39:23.135766Z',
       token: '25c8a07fc4c034229f15c888e3c8f0ea5c79b96a6d883a727460b82397629e06',
@@ -131,7 +116,7 @@ describe('LoginComponent', () => {
 
     expect(localStorage.getItem('token')).not.toBeNull();
     expect(location.path()).toBe('/dashboard');
-  }));
+  }));*/
 
   it('should navigate to /register', () => {
     router.navigate(['register']).then(() => {
