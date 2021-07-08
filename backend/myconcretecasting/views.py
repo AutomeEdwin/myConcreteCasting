@@ -37,7 +37,7 @@ class Login(APIView):
     def post(self, request, format=None):
         data = JSONParser().parse(request)
         user = authenticate(
-            username=data['username'], password=data["password"])
+            username=data['email'], password=data["password"])
 
         if user is not None:
             token = Token.objects.create(user=user)

@@ -93,8 +93,8 @@ DATABASES = {
         'ENGINE': 'djongo',
         'NAME': 'myconcretecasting',
         "CLIENT": {
-            'host': 'localhost:27017',
-            # 'host': 'mongodb://myconcretecasting_db:27017',
+            #'host': 'localhost:27017',
+            'host': 'mongodb://myconcretecasting_db:27017',
             "username": "root",
             "password": "mongoadmin",
         }
