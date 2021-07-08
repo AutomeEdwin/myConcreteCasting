@@ -10,16 +10,13 @@
         class="w-100"
       >
         <mat-label>Email</mat-label>
-        <input
-          matInput
-          formControlName="email"
-          type="email"
-          id="email"
-          [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
-        />
-        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-          <div *ngIf="f.email.errors.required">Email is required</div>
-        </div>
+        <input matInput formControlName="email" type="email" id="email" />
+        <mat-error *ngIf="submitted && f.email.errors?.required">
+          Email is required
+        </mat-error>
+        <mat-error *ngIf="submitted && f.email.errors?.email">
+          This is not a valid email
+        </mat-error>
       </mat-form-field>
     </div>
 
@@ -36,12 +33,18 @@
           formControlName="password"
           type="password"
           id="password"
-          [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
         />
-        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-          <div *ngIf="f.password.errors.required">Password is required</div>
-        </div>
+        <mat-error *ngIf="submitted && f.password.errors?.required"
+          >Password is required</mat-error
+        >
       </mat-form-field>
+    </div>
+
+    <div
+      *ngIf="submitted && responseError"
+      class="d-flex justify-content-end text-danger"
+    >
+      {{ responseErrorMessage }}
     </div>
 
     <div class="py-2">

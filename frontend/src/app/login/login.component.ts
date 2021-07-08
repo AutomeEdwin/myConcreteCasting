@@ -6,6 +6,7 @@ import {
   FormControl,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { using } from 'rxjs';
 
 import { AccountService } from '../services/account.service';
 import { LocalStorageService } from '../services/localstorage.service';
@@ -18,6 +19,9 @@ import { LocalStorageService } from '../services/localstorage.service';
 export class LoginComponent implements OnInit {
   form!: FormGroup;
   submitted = false;
+
+  responseErrorMessage!: string;
+  responseError!: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -74,6 +78,12 @@ export class LoginComponent implements OnInit {
    * @param response Response from the API
    */
   handleHttpResponse(response: any) {
+    console.log(response);
+    if (response.status === 400) {
+      this.responseError = true;
+      this.responseErrorMessage = response.error.non_field_errors[0];
+    }
+
     if (response.hasOwnProperty('token') && response.hasOwnProperty('expiry')) {
       this.accountService.storeToken(response.token);
       this.localStorageService.set('email', this.form.get('email')?.value);
