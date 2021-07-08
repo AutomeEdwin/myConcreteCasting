@@ -1,15 +1,11 @@
 from rest_framework import serializers
 from .models import User, Jobsite, Casting
 
-# User Serializer
-
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'email')
-
-# Register Serializer
 
 
 class RegisterSerializer(serializers.ModelSerializer):

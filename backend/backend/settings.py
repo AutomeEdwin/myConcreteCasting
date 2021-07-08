@@ -40,7 +40,7 @@ INSTALLED_APPS = [
 
     # Django REST framework & Knox
     'rest_framework',
-    'knox',
+    'rest_framework.authtoken',
 
     # CORS
     'corsheaders',
@@ -93,8 +93,8 @@ DATABASES = {
         'ENGINE': 'djongo',
         'NAME': 'myconcretecasting',
         "CLIENT": {
-            #'host': 'localhost:27017',
-            'host': 'mongodb://myconcretecasting_db:27017',
+            'host': 'localhost:27017',
+            # 'host': 'mongodb://myconcretecasting_db:27017',
             "username": "root",
             "password": "mongoadmin",
         }
@@ -143,9 +143,7 @@ STATIC_URL = '/static/'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        # 'rest_framework.authentication.BasicAuthentication',
-        # 'rest_framework.authentication.SessionAuthentication',
-        'knox.auth.TokenAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     ]
 }
 

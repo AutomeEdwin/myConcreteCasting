@@ -1,27 +1,19 @@
-from django.contrib.auth import login
-from knox.views import LoginView as KnoxLoginView
-from rest_framework.authtoken.serializers import AuthTokenSerializer
+from rest_framework import generics, permissions, viewsets
+
+from django.http import JsonResponse
+
+from django.contrib.auth import authenticate, login
+
+from .serializers import UserSerializer, RegisterSerializer, JobsiteSerializer
+from rest_framework.views import APIView
 from rest_framework import permissions
-from django.shortcuts import render
+from rest_framework.authtoken.models import Token
+from rest_framework.parsers import JSONParser
+from rest_framework.response import Response
 from rest_framework import status
 
 
-from rest_framework import generics, permissions, viewsets
-from rest_framework.response import Response
-from knox.models import AuthToken
-from .serializers import UserSerializer, RegisterSerializer, JobsiteSerializer
-
-from django.http import JsonResponse
-from rest_framework.views import APIView
-
 from .models import Jobsite
-
-from rest_framework.parsers import JSONParser
-
-
-import json
-
-# Register API
 
 
 class RegisterAPI(generics.GenericAPIView):
@@ -38,18 +30,24 @@ class RegisterAPI(generics.GenericAPIView):
             # "token": AuthToken.objects.create(user)[1]
         })
 
-# Login API
 
-
-class LoginAPI(KnoxLoginView):
+class Login(APIView):
     permission_classes = (permissions.AllowAny,)
 
     def post(self, request, format=None):
-        serializer = AuthTokenSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data['user']
-        login(request, user)
-        return super(LoginAPI, self).post(request, format=None)
+        data = JSONParser().parse(request)
+        user = authenticate(
+            username=data['username'], password=data["password"])
+
+        if user is not None:
+            token = Token.objects.create(user=user)
+
+            return Response({"token": token.key,
+                             "user": user.email,
+                             "user_id": user.id}, status=status.HTTP_200_OK)
+
+        else:
+            return Response({"message": "Email or password is incorrect"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class JobsitesAPI(APIView):

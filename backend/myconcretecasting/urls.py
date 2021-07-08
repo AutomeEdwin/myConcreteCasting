@@ -1,11 +1,9 @@
-from .views import RegisterAPI, LoginAPI, JobsitesAPI
-from knox import views as knox_views
+from .views import RegisterAPI, Login, JobsitesAPI
 from django.urls import path
 
 urlpatterns = [
     path('register/', RegisterAPI.as_view(), name='register'),
-    path('login/', LoginAPI.as_view(), name='login'),
-    path('logout/', knox_views.LogoutView.as_view(), name='logout'),
+    path('login/', Login.as_view(), name='login'),
     path('jobsites/', JobsitesAPI.as_view(), name="jobsite"),
     path('jobsites/<jobsite_owner>', JobsitesAPI.as_view(), name="jobsite"),
 
