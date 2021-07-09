@@ -4,6 +4,7 @@ import {
   FormBuilder,
   Validators,
   FormControl,
+  Form,
 } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -30,6 +31,14 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    if (this.isUserAlreadyLogged()) {
+      this.router.navigate(['/dashboard']);
+    }
+
+    this.initForm();
+  }
+
+  initForm() {
     this.form = this.formBuilder.group({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', Validators.required),
@@ -75,5 +84,13 @@ export class LoginComponent implements OnInit {
       this.localStorageService.set('userID', response.user_id);
       this.router.navigate(['/dashboard']);
     }
+  }
+
+  isUserAlreadyLogged() {
+    return (
+      this.localStorageService.get('token') != null &&
+      this.localStorageService.get('email') != null &&
+      this.localStorageService.get('userID') != null
+    );
   }
 }

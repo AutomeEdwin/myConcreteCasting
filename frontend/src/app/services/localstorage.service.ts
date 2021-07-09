@@ -17,7 +17,4 @@ export class LocalStorageService {
   remove(key: string) {
     localStorage.removeItem(key);
   }
-
-  isTokenExpired(){
-  }
 }
