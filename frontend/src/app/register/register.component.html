@@ -4,7 +4,7 @@
 
     <div class="row form-group">
       <!--First name-->
-      <div class="col py-2">
+      <div class="col">
         <mat-form-field
           appearance="fill"
           MatFormFieldControl="email"
@@ -16,18 +16,15 @@
             formControlName="firstName"
             type="text"
             id="firstName"
-            [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }"
           />
-          <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
-            <div *ngIf="f.firstName.errors.required">
-              First name is required
-            </div>
-          </div>
+          <mat-error *ngIf="submitted && f.firstName.errors?.required">
+            First name is required
+          </mat-error>
         </mat-form-field>
       </div>
 
       <!--Last name-->
-      <div class="col py-2 form-group">
+      <div class="col">
         <mat-form-field
           appearance="fill"
           MatFormFieldControl="password"
@@ -39,41 +36,34 @@
             formControlName="lastName"
             type="text"
             id="lastName"
-            [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"
           />
-          <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
-            <div *ngIf="f.firstName.errors.required">Last Name is required</div>
-          </div>
+          <mat-error *ngIf="submitted && f.lastName.errors?.required">
+            Last name is required
+          </mat-error>
         </mat-form-field>
       </div>
     </div>
 
     <!--Email-->
-    <div class="py-2 form-group">
+    <div>
       <mat-form-field
         appearance="fill"
         MatFormFieldControl="password"
         class="w-100"
       >
         <mat-label>Email</mat-label>
-        <input
-          matInput
-          formControlName="email"
-          type="email"
-          id="email"
-          [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
-        />
-        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-          <div *ngIf="f.email.errors.required">Email is required</div>
-          <div *ngIf="f.email.errors.email">
-            Email must be a valid email address
-          </div>
-        </div>
+        <input matInput formControlName="email" type="email" id="email" />
+        <mat-error *ngIf="submitted && f.email.errors?.required">
+          Email is required
+        </mat-error>
+        <mat-error *ngIf="submitted && f.email.errors?.email">
+          Email must be a valid email address
+        </mat-error>
       </mat-form-field>
     </div>
 
     <!--Password-->
-    <div class="form-group py-2">
+    <div>
       <mat-form-field
         appearance="fill"
         MatFormFieldControl="password"
@@ -85,14 +75,13 @@
           formControlName="password"
           type="password"
           id="password"
-          [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
         />
-        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-          <div *ngIf="f.password.errors.required">Password is required</div>
-          <div *ngIf="f.password.errors.minlength">
-            Password must be at least 8 characters
-          </div>
-        </div>
+        <mat-error *ngIf="submitted && f.password.errors?.required">
+          Password is required
+        </mat-error>
+        <mat-error *ngIf="submitted && f.password.errors?.minlength">
+          Password must be at least 8 characters
+        </mat-error>
       </mat-form-field>
     </div>
 
@@ -109,19 +98,13 @@
           formControlName="passwordConfirm"
           type="password"
           id="passwordConfirm"
-          [ngClass]="{ 'is-invalid': submitted && f.passwordConfirm.errors }"
         />
-        <div
-          *ngIf="submitted && f.passwordConfirm.errors"
-          class="invalid-feedback"
-        >
-          <div *ngIf="f.passwordConfirm.errors.required">
-            Confirm Password is required
-          </div>
-          <div *ngIf="f.passwordConfirm.errors.mustMatch">
-            Passwords must match
-          </div>
-        </div>
+        <mat-error *ngIf="submitted && f.passwordConfirm.errors?.mustMatch">
+          This doesn't match your choosen password
+        </mat-error>
+        <mat-error *ngIf="submitted && f.passwordConfirm.errors?.required">
+          This field is required
+        </mat-error>
       </mat-form-field>
     </div>
 
