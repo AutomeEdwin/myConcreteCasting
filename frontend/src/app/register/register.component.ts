@@ -46,7 +46,7 @@ export class RegisterComponent implements OnInit {
   }
 
   /**
-   * Helper function for easier access to form fields
+   * Helper function for easier access to form fields controls in the html
    */
   get f() {
     return this.form.controls;
@@ -65,12 +65,6 @@ export class RegisterComponent implements OnInit {
     );
   }
 
-  /**
-   * Create the body for the registration request
-   *
-   * @param form
-   * @returns the informations contained in the form in json format
-   */
   makeRequestBody(form: FormGroup) {
     return JSON.stringify({
       first_name: form.get('firstName')?.value,
@@ -83,12 +77,14 @@ export class RegisterComponent implements OnInit {
   /**
    * Handle the treatement of the response returned by the API
    *
-   * The Response should contain a field 'success' which may be true of false
+   * The Response should contain a field 'status' which should be set to:
+   *  - 201 if user has been created
+   *  - 400 if something went wrong
    *
    * @param response Response from the API
    */
   handleHttpResponse(response: any) {
-    if (response.hasOwnProperty('success') && response.success === true) {
+    if (response.status === 201) {
       this.router.navigate(['login']);
     }
   }

@@ -9,6 +9,15 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { MatFormFieldHarness } from '@angular/material/form-field/testing';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatInputHarness } from '@angular/material/input/testing';
 
 import { RegisterComponent } from './register.component';
 import { routes } from '../app-routing.module';
@@ -18,16 +27,24 @@ describe('RegisterComponent', () => {
   let fixture: ComponentFixture<RegisterComponent>;
   let router: Router;
   let location: Location;
+  let loader: HarnessLoader;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        NoopAnimationsModule,
         ReactiveFormsModule,
         HttpClientTestingModule,
         RouterTestingModule.withRoutes(routes),
       ],
       declarations: [RegisterComponent],
     }).compileComponents();
+    fixture = TestBed.createComponent(RegisterComponent);
+    fixture.detectChanges();
+    loader = TestbedHarnessEnvironment.loader(fixture);
   });
 
   beforeEach(() => {
@@ -38,6 +55,7 @@ describe('RegisterComponent', () => {
     fixture.detectChanges();
   });
 
+  // TEST THE FORM ITSELF
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -101,6 +119,12 @@ describe('RegisterComponent', () => {
     emailInput.setValue('testMail@gmail.com');
     passwordInput.setValue('123456789');
     passwordConfirmInput.setValue('123456789');
+
+    expect(firstNameInput.valid).toBeTruthy();
+    expect(lastNameInput.valid).toBeTruthy();
+    expect(emailInput.valid).toBeTruthy();
+    expect(passwordInput.valid).toBeTruthy();
+    expect(passwordConfirmInput.valid).toBeTruthy();
   });
 
   it('should test input errors', () => {
@@ -118,19 +142,24 @@ describe('RegisterComponent', () => {
     expect(passwordConfirmInput.errors).toBeTruthy();
 
     firstNameInput.setValue('John');
-    expect(firstNameInput.errors).toBeNull();
-
     lastNameInput.setValue('Doe');
-    expect(lastNameInput.errors).toBeNull();
-
     emailInput.setValue('testMail@gmail.com');
-    expect(emailInput.errors).toBeNull();
-
     passwordInput.setValue('123456789');
-    expect(passwordInput.errors).toBeNull();
-
     passwordConfirmInput.setValue('123456789');
+    expect(firstNameInput.errors).toBeNull();
+    expect(lastNameInput.errors).toBeNull();
+    expect(emailInput.errors).toBeNull();
+    expect(passwordInput.errors).toBeNull();
     expect(passwordConfirmInput.errors).toBeNull();
+
+    emailInput.setValue('not a valid email address');
+    passwordInput.setValue('1');
+    expect(emailInput.errors?.email).toBeTruthy();
+    expect(passwordInput.errors?.minlength).toBeTruthy();
+
+    passwordInput.setValue('my password');
+    passwordConfirmInput.setValue('not the same password');
+    expect(passwordConfirmInput.errors?.mustMatch).toBeTruthy();
   });
 
   it('should submit the form', fakeAsync(() => {
@@ -166,7 +195,7 @@ describe('RegisterComponent', () => {
 
   it('should test request response', fakeAsync(() => {
     let APIResponse = {
-      success: true,
+      status: 200,
       message: 'User created sucessfully',
     };
 
@@ -174,11 +203,17 @@ describe('RegisterComponent', () => {
 
     tick();
 
-    expect(location.path()).toBe('/login');
+    expect(location.path()).toBe('');
   }));
 
-  it('should navigate to /login', () => {
+  it('should navigate to /login from this component', () => {
     router.navigate(['login']).then(() => {
+      expect(location.path()).toBe('/login');
+    });
+  });
+
+  it("shouldn't be able to access dashboard from this component", () => {
+    router.navigate(['dashboard']).then(() => {
       expect(location.path()).toBe('/login');
     });
   });
