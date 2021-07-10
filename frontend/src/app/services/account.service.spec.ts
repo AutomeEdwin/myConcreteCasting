@@ -48,5 +48,7 @@ describe('AccountService', () => {
   it('should store token', () => {
     accountService.storeToken('testToken');
     expect(localStorage.getItem('token')).toEqual('testToken');
+
+    localStorage.removeItem('token');
   });
 });
