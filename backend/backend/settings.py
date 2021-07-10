@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # Django REST framework & Knox
+    # Django REST framework
     'rest_framework',
     'rest_framework.authtoken',
 
@@ -93,7 +93,7 @@ DATABASES = {
         'ENGINE': 'djongo',
         'NAME': 'myconcretecasting',
         "CLIENT": {
-            #'host': 'localhost:27017',
+            # 'host': 'localhost:27017',
             'host': 'mongodb://myconcretecasting_db:27017',
             "username": "root",
             "password": "mongoadmin",
