@@ -32,6 +32,7 @@ jobs:
       run: npm ci
     - name: Npm Build
       working-directory: ./frontend
+      run: mkdir -p dist/frontend/
       run: npm run build --if-present
     - name: Npm test
       working-directory: ./frontend
