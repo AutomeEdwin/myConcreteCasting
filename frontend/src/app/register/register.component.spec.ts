@@ -55,7 +55,6 @@ describe('RegisterComponent', () => {
     fixture.detectChanges();
   });
 
-  // TEST THE FORM ITSELF
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -79,6 +78,10 @@ describe('RegisterComponent', () => {
     expect(passwordConfirmInput).toBeTruthy();
     expect(submitButton).toBeTruthy();
     expect(signInButton).toBeTruthy();
+  });
+
+  it('should get form controls', () => {
+    expect(component.f).toEqual(component.form.controls);
   });
 
   it('should test form validity', () => {
@@ -162,7 +165,7 @@ describe('RegisterComponent', () => {
     expect(passwordConfirmInput.errors?.mustMatch).toBeTruthy();
   });
 
-  it('should submit the form', fakeAsync(() => {
+  it('should call onSubmit', fakeAsync(() => {
     spyOn(component, 'onSubmit');
 
     const button = fixture.debugElement.nativeElement.querySelector('button');
@@ -171,7 +174,36 @@ describe('RegisterComponent', () => {
     expect(component.onSubmit).toHaveBeenCalled();
   }));
 
-  it('should create the request body', () => {
+  it('should test the submit of the form', () => {
+    spyOn(component, 'makeRequestBody');
+
+    const form = component.form;
+    const firstNameInput = form.controls.firstName;
+    const lastNameInput = form.controls.lastName;
+    const emailInput = form.controls.email;
+    const passwordInput = form.controls.password;
+    const passwordConfirmInput = form.controls.passwordConfirm;
+
+    firstNameInput.setValue('John');
+    lastNameInput.setValue('Doe');
+    emailInput.setValue('testMail@gmail.com');
+    passwordInput.setValue('12345678');
+    passwordConfirmInput.setValue('12345678');
+
+    component.onSubmit();
+    expect(component.makeRequestBody).toHaveBeenCalled();
+
+    firstNameInput.setValue('John');
+    lastNameInput.setValue('Doe');
+    emailInput.setValue('com');
+    passwordInput.setValue('123');
+    passwordConfirmInput.setValue('123');
+
+    component.onSubmit();
+    expect(component.makeRequestBody).not.toHaveBeenCalled();
+  });
+
+  it('should make a request body', () => {
     const form = component.form;
     const firstNameInput = form.controls.firstName;
     const lastNameInput = form.controls.lastName;
@@ -195,7 +227,7 @@ describe('RegisterComponent', () => {
 
   it('should test request response', fakeAsync(() => {
     let APIResponse = {
-      status: 200,
+      status: 201,
       message: 'User created sucessfully',
     };
 
@@ -203,7 +235,7 @@ describe('RegisterComponent', () => {
 
     tick();
 
-    expect(location.path()).toBe('');
+    expect(location.path()).toBe('/login');
   }));
 
   it('should navigate to /login from this component', () => {
