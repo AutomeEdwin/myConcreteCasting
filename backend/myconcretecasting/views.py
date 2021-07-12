@@ -20,7 +20,12 @@ class Register(APIView):
         Create a new user if credentials are correct and user doesn't exists
         """
         serializer = RegisterSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
+        if not serializer.is_valid():
+            return Response({
+                "status": status.HTTP_400_BAD_REQUEST,
+                "message": "User already exist"
+            }, status=status.HTTP_400_BAD_REQUEST)
+
         user = serializer.save()
         return Response({
             "status": status.HTTP_201_CREATED,
