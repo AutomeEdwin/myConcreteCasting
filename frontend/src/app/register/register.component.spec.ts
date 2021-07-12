@@ -21,6 +21,7 @@ import { MatInputHarness } from '@angular/material/input/testing';
 
 import { RegisterComponent } from './register.component';
 import { routes } from '../app-routing.module';
+import { not } from '@angular/compiler/src/output/output_ast';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
@@ -186,21 +187,21 @@ describe('RegisterComponent', () => {
 
     firstNameInput.setValue('John');
     lastNameInput.setValue('Doe');
-    emailInput.setValue('testMail@gmail.com');
-    passwordInput.setValue('12345678');
-    passwordConfirmInput.setValue('12345678');
-
-    component.onSubmit();
-    expect(component.makeRequestBody).toHaveBeenCalled();
-
-    firstNameInput.setValue('John');
-    lastNameInput.setValue('Doe');
     emailInput.setValue('com');
     passwordInput.setValue('123');
     passwordConfirmInput.setValue('123');
 
     component.onSubmit();
     expect(component.makeRequestBody).not.toHaveBeenCalled();
+
+    firstNameInput.setValue('John');
+    lastNameInput.setValue('Doe');
+    emailInput.setValue('testMail@gmail.com');
+    passwordInput.setValue('12345678');
+    passwordConfirmInput.setValue('12345678');
+
+    component.onSubmit();
+    expect(component.makeRequestBody).toHaveBeenCalled();
   });
 
   it('should make a request body', () => {

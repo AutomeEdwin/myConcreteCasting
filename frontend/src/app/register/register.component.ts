@@ -49,7 +49,7 @@ export class RegisterComponent implements OnInit {
   }
 
   /**
-   * Helper function for easier access to form fields controls in the html
+   * Helper function for easier access to form fields controls
    */
   get f() {
     return this.form.controls;
