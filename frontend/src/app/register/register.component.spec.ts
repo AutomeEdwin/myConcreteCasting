@@ -60,6 +60,12 @@ describe('RegisterComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it("shouldn't be able to access dashboard from this component", () => {
+    router.navigate(['dashboard']).then(() => {
+      expect(location.path()).toBe('/login');
+    });
+  });
+
   it('should render elements', () => {
     const compiled = fixture.debugElement.nativeElement;
     const firstNameInput = compiled.querySelector('input[id="firstName"]');
@@ -227,15 +233,21 @@ describe('RegisterComponent', () => {
   });
 
   it('should test request response', fakeAsync(() => {
-    let APIResponse = {
-      status: 201,
-      message: 'User created sucessfully',
+    let ErrorAPIResponse = {
+      error: { email: 'Any message' },
+      status: 400,
     };
-
-    component.handleHttpResponse(APIResponse);
-
+    component.handleHttpResponse(ErrorAPIResponse);
     tick();
+    expect(component.responseError).toBeTruthy();
+    expect(component.responseErrorMessage).toEqual(ErrorAPIResponse.error.email);
 
+    let SuccessAPIResponse = {
+      message: 'Any message',
+      status: 201,
+    };
+    component.handleHttpResponse(SuccessAPIResponse);
+    tick();
     expect(location.path()).toBe('/login');
   }));
 
@@ -245,9 +257,5 @@ describe('RegisterComponent', () => {
     });
   });
 
-  it("shouldn't be able to access dashboard from this component", () => {
-    router.navigate(['dashboard']).then(() => {
-      expect(location.path()).toBe('/login');
-    });
-  });
+
 });

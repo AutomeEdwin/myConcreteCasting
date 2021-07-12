@@ -87,11 +87,11 @@ export class RegisterComponent implements OnInit {
    * @param response Response from the API
    */
   handleHttpResponse(response: any) {
+    console.log(response);
     if (response.status === 400) {
       this.responseError = true;
-      this.responseErrorMessage = response.error.message;
-    }
-    if (response.status === 201) {
+      this.responseErrorMessage = response.error.email;
+    } else if (response.status === 201) {
       this.router.navigate(['login']);
     }
   }
