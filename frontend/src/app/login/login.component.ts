@@ -33,9 +33,9 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     if (this.isUserAlreadyLogged()) {
       this.router.navigate(['/dashboard']);
+    } else {
+      this.initForm();
     }
-
-    this.initForm();
   }
 
   initForm() {
@@ -57,12 +57,12 @@ export class LoginComponent implements OnInit {
 
     if (this.form.invalid) {
       return;
+    } else {
+      this.accountService.loginUser(JSON.stringify(this.form.value)).subscribe(
+        (response) => this.handleHttpResponse(response),
+        (error) => this.handleHttpResponse(error)
+      );
     }
-
-    this.accountService.loginUser(JSON.stringify(this.form.value)).subscribe(
-      (response) => this.handleHttpResponse(response),
-      (error) => this.handleHttpResponse(error)
-    );
   }
 
   /**
@@ -73,6 +73,7 @@ export class LoginComponent implements OnInit {
    * @param response Response from the API
    */
   handleHttpResponse(response: any) {
+    console.log(response);
     if (response.status === 400) {
       this.responseError = true;
       this.responseErrorMessage = response.error.message;

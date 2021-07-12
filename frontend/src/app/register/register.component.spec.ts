@@ -21,7 +21,6 @@ import { MatInputHarness } from '@angular/material/input/testing';
 
 import { RegisterComponent } from './register.component';
 import { routes } from '../app-routing.module';
-import { not } from '@angular/compiler/src/output/output_ast';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
@@ -58,12 +57,6 @@ describe('RegisterComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it("shouldn't be able to access dashboard from this component", () => {
-    router.navigate(['dashboard']).then(() => {
-      expect(location.path()).toBe('/login');
-    });
   });
 
   it('should render elements', () => {
@@ -175,13 +168,15 @@ describe('RegisterComponent', () => {
   it('should call onSubmit', fakeAsync(() => {
     spyOn(component, 'onSubmit');
 
-    const button = fixture.debugElement.nativeElement.querySelector('button');
+    const button = fixture.debugElement.nativeElement.querySelector(
+      'button[type=submit]'
+    );
     button.click();
     tick();
     expect(component.onSubmit).toHaveBeenCalled();
   }));
 
-  it('should test the submit of the form', () => {
+  it('should test the submission of the form', () => {
     spyOn(component, 'makeRequestBody');
 
     const form = component.form;
@@ -237,10 +232,13 @@ describe('RegisterComponent', () => {
       error: { email: 'Any message' },
       status: 400,
     };
+
     component.handleHttpResponse(ErrorAPIResponse);
     tick();
     expect(component.responseError).toBeTruthy();
-    expect(component.responseErrorMessage).toEqual(ErrorAPIResponse.error.email);
+    expect(component.responseErrorMessage).toEqual(
+      ErrorAPIResponse.error.email
+    );
 
     let SuccessAPIResponse = {
       message: 'Any message',
@@ -256,6 +254,4 @@ describe('RegisterComponent', () => {
       expect(location.path()).toBe('/login');
     });
   });
-
-
 });
