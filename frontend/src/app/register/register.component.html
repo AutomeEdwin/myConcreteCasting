@@ -5,10 +5,7 @@
     <div class="row">
       <!--First name-->
       <div class="col">
-        <mat-form-field
-          appearance="fill"
-          MatFormFieldControl="email"
-        >
+        <mat-form-field appearance="fill" MatFormFieldControl="email">
           <mat-label>First name</mat-label>
           <input
             matInput
@@ -24,10 +21,7 @@
 
       <!--Last name-->
       <div class="col">
-        <mat-form-field
-          appearance="fill"
-          MatFormFieldControl="password"
-        >
+        <mat-form-field appearance="fill" MatFormFieldControl="password">
           <mat-label>Last name</mat-label>
           <input
             matInput
@@ -44,10 +38,7 @@
 
     <!--Email-->
     <div>
-      <mat-form-field
-        appearance="fill"
-        MatFormFieldControl="password"
-      >
+      <mat-form-field appearance="fill" MatFormFieldControl="password">
         <mat-label>Email</mat-label>
         <input matInput formControlName="email" type="email" id="email" />
         <mat-error *ngIf="submitted && f.email.errors?.required">
@@ -57,14 +48,17 @@
           Email must be a valid email address
         </mat-error>
       </mat-form-field>
+      <div
+        *ngIf="submitted && responseError"
+        class="d-flex justify-content-end text-danger"
+      >
+        {{ responseErrorMessage }}
+      </div>
     </div>
 
     <!--Password-->
     <div>
-      <mat-form-field
-        appearance="fill"
-        MatFormFieldControl="password"
-      >
+      <mat-form-field appearance="fill" MatFormFieldControl="password">
         <mat-label>Password</mat-label>
         <input
           matInput
@@ -83,10 +77,7 @@
 
     <!--Password Confirmation-->
     <div>
-      <mat-form-field
-        appearance="fill"
-        MatFormFieldControl="password"
-      >
+      <mat-form-field appearance="fill" MatFormFieldControl="password">
         <mat-label>Password</mat-label>
         <input
           matInput

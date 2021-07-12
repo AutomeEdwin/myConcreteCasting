@@ -20,6 +20,9 @@ export class RegisterComponent implements OnInit {
   form!: FormGroup;
   submitted = false;
 
+  responseErrorMessage!: string;
+  responseError!: boolean;
+
   constructor(
     private formBuilder: FormBuilder,
     private accountService: AccountService,
@@ -84,6 +87,10 @@ export class RegisterComponent implements OnInit {
    * @param response Response from the API
    */
   handleHttpResponse(response: any) {
+    if (response.status === 400) {
+      this.responseError = true;
+      this.responseErrorMessage = response.error.message;
+    }
     if (response.status === 201) {
       this.router.navigate(['login']);
     }
