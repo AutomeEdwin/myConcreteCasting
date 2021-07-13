@@ -8,6 +8,8 @@ from rest_framework.response import Response
 from .serializers import UserSerializer, RegisterSerializer, JobsiteSerializer
 from .models import Jobsite
 
+import json
+
 
 class Register(APIView):
     permission_classes = (permissions.AllowAny,)
@@ -31,13 +33,14 @@ class Register(APIView):
 class Login(APIView):
     permission_classes = (permissions.AllowAny,)
 
-    def post(self, request, format=None):
+    def post(self, request):
         """
         Check if the user provides the correct credentials.
         if they are correct a token is generated for the user 
         and send in the response with his username(email) and user_id
         """
         data = JSONParser().parse(request)
+
         user = authenticate(
             username=data['email'], password=data["password"])
 

@@ -1,28 +1,18 @@
-from django.test import TestCase
-from django.test import Client
+from rest_framework.test import APITestCase
+from rest_framework import status
 
-# Create your tests here.
+from .models import User
+from .serializers import UserSerializer
 
 
-class RegisterTest(TestCase):
-    def testRegistration(self):
-        c = Client()
-        response = c.post('/register/',
-                          {
-                              "first_name": "John",
-                              "last_name": "Doe",
-                              "email": "johnDoe@gmail.com",
-                              "password": "123456789"
-                          }
-                          )
-        self.assertEqual(response.status_code, 201)
+class RegistrationTestCase(APITestCase):
+    def test_registration(self):
+        data = {"first_name": "John",
+                "last_name": "Doe",
+                "email": "johnDoe@gmail.com",
+                "password": "123456789"}
+        response = self.client.post('/register/', data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-        response = c.post('/register/',
-                          {
-                              "first_name": "John",
-                              "last_name": "Doe",
-                              "email": "johnDoe.com",
-                          }
-                          )
-        self.assertEqual(response.status_code, 400)
 
+class LoginTest(APITestCase):
