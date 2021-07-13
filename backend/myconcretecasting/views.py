@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login
 from rest_framework import permissions, status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
 from rest_framework.parsers import JSONParser
@@ -8,15 +9,13 @@ from rest_framework.response import Response
 from .serializers import UserSerializer, RegisterSerializer, JobsiteSerializer
 from .models import Jobsite
 
-import json
-
 
 class Register(APIView):
     permission_classes = (permissions.AllowAny,)
 
     def post(self, request):
         """
-        Check if the user provides the correct credentials 
+        Check if the user provides the correct credentials
         and if the user doesn't already exist.
 
         Create a new user if credentials are correct and user doesn't exists
@@ -36,7 +35,7 @@ class Login(APIView):
     def post(self, request):
         """
         Check if the user provides the correct credentials.
-        if they are correct a token is generated for the user 
+        if they are correct a token is generated for the user
         and send in the response with his username(email) and user_id
         """
         data = JSONParser().parse(request)
@@ -54,6 +53,16 @@ class Login(APIView):
 
         else:
             return Response({"message": "Email or password is incorrect"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class Logout(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        t = Token.objects.get(
+            key=request.headers['Authorization'].replace('Token ', ""))
+        t.delete()
+        return Response(status=status.HTTP_200_OK)
 
 
 class Jobsites(APIView):
