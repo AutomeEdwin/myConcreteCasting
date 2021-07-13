@@ -80,7 +80,7 @@ export class LoginComponent implements OnInit {
     }
 
     if (response.status === 200) {
-      this.accountService.storeToken('Token ' + response.token);
+      this.accountService.storeToken(response.token);
       this.localStorageService.set('email', response.user);
       this.localStorageService.set('userID', response.user_id);
       this.router.navigate(['/dashboard']);

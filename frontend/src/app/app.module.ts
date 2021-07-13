@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 // Components import
 import { AppComponent } from './app.component';
@@ -40,6 +41,7 @@ import { JobsiteViewerComponent } from './jobsite-viewer/jobsite-viewer.componen
     MatGridListModule,
     MatExpansionModule,
     MatDialogModule,
+    MatSnackBarModule,
   ],
   declarations: [
     AppComponent,

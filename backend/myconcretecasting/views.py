@@ -62,7 +62,7 @@ class Logout(APIView):
         t = Token.objects.get(
             key=request.headers['Authorization'].replace('Token ', ""))
         t.delete()
-        return Response(status=status.HTTP_200_OK)
+        return Response({"status": status.HTTP_200_OK}, status=status.HTTP_200_OK)
 
 
 class Jobsites(APIView):

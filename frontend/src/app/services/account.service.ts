@@ -32,19 +32,11 @@ export class AccountService {
   }
 
   logoutUser() {
-    this.httpClient
-      .post(this.serverURL + 'logout/', null, {
-        headers: new HttpHeaders({
-          Authorization: 'Token ' + this.localStorageService.get('token'),
-        }),
-      })
-      .subscribe(
-        () => {},
-        (error) => {
-          console.log(error);
-        }
-      );
-    this.localStorageService.remove('token');
+    return this.httpClient.get(this.serverURL + 'logout/', {
+      headers: new HttpHeaders({
+        Authorization: 'Token ' + this.localStorageService.get('token'),
+      }),
+    });
   }
 
   storeToken(token: string) {
