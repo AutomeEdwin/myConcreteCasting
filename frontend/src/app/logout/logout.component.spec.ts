@@ -1,8 +1,15 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { LogoutComponent } from './logout.component';
 import { routes } from '../app-routing.module';
@@ -16,6 +23,7 @@ describe('LogoutComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
+        MatSnackBarModule,
         HttpClientTestingModule,
         RouterTestingModule.withRoutes(routes),
       ],
@@ -27,6 +35,8 @@ describe('LogoutComponent', () => {
     fixture = TestBed.createComponent(LogoutComponent);
     component = fixture.componentInstance;
     router = TestBed.get(Router);
+    location = TestBed.get(Location);
+
     fixture.detectChanges();
   });
 
@@ -41,9 +51,20 @@ describe('LogoutComponent', () => {
     expect(button).toBeTruthy();
   });
 
-  it('should navigate to login', () => {
-    router.navigate(['login']).then(() => {
-      expect(location.path()).toBe('login');
-    });
+  it('should call the logout function', fakeAsync(() => {
+    spyOn(component, 'logout');
+
+    const button = fixture.debugElement.nativeElement.querySelector('button');
+    button.click();
+    tick();
+    expect(component.logout).toHaveBeenCalled();
+  }));
+
+  it('should test response handling', () => {
+    component.handleHttpResponse({ status: 200 });
+    expect(location.path()).toBe('');
+    expect(localStorage.getItem('token')).toBeNull();
+    expect(localStorage.getItem('email')).toBeNull();
+    expect(localStorage.getItem('userID')).toBeNull();
   });
 });
