@@ -1,16 +1,34 @@
-<button (click)="getJobsites()">refresh</button>
-<mat-accordion>
-  <div *ngFor="let jobsite of jobsiteArray; let i = index">
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title> {{ getJobsiteName(i) }} </mat-panel-title>
-        <mat-panel-description>
-          {{ getJobsiteDescription(i) }}
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <p>Address : {{ getJobsiteAddress(i) }}</p>
-
-      <p>{{ getCastings(i) }}</p>
-    </mat-expansion-panel>
+<div class="px-2 pb-2">
+  <!-- REFRESH BUTTON -->
+  <div class="d-flex justify-content-end pb-2">
+    <button mat-raised-button color="primary" (click)="getJobsites()">
+      <mat-icon>refresh</mat-icon>
+    </button>
   </div>
-</mat-accordion>
+
+  <!-- CARDS -->
+  <div class="grid">
+    <div *ngFor="let jobsite of jobsiteArray; let i = index" class="pb-2 row">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title> {{ getJobsiteName(i) }} </mat-card-title>
+          <mat-card-subtitle>{{ getJobsiteAddress(i) }}</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+          <p>
+            {{ getJobsiteCoordinates(i) }}
+          </p>
+          <p>
+            {{ getJobsiteDescription(i) }}
+          </p>
+        </mat-card-content>
+
+        <mat-card-actions class="d-flex justify-content-end">
+          <button mat-button>Delete</button>
+          <button mat-button>Detail</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>

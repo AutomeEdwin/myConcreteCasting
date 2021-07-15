@@ -56,6 +56,10 @@ export class JobsiteViewerComponent implements OnInit {
     return this.jobsiteArray[i].getAddress();
   }
 
+  getJobsiteCoordinates(i: number) {
+    return this.jobsiteArray[i].getCoordinates();
+  }
+
   getCastings(i: number) {
     return this.jobsiteArray[i].getCastings();
   }

@@ -25,6 +25,10 @@ export class Jobsite {
     return this.jobsite_address;
   }
 
+  getCoordinates() {
+    return this.jobsite_coordinates;
+  }
+
   getDescription() {
     return this.jobsite_description;
   }

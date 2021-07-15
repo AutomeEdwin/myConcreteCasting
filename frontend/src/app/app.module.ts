@@ -13,6 +13,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatCardModule } from '@angular/material/card';
 
 // Components import
 import { AppComponent } from './app.component';
@@ -43,6 +44,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     MatExpansionModule,
     MatDialogModule,
     MatSnackBarModule,
+    MatCardModule,
   ],
   declarations: [
     AppComponent,
