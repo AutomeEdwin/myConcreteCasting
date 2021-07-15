@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+
+import { MatDialogRef } from '@angular/material/dialog';
+
 import {
   FormGroup,
   FormBuilder,
@@ -47,7 +50,8 @@ export class NewJobsiteComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private jobsitesService: JobsitesService,
-    private nominatomService: NominatimService
+    private nominatomService: NominatimService,
+    public dialog: MatDialogRef<NewJobsiteComponent>
   ) {}
 
   ngOnInit(): void {
@@ -126,11 +130,9 @@ export class NewJobsiteComponent implements OnInit {
 
     this.jobsitesService.createJobsite(this.form.value).subscribe(
       (res) => {
-        console.log(res);
+        this.dialog.close();
       },
-      (err) => {
-        console.log(err);
-      }
+      (err) => {}
     );
   }
 

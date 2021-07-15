@@ -1,3 +1,7 @@
 <app-navbar></app-navbar>
-<button (click)="openForm()">New Jobsite</button>
+<div class="d-flex justify-content-end p-2">
+  <button mat-raised-button color="primary" (click)="openForm()">
+    New Jobsite
+  </button>
+</div>
 <app-jobsite-viewer></app-jobsite-viewer>
