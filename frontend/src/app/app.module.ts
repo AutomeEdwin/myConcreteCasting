@@ -25,6 +25,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NewJobsiteComponent } from './new-jobsite/new-jobsite.component';
 import { JobsiteViewerComponent } from './jobsite-viewer/jobsite-viewer.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { JobsitePreviewCardComponent } from './jobsite-preview-card/jobsite-preview-card.component';
 
 @NgModule({
   imports: [
@@ -55,6 +56,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     LogoutComponent,
     JobsiteViewerComponent,
     NavbarComponent,
+    JobsitePreviewCardComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],

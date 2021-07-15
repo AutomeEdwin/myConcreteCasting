@@ -1,7 +1,23 @@
 <app-navbar></app-navbar>
+
 <div class="d-flex justify-content-end p-2">
   <button mat-raised-button color="primary" (click)="openForm()">
     New Jobsite
   </button>
 </div>
-<app-jobsite-viewer></app-jobsite-viewer>
+
+<!-- REFRESH BUTTON -->
+<div class="d-flex justify-content-end pb-2 px-2">
+  <button mat-raised-button color="primary" (click)="getJobsites()">
+    <mat-icon>refresh</mat-icon>
+  </button>
+</div>
+
+<!-- CARDS -->
+<div class="grid">
+  <div *ngFor="let jobsite of jobsiteArray; let i = index" class="pb-2 row">
+    <app-jobsite-preview-card
+      [jobsite]="getJobsite(i)"
+    ></app-jobsite-preview-card>
+  </div>
+</div>

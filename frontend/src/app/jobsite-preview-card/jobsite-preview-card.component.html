@@ -1,0 +1,15 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title> {{ getJobsiteName() }}</mat-card-title>
+    <mat-card-subtitle>{{ getJobsiteAddress() }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <p>{{ getJobsiteDescription() }}</p>
+  </mat-card-content>
+
+  <mat-card-actions class="d-flex justify-content-end">
+    <button mat-button>Delete</button>
+    <button mat-button>Detail</button>
+  </mat-card-actions>
+</mat-card>
