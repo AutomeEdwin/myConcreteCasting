@@ -28,4 +28,8 @@ export class JobsitePreviewCardComponent implements OnInit {
   getJobsiteCoordinates() {
     return this.jobsite.getCoordinates();
   }
+
+  onDelete() {}
+
+  onDetail() {}
 }

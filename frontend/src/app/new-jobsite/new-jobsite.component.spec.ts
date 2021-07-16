@@ -6,16 +6,32 @@ import {
 } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormArray, ReactiveFormsModule } from '@angular/forms';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NewJobsiteComponent } from './new-jobsite.component';
 
 describe('NewJobsiteComponent', () => {
   let component: NewJobsiteComponent;
   let fixture: ComponentFixture<NewJobsiteComponent>;
+  let loader: HarnessLoader;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, HttpClientTestingModule],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientTestingModule,
+        MatDialogModule,
+        NoopAnimationsModule,
+      ],
+      providers: [
+        {
+          provide: MatDialogRef,
+          useValue: {},
+        },
+      ],
       declarations: [NewJobsiteComponent],
     }).compileComponents();
   });
@@ -24,6 +40,7 @@ describe('NewJobsiteComponent', () => {
     fixture = TestBed.createComponent(NewJobsiteComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    loader = TestbedHarnessEnvironment.documentRootLoader(fixture);
   });
 
   // TEST THE FORM ITSELF
