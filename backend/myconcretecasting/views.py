@@ -82,3 +82,12 @@ class Jobsites(APIView):
             jobsite_owner=kwargs['jobsite_owner'])
         serializer = JobsiteSerializer(jobsistes, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class getJobsiteByID(APIView):
+
+    def get(self, *args, **kwargs):
+        jobsite = Jobsite.objects.get(id=kwargs['id'],
+                                      jobsite_owner=kwargs['jobsite_owner'])
+        serializer = JobsiteSerializer(jobsite)
+        return Response(serializer.data, status=status.HTTP_200_OK)

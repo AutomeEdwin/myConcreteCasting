@@ -1,4 +1,4 @@
-from .views import Register, Login, Logout, Jobsites
+from .views import Register, Login, Logout, Jobsites, getJobsiteByID
 from django.urls import path
 
 urlpatterns = [
@@ -7,4 +7,6 @@ urlpatterns = [
     path('logout/', Logout.as_view(), name='logout'),
     path('jobsites/', Jobsites.as_view(), name="jobsite"),
     path('jobsites/<jobsite_owner>', Jobsites.as_view(), name="jobsite"),
+    path('jobsites/<jobsite_owner>/<id>', getJobsiteByID.as_view()),
+
 ]
