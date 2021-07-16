@@ -1,12 +1,12 @@
 export class Jobsite {
   constructor(
-    public id: number,
-    public jobsite_owner: string,
-    public jobsite_name: string,
-    public jobsite_address: string,
-    public jobsite_coordinates: string,
-    public jobsite_description: string,
-    public jobsite_castings: string
+    private id: number,
+    private jobsite_owner: string,
+    private jobsite_name: string,
+    private jobsite_address: string,
+    private jobsite_coordinates: string,
+    private jobsite_description: string,
+    private jobsite_castings: string
   ) {}
 
   getId() {

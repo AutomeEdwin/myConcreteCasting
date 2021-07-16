@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Jobsite } from '../models/jobsite.model';
 
 @Component({
@@ -9,7 +10,7 @@ import { Jobsite } from '../models/jobsite.model';
 export class JobsitePreviewCardComponent implements OnInit {
   @Input() jobsite!: Jobsite;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
 
@@ -31,5 +32,7 @@ export class JobsitePreviewCardComponent implements OnInit {
 
   onDelete() {}
 
-  onDetail() {}
+  onDetail() {
+    this.router.navigate(['jobsite/', this.jobsite.getId()]);
+  }
 }

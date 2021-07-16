@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { JobsiteDashboardComponent } from './jobsite-dashboard/jobsite-dashboard.component';
-
+import { JobsiteViewerComponent } from './jobsite-viewer/jobsite-viewer.component';
 import { AuthguardService } from './services/authguard.service';
 
 export const routes: Routes = [
@@ -15,6 +15,11 @@ export const routes: Routes = [
     path: 'dashboard',
     canActivate: [AuthguardService],
     component: JobsiteDashboardComponent,
+  },
+  {
+    path: 'jobsite/:id',
+    canActivate: [AuthguardService],
+    component: JobsiteViewerComponent,
   },
 ];
 
