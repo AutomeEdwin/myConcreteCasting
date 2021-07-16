@@ -11,15 +11,7 @@ import { Jobsite } from '../models/jobsite.model';
   styleUrls: ['./jobsite-viewer.component.scss'],
 })
 export class JobsiteViewerComponent implements OnInit {
-  jobsite: Jobsite = new Jobsite(
-    1,
-    'owner',
-    'name',
-    'address',
-    'coordinates',
-    'description',
-    'castings'
-  );
+  jobsite!: Jobsite;
 
   constructor(
     private router: Router,
@@ -27,9 +19,22 @@ export class JobsiteViewerComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.jobsiteService.getJobsiteByID(
-      +this.router.url.replace('/jobsite/', '')
-    );
+    this.jobsiteService
+      .getJobsiteByID(+this.router.url.replace('/jobsite/', ''))
+      .subscribe(
+        (res: any) => {
+          this.jobsite = new Jobsite(
+            res.id,
+            res.jobsite_owner,
+            res.jobsite_name,
+            res.jobsite_address,
+            res.jobsite_coordinates,
+            res.jobsite_description,
+            res.jobsite_castings
+          );
+        },
+        (err) => {}
+      );
   }
 
   getJobsiteName() {

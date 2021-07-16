@@ -32,4 +32,15 @@ export class JobsitesService {
       }
     );
   }
+
+  getJobsiteByID(id: number) {
+    return this.httpClient.get(
+      this.serverURL + 'jobsites/' + localStorage.getItem('email') + '/' + id,
+      {
+        headers: new HttpHeaders({
+          Authorization: 'Token ' + this.localStorageService.get('token'),
+        }),
+      }
+    );
+  }
 }
