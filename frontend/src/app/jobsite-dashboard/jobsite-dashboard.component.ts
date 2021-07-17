@@ -57,5 +57,9 @@ export class JobsiteDashboardComponent implements OnInit {
       height: '98%',
       width: '100%',
     });
+
+    dialog.afterClosed().subscribe((result) => {
+      this.getJobsites();
+    });
   }
 }
