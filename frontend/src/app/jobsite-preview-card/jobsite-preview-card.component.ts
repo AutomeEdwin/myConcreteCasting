@@ -12,6 +12,8 @@ import Point from 'ol/geom/Point';
 import { Fill, Stroke, Circle, Style } from 'ol/style';
 
 import { Jobsite } from '../models/jobsite.model';
+import { JobsitesService } from '../services/jobsites.service';
+import { JobsiteDashboardComponent } from '../jobsite-dashboard/jobsite-dashboard.component';
 
 @Component({
   selector: 'app-jobsite-preview-card',
@@ -24,7 +26,10 @@ export class JobsitePreviewCardComponent implements OnInit {
   map!: Map;
   marker!: Feature;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private jobsiteService: JobsitesService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -48,7 +53,14 @@ export class JobsitePreviewCardComponent implements OnInit {
     return this.jobsite.getCoordinates();
   }
 
-  onDelete() {}
+  onDelete() {
+    this.jobsiteService.deleteJobsite(this.jobsite.getId()).subscribe(
+      (res) => {
+        // TODO refresh dahsboard
+      },
+      (err) => {}
+    );
+  }
 
   onDetail() {
     this.router.navigate(['jobsite/', this.jobsite.getId()]);
