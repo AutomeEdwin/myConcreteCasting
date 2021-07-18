@@ -26,6 +26,7 @@ import { NewJobsiteComponent } from './new-jobsite/new-jobsite.component';
 import { JobsiteViewerComponent } from './jobsite-viewer/jobsite-viewer.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { JobsitePreviewCardComponent } from './jobsite-preview-card/jobsite-preview-card.component';
+import { ConfirmJobsiteDeleteComponent } from './confirm-jobsite-delete/confirm-jobsite-delete.component';
 
 @NgModule({
   imports: [
@@ -57,6 +58,7 @@ import { JobsitePreviewCardComponent } from './jobsite-preview-card/jobsite-prev
     JobsiteViewerComponent,
     NavbarComponent,
     JobsitePreviewCardComponent,
+    ConfirmJobsiteDeleteComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],

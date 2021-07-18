@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { MatDialog } from '@angular/material/dialog';
+
 import Map from 'ol/Map';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
 import OSM from 'ol/source/OSM';
@@ -13,7 +15,7 @@ import { Fill, Stroke, Circle, Style } from 'ol/style';
 
 import { Jobsite } from '../models/jobsite.model';
 import { JobsitesService } from '../services/jobsites.service';
-import { JobsiteDashboardComponent } from '../jobsite-dashboard/jobsite-dashboard.component';
+import { ConfirmJobsiteDeleteComponent } from '../confirm-jobsite-delete/confirm-jobsite-delete.component';
 
 @Component({
   selector: 'app-jobsite-preview-card',
@@ -28,7 +30,8 @@ export class JobsitePreviewCardComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private jobsiteService: JobsitesService
+    private jobsiteService: JobsitesService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {}
@@ -54,12 +57,18 @@ export class JobsitePreviewCardComponent implements OnInit {
   }
 
   onDelete() {
-    this.jobsiteService.deleteJobsite(this.jobsite.getId()).subscribe(
-      (res) => {
-        // TODO refresh dahsboard
-      },
-      (err) => {}
-    );
+    const dialog = this.dialog.open(ConfirmJobsiteDeleteComponent);
+
+    dialog.afterClosed().subscribe((result) => {
+      if (result) {
+        this.jobsiteService.deleteJobsite(this.jobsite.getId()).subscribe(
+          (res) => {
+            // TODO refresh dahsboard
+          },
+          (err) => {}
+        );
+      }
+    });
   }
 
   onDetail() {
