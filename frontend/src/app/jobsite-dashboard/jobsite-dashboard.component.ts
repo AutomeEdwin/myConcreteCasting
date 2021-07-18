@@ -35,16 +35,14 @@ export class JobsiteDashboardComponent implements OnInit {
               this.data[i].jobsite_owner,
               this.data[i].jobsite_name,
               this.data[i].jobsite_address,
-              this.data[i].jobsite_coordinates,
+              JSON.parse(this.data[i].jobsite_coordinates),
               this.data[i].jobsite_description,
               this.data[i].jobsite_castings
             )
           );
         }
       },
-      (error) => {
-        console.log(error);
-      }
+      (error) => {}
     );
   }
 

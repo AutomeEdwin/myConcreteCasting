@@ -8,7 +8,7 @@ describe('Jobsite', () => {
         'owner',
         'name',
         'address',
-        'coordinates',
+        [0, 0],
         'description',
         'castings'
       )

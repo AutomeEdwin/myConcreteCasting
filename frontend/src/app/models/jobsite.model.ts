@@ -4,7 +4,7 @@ export class Jobsite {
     private jobsite_owner: string,
     private jobsite_name: string,
     private jobsite_address: string,
-    private jobsite_coordinates: string,
+    private jobsite_coordinates: Array<number>,
     private jobsite_description: string,
     private jobsite_castings: string
   ) {}

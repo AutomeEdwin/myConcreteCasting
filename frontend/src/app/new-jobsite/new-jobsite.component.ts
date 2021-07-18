@@ -179,7 +179,7 @@ export class NewJobsiteComponent implements OnInit {
         center: olProj.fromLonLat([this.lattitude, this.longitude]),
         zoom: 9,
       }),
-      target: 'map',
+      target: 'new-jobsite-map',
     });
 
     this.map.on('singleclick', (event) => {
