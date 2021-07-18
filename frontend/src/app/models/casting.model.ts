@@ -9,7 +9,7 @@ export class Casting {
     return this.casting_name;
   }
 
-  getDescrition() {
+  getDescription() {
     return this.casting_description;
   }
 

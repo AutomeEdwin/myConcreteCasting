@@ -14,12 +14,7 @@ import { Casting } from '../models/casting.model';
 export class JobsiteViewerComponent implements OnInit {
   jobsite!: Jobsite;
 
-  constructor(
-    private router: Router,
-    private jobsiteService: JobsitesService
-  ) {}
-
-  ngOnInit(): void {
+  constructor(private router: Router, private jobsiteService: JobsitesService) {
     this.jobsiteService
       .getJobsiteByID(+this.router.url.replace('/jobsite/', ''))
       .subscribe(
@@ -51,6 +46,8 @@ export class JobsiteViewerComponent implements OnInit {
       );
   }
 
+  ngOnInit(): void {}
+
   getJobsiteName() {
     return this.jobsite.getName();
   }
@@ -69,6 +66,17 @@ export class JobsiteViewerComponent implements OnInit {
 
   getJobsiteCastings() {
     return this.jobsite.getCastings();
+  }
+
+  getCastingName(i: number) {
+    return this.getJobsiteCastings()[i].getName();
+  }
+
+  getCastingDescription(i: number) {
+    return this.getJobsiteCastings()[i].getDescription();
+  }
+  getCastingInfos(i: number) {
+    return this.getJobsiteCastings()[i].getInfos();
   }
 
   onBack(): void {

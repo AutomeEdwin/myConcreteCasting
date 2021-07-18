@@ -8,8 +8,8 @@
   <!-- JOBSITE OVERALL -->
   <mat-card class="m-2">
     <mat-card-header>
-      <mat-card-title> title</mat-card-title>
-      <mat-card-subtitle>subtitle</mat-card-subtitle>
+      <mat-card-title> {{ getJobsiteName() }}</mat-card-title>
+      <mat-card-subtitle>{{ getJobsiteAddress() }}</mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-content>
@@ -18,7 +18,7 @@
           <strong>NOT IMPLEMENTED YET</strong>
         </div>
       </div>
-      <p>Description</p>
+      <p>{{ getJobsiteDescription() }}</p>
     </mat-card-content>
 
     <mat-card-actions class="d-flex justify-content-end">
@@ -26,25 +26,23 @@
     </mat-card-actions>
   </mat-card>
 
-  <div *ngFor="">
-    <mat-card class="m-2">
-    <mat-card-header>
-      <mat-card-title> title</mat-card-title>
-      <mat-card-subtitle>subtitle</mat-card-subtitle>
-    </mat-card-header>
+  <div class="grid">
+    <div *ngFor="let casting of getJobsiteCastings(); let i = index">
+      <!-- CASTING -->
+      <mat-card class="m-2"
+        ><mat-card-header>
+          <mat-card-title>{{ getCastingName(i) }} </mat-card-title>
+        </mat-card-header>
 
-    <mat-card-content>
-      <div class="map-container pt-2">
-        <div id="map" class="map d-flex justify-content-center">
-          <strong>NOT IMPLEMENTED YET</strong>
-        </div>
-      </div>
-      <p>Description</p>
-    </mat-card-content>
+        <mat-card-content>
+          <p>{{ getCastingDescription(i) }}</p>
+          <p>{{ getCastingInfos(i) }}</p>
+        </mat-card-content>
 
-    <mat-card-actions class="d-flex justify-content-end">
-      <button mat-button>Edit</button>
-    </mat-card-actions>
-  </mat-card>
+        <mat-card-actions class="d-flex justify-content-end">
+          <button mat-button>Edit</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
   </div>
 </div>
