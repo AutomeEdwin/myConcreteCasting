@@ -6,6 +6,7 @@ urlpatterns = [
     path('login/', Login.as_view(), name='login'),
     path('logout/', Logout.as_view(), name='logout'),
     path('jobsites/', Jobsites.as_view(), name="jobsite"),
+    path('jobsites/<jobsite_id>', Jobsites.as_view(), name="jobsite"),
     path('jobsites/<jobsite_owner>', Jobsites.as_view(), name="jobsite"),
     path('jobsites/<jobsite_owner>/<id>', getJobsiteByID.as_view()),
 
