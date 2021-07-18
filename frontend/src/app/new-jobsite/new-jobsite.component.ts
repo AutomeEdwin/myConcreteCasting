@@ -227,7 +227,6 @@ export class NewJobsiteComponent implements OnInit {
           this.updateMarker();
         },
         (err) => {
-          console.log(err);
         }
       );
   }

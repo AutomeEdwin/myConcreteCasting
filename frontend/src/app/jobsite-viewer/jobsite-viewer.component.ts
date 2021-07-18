@@ -46,8 +46,6 @@ export class JobsiteViewerComponent implements OnInit {
             res.jobsite_description,
             castingsArray
           );
-
-          console.log(this.jobsite);
         },
         (err) => {}
       );

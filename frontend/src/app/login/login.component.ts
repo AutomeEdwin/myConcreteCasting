@@ -73,7 +73,6 @@ export class LoginComponent implements OnInit {
    * @param response Response from the API
    */
   handleHttpResponse(response: any) {
-    console.log(response);
     if (response.status === 400) {
       this.responseError = true;
       this.responseErrorMessage = response.error.message;

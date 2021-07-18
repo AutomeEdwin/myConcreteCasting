@@ -26,7 +26,6 @@ export class LogoutComponent implements OnInit {
         this.handleHttpResponse(res);
       },
       (err) => {
-        console.log(err);
       }
     );
   }
