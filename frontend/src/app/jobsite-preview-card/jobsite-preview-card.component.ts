@@ -29,7 +29,7 @@ export class JobsitePreviewCardComponent implements OnInit {
   ngOnInit(): void {}
 
   ngAfterViewInit() {
-   // this.initMap();
+    // this.initMap();
   }
 
   getJobsiteName() {

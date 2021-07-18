@@ -1,3 +1,5 @@
+import { Casting } from './casting.model';
+
 export class Jobsite {
   constructor(
     private id: number,
@@ -6,7 +8,7 @@ export class Jobsite {
     private jobsite_address: string,
     private jobsite_coordinates: Array<number>,
     private jobsite_description: string,
-    private jobsite_castings: string
+    private jobsite_castings: Array<Casting>
   ) {}
 
   getId() {

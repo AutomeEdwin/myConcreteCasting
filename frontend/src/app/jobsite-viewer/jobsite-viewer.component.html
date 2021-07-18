@@ -1,11 +1,50 @@
 <app-navbar></app-navbar>
+
 <div class="p-2">
   <button mat-icon-button (click)="onBack()">
     <mat-icon>keyboard_return</mat-icon>
   </button>
-  <p>Name : {{ getJobsiteName() }}</p>
-  <p>Description :{{ getJobsiteDescription() }}</p>
-  <p>Address : {{ getJobsiteAddress() }}</p>
-  <p>Coordinates : {{ getJobsiteCoordinates() }}</p>
-  <p>Castings: {{ getJobsiteCastings() }}</p>
+
+  <!-- JOBSITE OVERALL -->
+  <mat-card class="m-2">
+    <mat-card-header>
+      <mat-card-title> title</mat-card-title>
+      <mat-card-subtitle>subtitle</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="map-container pt-2">
+        <div id="map" class="map d-flex justify-content-center">
+          <strong>NOT IMPLEMENTED YET</strong>
+        </div>
+      </div>
+      <p>Description</p>
+    </mat-card-content>
+
+    <mat-card-actions class="d-flex justify-content-end">
+      <button mat-button>Edit</button>
+    </mat-card-actions>
+  </mat-card>
+
+  <div *ngFor="">
+    <mat-card class="m-2">
+    <mat-card-header>
+      <mat-card-title> title</mat-card-title>
+      <mat-card-subtitle>subtitle</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="map-container pt-2">
+        <div id="map" class="map d-flex justify-content-center">
+          <strong>NOT IMPLEMENTED YET</strong>
+        </div>
+      </div>
+      <p>Description</p>
+    </mat-card-content>
+
+    <mat-card-actions class="d-flex justify-content-end">
+      <button mat-button>Edit</button>
+    </mat-card-actions>
+  </mat-card>
+  </div>
 </div>

@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { NewJobsiteComponent } from '../new-jobsite/new-jobsite.component';
 import { Jobsite } from '../models/jobsite.model';
 import { JobsitesService } from '../services/jobsites.service';
+import { Casting } from '../models/casting.model';
 
 @Component({
   selector: 'app-jobsite-dashboard',
@@ -24,11 +25,24 @@ export class JobsiteDashboardComponent implements OnInit {
 
   getJobsites() {
     this.jobsiteArray.length = 0;
+
     this.jobsitesService.getJobsites().subscribe(
       (response) => {
         this.data = response;
 
         for (let i in this.data) {
+          let castingsArray: Array<Casting> = [];
+          let castings = JSON.parse(this.data[i].jobsite_castings);
+
+          for (let j in castings) {
+            let casting = new Casting(
+              castings[j].casting_name,
+              castings[j].casting_description,
+              castings[j].casting_infos
+            );
+
+            castingsArray.push(casting);
+          }
           this.jobsiteArray.push(
             new Jobsite(
               this.data[i].id,
@@ -37,7 +51,7 @@ export class JobsiteDashboardComponent implements OnInit {
               this.data[i].jobsite_address,
               JSON.parse(this.data[i].jobsite_coordinates),
               this.data[i].jobsite_description,
-              this.data[i].jobsite_castings
+              castingsArray
             )
           );
         }
