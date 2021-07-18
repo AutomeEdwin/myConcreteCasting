@@ -90,6 +90,7 @@ class Jobsites(APIView):
 
 
 class getJobsiteByID(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, *args, **kwargs):
         jobsite = Jobsite.objects.get(id=kwargs['id'],
