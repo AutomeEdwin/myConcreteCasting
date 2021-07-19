@@ -13,6 +13,18 @@ describe('JobsiteViewerComponent', () => {
   let fixture: ComponentFixture<JobsiteViewerComponent>;
   let router: Router;
 
+  let requestResponse = {
+    id: 12,
+    jobsite_owner: 'test@test.com',
+    jobsite_name: 'test',
+    jobsite_address:
+      '16, Rue de la Loi, Quartier Royal, Pentagon, Brussels, City of Brussels, Brussels-Capital, 1000, Belgium',
+    jobsite_coordinates: '[4.3665285, 50.8461624]',
+    jobsite_description: 'dsqdsqd',
+    jobsite_castings:
+      '[{"casting_name": "dsqdsqcxwcwx", "casting_description": "aezaeazeae", "casting_infos": "wxcwxcwxc"}]',
+  };
+
   let castingsArray: Array<Casting> = [
     new Casting('name', 'description', 'infos'),
   ];
@@ -47,4 +59,11 @@ describe('JobsiteViewerComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should get a jobsite informations', () => {
+    component.createJobsite(requestResponse);
+    expect(component.jobsite.getId()).toBe(requestResponse.id);
+  });
+
+  it('should go back to the dashboard', () => {});
 });
