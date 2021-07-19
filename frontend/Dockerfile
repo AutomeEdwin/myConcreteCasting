@@ -11,7 +11,7 @@ WORKDIR /usr/src/app
 RUN npm install -g @angular/cli
 
 COPY package.json /usr/src/app/
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 COPY . /usr/src/app/
 

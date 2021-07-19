@@ -17,14 +17,16 @@ import OSM from 'ol/source/OSM';
 import View from 'ol/View';
 import * as olProj from 'ol/proj';
 import VectorSource from 'ol/source/Vector';
-import { Feature, MapBrowserEvent } from 'ol';
-import Point from 'ol/geom/Point';
+import { MapBrowserEvent } from 'ol';
 import { Fill, Stroke, Circle, Style } from 'ol/style';
 
 import { timeout } from 'rxjs/operators';
 
 import { JobsitesService } from '../services/jobsites.service';
 import { NominatimService } from '../services/nominatim.service';
+import Point from 'ol/geom/Point';
+import Feature from 'ol/Feature';
+import Geometry from 'ol/geom/Geometry';
 
 @Component({
   selector: 'app-new-jobsite',
@@ -38,14 +40,16 @@ import { NominatimService } from '../services/nominatim.service';
   ],
 })
 export class NewJobsiteComponent implements OnInit {
-  form!: FormGroup;
-  concreteCastings!: FormArray;
-  map!: Map;
-  marker!: Feature;
-
   // Hardcoded data that point the Grand Place of Brussels
   lattitude = 4.352530764849208;
   longitude = 50.846642213471654;
+
+  form!: FormGroup;
+  concreteCastings!: FormArray;
+  map!: Map;
+  marker = new Feature<Geometry>({
+    geometry: new Point(olProj.fromLonLat([this.lattitude, this.longitude])),
+  });
 
   constructor(
     private formBuilder: FormBuilder,
@@ -138,12 +142,7 @@ export class NewJobsiteComponent implements OnInit {
 
   // MAP
   initMap() {
-    const osmLayer = new TileLayer({ source: new OSM() });
-
-    this.marker = new Feature({
-      geometry: new Point(olProj.fromLonLat([this.lattitude, this.longitude])),
-    });
-    var markerStyles = [
+    this.marker.setStyle(
       new Style({
         image: new Circle({
           fill: new Fill({
@@ -162,19 +161,18 @@ export class NewJobsiteComponent implements OnInit {
           color: 'rgba(255, 0, 0,0.8)',
           width: 1,
         }),
-      }),
-    ];
-    this.marker.setStyle(markerStyles);
-
-    let markerSource = new VectorSource({
-      features: [this.marker],
-    });
-    let markerLayer = new VectorLayer({
-      source: markerSource,
-    });
+      })
+    );
 
     this.map = new Map({
-      layers: [osmLayer, markerLayer],
+      layers: [
+        new TileLayer({ source: new OSM() }),
+        new VectorLayer({
+          source: new VectorSource({
+            features: [this.marker],
+          }),
+        }),
+      ],
       view: new View({
         center: olProj.fromLonLat([this.lattitude, this.longitude]),
         zoom: 9,
@@ -195,7 +193,7 @@ export class NewJobsiteComponent implements OnInit {
     );
   }
 
-  getClickCoordinates(event: MapBrowserEvent) {
+  getClickCoordinates(event: MapBrowserEvent<any>) {
     let convertedCoordinates = olProj.transform(
       event.coordinate,
       'EPSG:3857',
@@ -226,8 +224,7 @@ export class NewJobsiteComponent implements OnInit {
 
           this.updateMarker();
         },
-        (err) => {
-        }
+        (err) => {}
       );
   }
 }
