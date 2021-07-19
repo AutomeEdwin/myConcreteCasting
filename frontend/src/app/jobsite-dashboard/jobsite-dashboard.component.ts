@@ -11,7 +11,7 @@ import { Casting } from '../models/casting.model';
   styleUrls: ['./jobsite-dashboard.component.scss'],
 })
 export class JobsiteDashboardComponent implements OnInit {
-  data: any;
+  //  data: any;
   jobsiteArray: Array<Jobsite> = [];
 
   constructor(
@@ -28,36 +28,38 @@ export class JobsiteDashboardComponent implements OnInit {
 
     this.jobsitesService.getJobsites().subscribe(
       (response) => {
-        this.data = response;
-
-        for (let i in this.data) {
-          let castingsArray: Array<Casting> = [];
-          let castings = JSON.parse(this.data[i].jobsite_castings);
-
-          for (let j in castings) {
-            let casting = new Casting(
-              castings[j].casting_name,
-              castings[j].casting_description,
-              castings[j].casting_infos
-            );
-
-            castingsArray.push(casting);
-          }
-          this.jobsiteArray.push(
-            new Jobsite(
-              this.data[i].id,
-              this.data[i].jobsite_owner,
-              this.data[i].jobsite_name,
-              this.data[i].jobsite_address,
-              JSON.parse(this.data[i].jobsite_coordinates),
-              this.data[i].jobsite_description,
-              castingsArray
-            )
-          );
-        }
+        this.fillJobsitesArray(response);
       },
       (error) => {}
     );
+  }
+
+  fillJobsitesArray(data: any) {
+    for (let i in data) {
+      let castingsArray: Array<Casting> = [];
+      let castings = JSON.parse(data[i].jobsite_castings);
+
+      for (let j in castings) {
+        let casting = new Casting(
+          castings[j].casting_name,
+          castings[j].casting_description,
+          castings[j].casting_infos
+        );
+
+        castingsArray.push(casting);
+      }
+      this.jobsiteArray.push(
+        new Jobsite(
+          data[i].id,
+          data[i].jobsite_owner,
+          data[i].jobsite_name,
+          data[i].jobsite_address,
+          JSON.parse(data[i].jobsite_coordinates),
+          data[i].jobsite_description,
+          castingsArray
+        )
+      );
+    }
   }
 
   getJobsite(i: number) {
