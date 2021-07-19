@@ -56,7 +56,7 @@ describe('NewJobsiteComponent', () => {
     const jobsite_addressInput = compiled.querySelector(
       'input[id="jobsite_address"]'
     );
-    const map = compiled.querySelector('div[id="map"]');
+    const map = compiled.querySelector('div[id="new-jobsite-map"]');
     const jobsite_descriptionInput = compiled.querySelector(
       'textarea[id="jobsite_description"]'
     );
@@ -77,6 +77,8 @@ describe('NewJobsiteComponent', () => {
     const castings_overview = compiled.querySelector(
       'div[id="castings_overview"]'
     );
+
+    component.ngAfterViewInit();
 
     expect(jobsite_nameInput).toBeTruthy();
     expect(jobsite_addressInput).toBeTruthy();

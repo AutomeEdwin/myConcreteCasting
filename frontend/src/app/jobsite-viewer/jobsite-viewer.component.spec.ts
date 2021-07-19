@@ -6,20 +6,24 @@ import { Router } from '@angular/router';
 import { routes } from '../app-routing.module';
 import { JobsiteViewerComponent } from './jobsite-viewer.component';
 import { Jobsite } from '../models/jobsite.model';
+import { Casting } from '../models/casting.model';
 
 describe('JobsiteViewerComponent', () => {
   let component: JobsiteViewerComponent;
   let fixture: ComponentFixture<JobsiteViewerComponent>;
   let router: Router;
 
+  let castingsArray: Array<Casting> = [
+    new Casting('name', 'description', 'infos'),
+  ];
   const jobsite: Jobsite = new Jobsite(
     1,
     'owner',
     'name',
     'address',
-    'coordinates',
+    [0, 0],
     'description',
-    'castings'
+    castingsArray
   );
 
   beforeEach(async () => {
