@@ -7,7 +7,7 @@ from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
 
 from .serializers import UserSerializer, RegisterSerializer, JobsiteSerializer
-from .models import Jobsite
+from .models import Jobsite, User
 
 
 class Register(APIView):
@@ -65,18 +65,13 @@ class Logout(APIView):
         return Response({"status": status.HTTP_200_OK}, status=status.HTTP_200_OK)
 
 
-class Account(APIView):
+class DeleteUser(APIView):
     permission_classes = [IsAuthenticated]
 
-    def delete(self, request):
-        data = JSONParser().parse(request)
+    def delete(self, *args, **kwargs):
 
-        user = authenticate(
-            username=data['email'], password=data["password"])
-
-        if user is not None:
-            user.delete()
-            return Response({"status": status.HTTP_200_OK}, status=status.HTTP_200_OK)
+        User.objects.get(email=kwargs['username']).delete()
+        return Response({"status": status.HTTP_200_OK}, status=status.HTTP_200_OK)
 
         return Response({"message": "Email or password is incorrect"}, status=status.HTTP_400_BAD_REQUEST)
 
