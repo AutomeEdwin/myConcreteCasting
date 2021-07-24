@@ -65,6 +65,22 @@ class Logout(APIView):
         return Response({"status": status.HTTP_200_OK}, status=status.HTTP_200_OK)
 
 
+class Account(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request):
+        data = JSONParser().parse(request)
+
+        user = authenticate(
+            username=data['email'], password=data["password"])
+
+        if user is not None:
+            user.delete()
+            return Response({"status": status.HTTP_200_OK}, status=status.HTTP_200_OK)
+
+        return Response({"message": "Email or password is incorrect"}, status=status.HTTP_400_BAD_REQUEST)
+
+
 class Jobsites(APIView):
     permission_classes = [IsAuthenticated]
 
