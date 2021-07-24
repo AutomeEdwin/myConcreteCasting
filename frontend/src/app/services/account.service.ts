@@ -39,6 +39,17 @@ export class AccountService {
     });
   }
 
+  deleteUserAccount() {
+    return this.httpClient.delete(
+      this.serverURL + 'deleteUser/' + this.localStorageService.get('email'),
+      {
+        headers: new HttpHeaders({
+          Authorization: 'Token ' + this.localStorageService.get('token'),
+        }),
+      }
+    );
+  }
+
   storeToken(token: string) {
     this.localStorageService.set('token', token);
   }
