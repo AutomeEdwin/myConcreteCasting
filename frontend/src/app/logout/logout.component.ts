@@ -23,23 +23,13 @@ export class LogoutComponent implements OnInit {
   logout() {
     this.accountService.logoutUser().subscribe(
       (res) => {
-        this.handleHttpResponse(res);
+        this.localStorageService.clear();
       },
       (err) => {
+        this.snackBar.open('Something went wrong !', 'ok', {
+          duration: 5000,
+        });
       }
     );
-  }
-
-  handleHttpResponse(res: any) {
-    if (res.status === 200) {
-      this.localStorageService.remove('token');
-      this.localStorageService.remove('email');
-      this.localStorageService.remove('userID');
-      this.router.navigate(['login']);
-    } else {
-      this.snackBar.open('Something went wrong !', 'ok', {
-        duration: 5000,
-      });
-    }
   }
 }

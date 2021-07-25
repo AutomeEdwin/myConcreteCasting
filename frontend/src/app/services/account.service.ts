@@ -41,7 +41,9 @@ export class AccountService {
 
   deleteUserAccount() {
     return this.httpClient.delete(
-      this.serverURL + 'deleteUser/' + this.localStorageService.get('email'),
+      this.serverURL +
+        'deleteUser/' +
+        JSON.parse(String(this.localStorageService.get('user'))).email,
       {
         headers: new HttpHeaders({
           Authorization: 'Token ' + this.localStorageService.get('token'),
