@@ -1,9 +1,24 @@
 export class User {
   constructor(
-    public id: number,
-    public firstName: string,
-    public lastName: string,
-    public email: string,
-    public password: string,
+    private id: number,
+    private firstName: string,
+    private lastName: string,
+    private email: string
   ) {}
+
+  getID() {
+    return this.id;
+  }
+
+  getFirstName() {
+    return this.firstName;
+  }
+
+  getLastName() {
+    return this.lastName;
+  }
+
+  getEmail() {
+    return this.email;
+  }
 }
