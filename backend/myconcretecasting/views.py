@@ -45,12 +45,10 @@ class Login(APIView):
 
         if user is not None:
             token = Token.objects.create(user=user)
-
-            return Response({"status": status.HTTP_200_OK,
-                             "token": token.key,
-                             "user": user.email,
-                             "user_id": user.id}, status=status.HTTP_200_OK)
-
+            serialized_user = UserSerializer(user)
+            return Response({"token": token.key,
+                             "user": serialized_user.data
+                             }, status=status.HTTP_200_OK)
         else:
             return Response({"message": "Email or password is incorrect"}, status=status.HTTP_400_BAD_REQUEST)
 
