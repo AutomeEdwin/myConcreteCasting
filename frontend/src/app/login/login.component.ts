@@ -6,6 +6,7 @@ import {
   FormControl,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from '../models/user.model';
 
 import { AccountService } from '../services/account.service';
 import { LocalStorageService } from '../services/localstorage.service';
@@ -60,7 +61,17 @@ export class LoginComponent implements OnInit {
       this.accountService.loginUser(JSON.stringify(this.form.value)).subscribe(
         (response: any) => {
           this.accountService.storeToken(response.token);
-          this.localStorageService.set('user', JSON.stringify(response.user));
+          this.localStorageService.set(
+            'user',
+            JSON.stringify(
+              new User(
+                response.user.id,
+                response.user.first_name,
+                response.user.last_name,
+                response.user.email
+              )
+            )
+          );
           this.router.navigate(['/dashboard']);
         },
         (error: any) => {
