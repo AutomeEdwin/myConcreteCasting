@@ -37,8 +37,9 @@ export class AccountManagerComponent implements OnInit {
     public dialog: MatDialog
   ) {
     this.editAccountForm = formBuilder.group({
-      firstName: new FormControl(''),
-      lastName: new FormControl(''),
+      first_name: new FormControl(''),
+      last_name: new FormControl(''),
+      email: this.user.getEmail(),
     });
 
     this.editAccountForm.get('firstName')?.setValue(this.user.getFirstName());
@@ -66,7 +67,14 @@ export class AccountManagerComponent implements OnInit {
   }
 
   onSubmit(form: any) {
-    console.log(form.value);
+    this.accountService.updateUserAccount(form.value).subscribe(
+      (res) => {
+        console.log(res);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
   onDeleteAccount() {
