@@ -2,9 +2,121 @@
   <mat-icon>keyboard_return</mat-icon>
 </button>
 <div class="container">
+  <!-- EDIT ACCOUNT -->
   <div>
-    <button mat-raised-button color="warn" (click)="onDeleteAccount()">
-      Delete my account
-    </button>
+    <form [formGroup]="editAccountForm" (ngSubmit)="onSubmit(editAccountForm)">
+      <h1>My Account</h1>
+      <div class="row">
+        <!-- USER FIRST NAME-->
+        <div class="col">
+          First name :
+          <mat-form-field appearance="outline" class="w-100">
+            <input
+              matInput
+              formControlName="firstName"
+              type="text"
+              id="firstName"
+              [placeholder]="getUserFirstName()"
+            />
+          </mat-form-field>
+        </div>
+
+        <!-- USER LAST NAME-->
+        <div class="col">
+          Last name :
+          <mat-form-field appearance="outline" class="w-100">
+            <input
+              matInput
+              formControlName="lastName"
+              type="text"
+              id="lastName"
+              [placeholder]="getUserLastName()"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- USER EMAIL -->
+      <div>
+        Email :
+        <mat-form-field appearance="outline" class="w-100">
+          <input
+            matInput
+            type="email"
+            id="email"
+            [placeholder]="getUserEmail()"
+            disabled
+          />
+        </mat-form-field>
+      </div>
+      <div class="d-flex justify-content-end">
+        <button mat-raised-button color="primary" type="submit">
+          Save changes
+        </button>
+      </div>
+    </form>
+
+    <!-- CHANGE PASSWORD -->
+    <div>
+      <form
+        [formGroup]="changePasswordForm"
+        (ngSubmit)="onSubmit(changePasswordForm)"
+      >
+        <!-- USER EMAIL -->
+        <div>
+          Current password :
+          <mat-form-field appearance="outline" class="w-100">
+            <input
+              matInput
+              formControlName="currentPassword"
+              type="password"
+              id="currentPassword"
+            />
+          </mat-form-field>
+        </div>
+        <!-- USER EMAIL -->
+        <div>
+          New password :
+          <mat-form-field appearance="outline" class="w-100">
+            <input
+              matInput
+              formControlName="newPassword"
+              type="password"
+              id="newPassword"
+            />
+          </mat-form-field>
+        </div>
+        <!-- USER EMAIL -->
+        <div>
+          Confirm new password :
+          <mat-form-field appearance="outline" class="w-100">
+            <input
+              matInput
+              formControlName="newPasswordConfirm"
+              type="password"
+              id="newPasswordConfirm"
+            />
+          </mat-form-field>
+        </div>
+        <div class="d-flex justify-content-end">
+          <button mat-raised-button color="primary" type="submit">
+            Change password
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- DELETE ACCOUNT-->
+    <div class="row delete-account-button">
+      <div class="col">
+        <p>Delete account</p>
+        <small>You will lose all your data</small>
+      </div>
+      <div class="col">
+        <button mat-raised-button color="warn" (click)="onDeleteAccount()">
+          Delete my account
+        </button>
+      </div>
+    </div>
   </div>
 </div>
