@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import {
+  AbstractControlOptions,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -6,12 +13,7 @@ import { LocalStorageService } from '../services/localstorage.service';
 import { AccountService } from '../services/account.service';
 import { ConfirmJobsiteDeleteComponent } from '../confirm-jobsite-delete/confirm-jobsite-delete.component';
 import { User } from '../models/user.model';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { MustMatch } from '../helpers/must-match.validator';
 
 @Component({
   selector: 'app-account-manager',
@@ -28,6 +30,7 @@ export class AccountManagerComponent implements OnInit {
 
   editAccountForm!: FormGroup;
   changePasswordForm!: FormGroup;
+  submitted: boolean = false;
 
   constructor(
     private localStorageService: LocalStorageService,
@@ -45,14 +48,30 @@ export class AccountManagerComponent implements OnInit {
     this.editAccountForm.get('firstName')?.setValue(this.user.getFirstName());
     this.editAccountForm.get('lastName')?.setValue(this.user.getLastName());
 
-    this.changePasswordForm = formBuilder.group({
-      currentPassword: new FormControl('', Validators.required),
-      newPassword: new FormControl('', Validators.required),
-      newPasswordConfirm: new FormControl('', Validators.required),
-    });
+    this.changePasswordForm = formBuilder.group(
+      {
+        currentPassword: new FormControl('', Validators.required),
+        newPassword: new FormControl('', [
+          Validators.required,
+          Validators.minLength(8),
+        ]),
+        newPasswordConfirm: new FormControl('', Validators.required),
+      },
+      {
+        validator: MustMatch('newPassword', 'newPasswordConfirm'), // Cross field validator
+      } as AbstractControlOptions
+    );
   }
 
   ngOnInit(): void {}
+
+  get accountForm() {
+    return this.editAccountForm.controls;
+  }
+
+  get passwordForm() {
+    return this.changePasswordForm.controls;
+  }
 
   getUserFirstName() {
     return this.user.getFirstName();
@@ -66,10 +85,17 @@ export class AccountManagerComponent implements OnInit {
     return this.user.getEmail();
   }
 
-  onSubmit(form: any) {
+  onSubmit(form: FormGroup) {
+    this.submitted = true;
+
+    if (form.invalid) {
+      return;
+    }
+
     this.accountService.updateUserAccount(form.value).subscribe(
       (res) => {
         console.log(res);
+        this.submitted = false;
       },
       (err) => {
         console.log(err);

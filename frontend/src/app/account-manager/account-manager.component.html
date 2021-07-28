@@ -3,7 +3,7 @@
 </button>
 <div class="container">
   <!-- EDIT ACCOUNT -->
-  <div>
+  <div class="p-2">
     <form [formGroup]="editAccountForm" (ngSubmit)="onSubmit(editAccountForm)">
       <h1>My Account</h1>
       <div class="row">
@@ -57,12 +57,12 @@
     </form>
 
     <!-- CHANGE PASSWORD -->
-    <div>
+    <div class="p-2">
       <form
         [formGroup]="changePasswordForm"
         (ngSubmit)="onSubmit(changePasswordForm)"
       >
-        <!-- USER EMAIL -->
+        <!-- CURRENT PASSWORD -->
         <div>
           Current password :
           <mat-form-field appearance="outline" class="w-100">
@@ -72,9 +72,13 @@
               type="password"
               id="currentPassword"
             />
+            <mat-error
+              *ngIf="submitted && passwordForm.currentPassword.errors?.required"
+              >Current password is required</mat-error
+            >
           </mat-form-field>
         </div>
-        <!-- USER EMAIL -->
+        <!-- NEW PASSWORD -->
         <div>
           New password :
           <mat-form-field appearance="outline" class="w-100">
@@ -84,9 +88,19 @@
               type="password"
               id="newPassword"
             />
+            <mat-error
+              *ngIf="submitted && passwordForm.newPassword.errors?.required"
+            >
+              This field is required
+            </mat-error>
+            <mat-error
+              *ngIf="submitted && passwordForm.newPassword.errors?.minlength"
+            >
+              Password must be at least 8 characters
+            </mat-error>
           </mat-form-field>
         </div>
-        <!-- USER EMAIL -->
+        <!-- NEW PASSWORD CONFIRMATION -->
         <div>
           Confirm new password :
           <mat-form-field appearance="outline" class="w-100">
@@ -96,6 +110,20 @@
               type="password"
               id="newPasswordConfirm"
             />
+            <mat-error
+              *ngIf="
+                submitted && passwordForm.newPasswordConfirm.errors?.mustMatch
+              "
+            >
+              This doesn't match your choosen password
+            </mat-error>
+            <mat-error
+              *ngIf="
+                submitted && passwordForm.newPasswordConfirm.errors?.required
+              "
+            >
+              This field is required
+            </mat-error>
           </mat-form-field>
         </div>
         <div class="d-flex justify-content-end">
@@ -107,7 +135,7 @@
     </div>
 
     <!-- DELETE ACCOUNT-->
-    <div class="row delete-account-button">
+    <div class="row delete-account-button p-2">
       <div class="col">
         <p>Delete account</p>
         <small>You will lose all your data</small>
