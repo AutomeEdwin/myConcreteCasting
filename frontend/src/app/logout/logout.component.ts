@@ -24,6 +24,7 @@ export class LogoutComponent implements OnInit {
     this.accountService.logoutUser().subscribe(
       (res) => {
         this.localStorageService.clear();
+        this.router.navigate(['/login']);
       },
       (err) => {
         this.snackBar.open('Something went wrong !', 'ok', {
