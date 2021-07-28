@@ -4,7 +4,7 @@
 <div class="container">
   <!-- EDIT ACCOUNT -->
   <div class="p-2">
-    <form [formGroup]="editAccountForm" (ngSubmit)="onSubmit(editAccountForm)">
+    <form [formGroup]="editAccountForm" (ngSubmit)="onEditAccountSubmit()">
       <h1>My Account</h1>
       <div class="row">
         <!-- USER FIRST NAME-->
@@ -60,7 +60,7 @@
     <div class="p-2">
       <form
         [formGroup]="changePasswordForm"
-        (ngSubmit)="onSubmit(changePasswordForm)"
+        (ngSubmit)="onEditPasswordSubmit()"
       >
         <!-- CURRENT PASSWORD -->
         <div>

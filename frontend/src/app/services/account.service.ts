@@ -66,6 +66,20 @@ export class AccountService {
     );
   }
 
+  updateUserPassword(modif: any) {
+    return this.httpClient.patch(
+      this.serverURL +
+        'updateUserPassword/' +
+        JSON.parse(String(this.localStorageService.get('user'))).email,
+      modif,
+      {
+        headers: new HttpHeaders({
+          Authorization: 'Token ' + this.localStorageService.get('token'),
+        }),
+      }
+    );
+  }
+
   storeToken(token: string) {
     this.localStorageService.set('token', token);
   }

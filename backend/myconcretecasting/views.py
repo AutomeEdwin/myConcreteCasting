@@ -106,6 +106,8 @@ class UpdateUserPassword(APIView):
                 user.save()
                 return Response({"message": "user password has been successfully changed"}, status=status.HTTP_200_OK)
 
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
 
 class Jobsites(APIView):
     permission_classes = [IsAuthenticated]

@@ -85,14 +85,14 @@ export class AccountManagerComponent implements OnInit {
     return this.user.getEmail();
   }
 
-  onSubmit(form: FormGroup) {
+  onEditAccountSubmit() {
     this.submitted = true;
 
-    if (form.invalid) {
+    if (this.editAccountForm.invalid) {
       return;
     }
 
-    this.accountService.updateUserAccount(form.value).subscribe(
+    this.accountService.updateUserAccount(this.editAccountForm.value).subscribe(
       (res) => {
         console.log(res);
         this.submitted = false;
@@ -101,6 +101,26 @@ export class AccountManagerComponent implements OnInit {
         console.log(err);
       }
     );
+  }
+
+  onEditPasswordSubmit() {
+    this.submitted = true;
+
+    if (this.editAccountForm.invalid) {
+      return;
+    }
+
+    this.accountService
+      .updateUserPassword(this.changePasswordForm.value)
+      .subscribe(
+        (res) => {
+          console.log(res);
+          this.submitted = false;
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
   }
 
   onDeleteAccount() {
