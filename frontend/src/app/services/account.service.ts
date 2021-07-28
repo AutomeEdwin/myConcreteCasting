@@ -39,6 +39,47 @@ export class AccountService {
     });
   }
 
+  deleteUserAccount() {
+    return this.httpClient.delete(
+      this.serverURL +
+        'deleteUser/' +
+        JSON.parse(String(this.localStorageService.get('user'))).email,
+      {
+        headers: new HttpHeaders({
+          Authorization: 'Token ' + this.localStorageService.get('token'),
+        }),
+      }
+    );
+  }
+
+  updateUserAccount(modif: any) {
+    return this.httpClient.patch(
+      this.serverURL +
+        'updateUser/' +
+        JSON.parse(String(this.localStorageService.get('user'))).email,
+      modif,
+      {
+        headers: new HttpHeaders({
+          Authorization: 'Token ' + this.localStorageService.get('token'),
+        }),
+      }
+    );
+  }
+
+  updateUserPassword(modif: any) {
+    return this.httpClient.patch(
+      this.serverURL +
+        'updateUserPassword/' +
+        JSON.parse(String(this.localStorageService.get('user'))).email,
+      modif,
+      {
+        headers: new HttpHeaders({
+          Authorization: 'Token ' + this.localStorageService.get('token'),
+        }),
+      }
+    );
+  }
+
   storeToken(token: string) {
     this.localStorageService.set('token', token);
   }

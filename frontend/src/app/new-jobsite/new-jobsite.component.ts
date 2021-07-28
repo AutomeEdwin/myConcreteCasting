@@ -19,14 +19,15 @@ import * as olProj from 'ol/proj';
 import VectorSource from 'ol/source/Vector';
 import { MapBrowserEvent } from 'ol';
 import { Fill, Stroke, Circle, Style } from 'ol/style';
+import Point from 'ol/geom/Point';
+import Feature from 'ol/Feature';
+import Geometry from 'ol/geom/Geometry';
 
 import { timeout } from 'rxjs/operators';
 
 import { JobsitesService } from '../services/jobsites.service';
 import { NominatimService } from '../services/nominatim.service';
-import Point from 'ol/geom/Point';
-import Feature from 'ol/Feature';
-import Geometry from 'ol/geom/Geometry';
+import { LocalStorageService } from '../services/localstorage.service';
 
 @Component({
   selector: 'app-new-jobsite',
@@ -55,6 +56,7 @@ export class NewJobsiteComponent implements OnInit {
     private formBuilder: FormBuilder,
     private jobsitesService: JobsitesService,
     private nominatomService: NominatimService,
+    private localStorageService: LocalStorageService,
     public dialog: MatDialogRef<NewJobsiteComponent>
   ) {}
 
@@ -68,7 +70,8 @@ export class NewJobsiteComponent implements OnInit {
 
   initForm(): void {
     this.form = this.formBuilder.group({
-      jobsite_owner: localStorage.getItem('email'),
+      jobsite_owner: JSON.parse(String(this.localStorageService.get('user')))
+        .email,
       jobsite_name: new FormControl('', [Validators.required]),
       jobsite_address: new FormControl('', [Validators.required]),
       jobsite_description: new FormControl(''),
@@ -136,7 +139,9 @@ export class NewJobsiteComponent implements OnInit {
       (res) => {
         this.dialog.close();
       },
-      (err) => {}
+      (err) => {
+        console.log(err);
+      }
     );
   }
 
