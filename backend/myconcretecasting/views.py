@@ -89,6 +89,24 @@ class UpdateUser(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class UpdateUserPassword(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request, *args, **kwargs):
+        data = JSONParser().parse(request)
+
+        user = authenticate(
+            username=kwargs['username'], password=data['currentPassword'])
+
+        print(user)
+
+        if user is not None:
+            if data['newPassword'] == data['newPasswordConfirm']:
+                user.set_password(data['newPassword'])
+                user.save()
+                return Response({"message": "user password has been successfully changed"}, status=status.HTTP_200_OK)
+
+
 class Jobsites(APIView):
     permission_classes = [IsAuthenticated]
 
