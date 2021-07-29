@@ -14,6 +14,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTabsModule } from '@angular/material/tabs';
 
 // Components import
 import { AppComponent } from './app.component';
@@ -27,6 +29,7 @@ import { JobsiteViewerComponent } from './jobsite-viewer/jobsite-viewer.componen
 import { NavbarComponent } from './navbar/navbar.component';
 import { JobsitePreviewCardComponent } from './jobsite-preview-card/jobsite-preview-card.component';
 import { ConfirmJobsiteDeleteComponent } from './confirm-jobsite-delete/confirm-jobsite-delete.component';
+import { AccountManagerComponent } from './account-manager/account-manager.component';
 
 @NgModule({
   imports: [
@@ -47,6 +50,8 @@ import { ConfirmJobsiteDeleteComponent } from './confirm-jobsite-delete/confirm-
     MatDialogModule,
     MatSnackBarModule,
     MatCardModule,
+    MatMenuModule,
+    MatTabsModule,
   ],
   declarations: [
     AppComponent,
@@ -59,6 +64,7 @@ import { ConfirmJobsiteDeleteComponent } from './confirm-jobsite-delete/confirm-
     NavbarComponent,
     JobsitePreviewCardComponent,
     ConfirmJobsiteDeleteComponent,
+    AccountManagerComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],

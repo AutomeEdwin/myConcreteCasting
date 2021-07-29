@@ -1,0 +1,22 @@
+.container {
+  height: 75%;
+  width: 75%;
+  color: #ffffff;
+  justify-content: center;
+  display: flex;
+  box-shadow: 0 0.5rem 1rem #006666;
+
+  // centering the container
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.delete-account {
+  position: absolute;
+  bottom: 5%;
+  justify-content: space-around;
+}

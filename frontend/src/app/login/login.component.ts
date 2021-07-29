@@ -4,9 +4,9 @@ import {
   FormBuilder,
   Validators,
   FormControl,
-  Form,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from '../models/user.model';
 
 import { AccountService } from '../services/account.service';
 import { LocalStorageService } from '../services/localstorage.service';
@@ -59,38 +59,33 @@ export class LoginComponent implements OnInit {
       return;
     } else {
       this.accountService.loginUser(JSON.stringify(this.form.value)).subscribe(
-        (response) => this.handleHttpResponse(response),
-        (error) => this.handleHttpResponse(error)
+        (response: any) => {
+          this.accountService.storeToken(response.token);
+          this.localStorageService.set(
+            'user',
+            JSON.stringify(
+              new User(
+                response.user.id,
+                response.user.first_name,
+                response.user.last_name,
+                response.user.email
+              )
+            )
+          );
+          this.router.navigate(['/dashboard']);
+        },
+        (error: any) => {
+          this.responseError = true;
+          this.responseErrorMessage = error.error.message;
+        }
       );
-    }
-  }
-
-  /**
-   * Handle the treatement of the response returned by the API
-   *
-   * The Response contains a field 'success' which may be true of false
-   *
-   * @param response Response from the API
-   */
-  handleHttpResponse(response: any) {
-    if (response.status === 400) {
-      this.responseError = true;
-      this.responseErrorMessage = response.error.message;
-    }
-
-    if (response.status === 200) {
-      this.accountService.storeToken(response.token);
-      this.localStorageService.set('email', response.user);
-      this.localStorageService.set('userID', response.user_id);
-      this.router.navigate(['/dashboard']);
     }
   }
 
   isUserAlreadyLogged() {
     return (
       this.localStorageService.get('token') != null &&
-      this.localStorageService.get('email') != null &&
-      this.localStorageService.get('userID') != null
+      this.localStorageService.get('user') != null
     );
   }
 }

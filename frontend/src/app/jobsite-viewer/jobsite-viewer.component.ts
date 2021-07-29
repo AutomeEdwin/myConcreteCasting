@@ -1,10 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { JobsitesService } from '../services/jobsites.service';
+import { MatDialog } from '@angular/material/dialog';
 
+import { JobsitesService } from '../services/jobsites.service';
 import { Jobsite } from '../models/jobsite.model';
 import { Casting } from '../models/casting.model';
+import { ConfirmJobsiteDeleteComponent } from '../confirm-jobsite-delete/confirm-jobsite-delete.component';
 
 @Component({
   selector: 'app-jobsite-viewer',
@@ -14,7 +16,11 @@ import { Casting } from '../models/casting.model';
 export class JobsiteViewerComponent implements OnInit {
   jobsite!: Jobsite;
 
-  constructor(private router: Router, private jobsiteService: JobsitesService) {
+  constructor(
+    private router: Router,
+    private jobsiteService: JobsitesService,
+    public dialog: MatDialog
+  ) {
     this.jobsiteService
       .getJobsiteByID(+this.router.url.replace('/jobsite/', ''))
       .subscribe(
@@ -81,6 +87,21 @@ export class JobsiteViewerComponent implements OnInit {
   }
   getCastingInfos(i: number) {
     return this.getJobsiteCastings()[i].getInfos();
+  }
+
+  onDelete() {
+    const dialog = this.dialog.open(ConfirmJobsiteDeleteComponent);
+
+    dialog.afterClosed().subscribe((result) => {
+      if (result) {
+        this.jobsiteService.deleteJobsite(this.jobsite.getId()).subscribe(
+          (res) => {
+            this.router.navigate(['/dashboard']);
+          },
+          (err) => {}
+        );
+      }
+    });
   }
 
   onBack(): void {

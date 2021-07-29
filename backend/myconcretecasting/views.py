@@ -7,7 +7,7 @@ from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
 
 from .serializers import UserSerializer, RegisterSerializer, JobsiteSerializer
-from .models import Jobsite
+from .models import Jobsite, User
 
 
 class Register(APIView):
@@ -45,12 +45,10 @@ class Login(APIView):
 
         if user is not None:
             token = Token.objects.create(user=user)
-
-            return Response({"status": status.HTTP_200_OK,
-                             "token": token.key,
-                             "user": user.email,
-                             "user_id": user.id}, status=status.HTTP_200_OK)
-
+            serialized_user = UserSerializer(user)
+            return Response({"token": token.key,
+                             "user": serialized_user.data
+                             }, status=status.HTTP_200_OK)
         else:
             return Response({"message": "Email or password is incorrect"}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -63,6 +61,52 @@ class Logout(APIView):
             key=request.headers['Authorization'].replace('Token ', ""))
         t.delete()
         return Response({"status": status.HTTP_200_OK}, status=status.HTTP_200_OK)
+
+
+class DeleteUser(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, *args, **kwargs):
+
+        User.objects.get(email=kwargs['username']).delete()
+        return Response({"status": status.HTTP_200_OK}, status=status.HTTP_200_OK)
+
+        return Response({"message": "Email or password is incorrect"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UpdateUser(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request, *args, **kwargs):
+        user = User.objects.get(email=kwargs['username'])
+        data = JSONParser().parse(request)
+        serializer = UserSerializer(user, data=data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UpdateUserPassword(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request, *args, **kwargs):
+        data = JSONParser().parse(request)
+
+        user = authenticate(
+            username=kwargs['username'], password=data['currentPassword'])
+
+        print(user)
+
+        if user is not None:
+            if data['newPassword'] == data['newPasswordConfirm']:
+                user.set_password(data['newPassword'])
+                user.save()
+                return Response({"message": "user password has been successfully changed"}, status=status.HTTP_200_OK)
+
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class Jobsites(APIView):

@@ -24,7 +24,7 @@ export class JobsitesService {
 
   getJobsites() {
     return this.httpClient.get(
-      this.serverURL + 'jobsites/' + localStorage.getItem('email'),
+      this.serverURL + 'jobsites/' + JSON.parse(String(this.localStorageService.get('user'))).email,
       {
         headers: new HttpHeaders({
           Authorization: 'Token ' + this.localStorageService.get('token'),
@@ -35,7 +35,7 @@ export class JobsitesService {
 
   getJobsiteByID(id: number) {
     return this.httpClient.get(
-      this.serverURL + 'jobsites/' + localStorage.getItem('email') + '/' + id,
+      this.serverURL + 'jobsites/' + JSON.parse(String(this.localStorageService.get('user'))).email + '/' + id,
       {
         headers: new HttpHeaders({
           Authorization: 'Token ' + this.localStorageService.get('token'),
