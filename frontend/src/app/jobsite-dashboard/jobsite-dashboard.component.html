@@ -1,33 +1,35 @@
-<app-navbar></app-navbar>
+<div>
+  <app-navbar></app-navbar>
 
-<div class="d-flex justify-content-end p-2">
-  <button
-    id="newJobsiteButton"
-    mat-raised-button
-    color="primary"
-    (click)="openForm()"
-  >
-    New Jobsite
-  </button>
-</div>
+  <div class="d-flex justify-content-end p-2">
+    <button
+      id="newJobsiteButton"
+      mat-raised-button
+      color="primary"
+      (click)="openForm()"
+    >
+      New Jobsite
+    </button>
+  </div>
 
-<!-- REFRESH BUTTON -->
-<div class="d-flex justify-content-end pb-2 px-2">
-  <button
-    id="refreshButton"
-    mat-raised-button
-    color="primary"
-    (click)="getJobsites()"
-  >
-    <mat-icon>refresh</mat-icon>
-  </button>
-</div>
+  <!-- REFRESH BUTTON -->
+  <div class="d-flex justify-content-end pb-2 px-2">
+    <button
+      id="refreshButton"
+      mat-raised-button
+      color="primary"
+      (click)="getJobsites()"
+    >
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </div>
 
-<!-- CARDS -->
-<div class="grid" id="cards">
-  <div *ngFor="let jobsite of jobsiteArray; let i = index" class="pb-2 row">
-    <app-jobsite-preview-card
-      [jobsite]="getJobsite(i)"
-    ></app-jobsite-preview-card>
+  <!-- CARDS -->
+  <div class="grid" id="cards">
+    <div *ngFor="let jobsite of jobsiteArray; let i = index" class="pb-2 row">
+      <app-jobsite-preview-card
+        [jobsite]="getJobsite(i)"
+      ></app-jobsite-preview-card>
+    </div>
   </div>
 </div>
