@@ -1,10 +1,13 @@
 .container {
-  height: 75%;
-  width: 75%;
-  color: #ffffff;
+  width: auto;
+  height: auto;
+  color: black;
   justify-content: center;
   display: flex;
+  align-items: center;
   box-shadow: 0 0.5rem 1rem #006666;
+
+  padding: 1em;
 
   // centering the container
   margin: 0;
@@ -15,8 +18,27 @@
   transform: translate(-50%, -50%);
 }
 
+h1 {
+  text-decoration: underline;
+  text-align: center;
+}
+
+form{  padding: 1em 0 0 0;
+}
+
+.col {
+  float: left;
+  width: 50%;
+}
+
 .delete-account {
-  position: absolute;
-  bottom: 5%;
+  display: flex;
+  width: 100%;
+  bottom: 0%;
   justify-content: space-around;
+  padding: 1em 0 0 0;
+}
+
+.back-button {
+  margin: 1em;
 }

@@ -1,11 +1,13 @@
-<button mat-icon-button (click)="onBack()">
-  <mat-icon>keyboard_return</mat-icon>
-</button>
+<div class="back-button">
+  <button mat-icon-button (click)="onBack()">
+    <mat-icon>keyboard_return</mat-icon>
+  </button>
+</div>
 <div class="container">
   <!-- EDIT ACCOUNT -->
-  <div class="p-2">
+  <div>
     <form [formGroup]="editAccountForm" (ngSubmit)="onEditAccountSubmit()">
-      <h1>My Account</h1>
+      <h1><strong>My Account</strong></h1>
       <div class="row">
         <!-- USER FIRST NAME-->
         <div class="col">
@@ -57,7 +59,7 @@
     </form>
 
     <!-- CHANGE PASSWORD -->
-    <div class="p-2">
+    <div>
       <form
         [formGroup]="changePasswordForm"
         (ngSubmit)="onEditPasswordSubmit()"
@@ -135,16 +137,14 @@
     </div>
 
     <!-- DELETE ACCOUNT-->
-    <div class="row delete-account p-2">
-      <div class="col w-75">
+    <div class="delete-account">
+      <div class="col">
         <p>Delete account</p>
         <small>You will lose all your data</small>
       </div>
-      <div class="col w-25 d-flex justify-content-end">
-        <button mat-raised-button color="warn" (click)="onDeleteAccount()">
-          Delete my account
-        </button>
-      </div>
+      <button mat-raised-button color="warn" (click)="onDeleteAccount()">
+        Delete
+      </button>
     </div>
   </div>
 </div>
