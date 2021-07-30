@@ -1,5 +1,7 @@
 .container {
-  color: #ffffff;
+  width: auto;
+  height: auto;
+  color: black;
   justify-content: center;
   display: flex;
   align-items: center;
@@ -14,12 +16,8 @@
   transform: translate(-50%, -50%);
 }
 
-form {
-  width: 50%;
-  color: black;
-}
-
 h1 {
+  text-decoration: underline;
   text-align: center;
 }
 
@@ -29,9 +27,14 @@ button {
   border-radius: 10px;
   color: #fff;
   transition: all 0.1s ease-in-out;
+
   &:hover {
     background-color: transparent;
   }
+}
+
+mat-form-field {
+  width: 100%;
 }
 
 .text-divider {
@@ -46,7 +49,7 @@ button {
   &::after {
     content: "";
     height: 1px;
-    background-color: silver;
+    background-color: black;
     flex-grow: 1;
   }
 
@@ -61,6 +64,8 @@ button {
 
 .signInBtn {
   background-color: #f3941f;
+  margin: 1em 0em 1em 0em;
+
   &:hover {
     border-color: #f3941f;
   }
@@ -68,6 +73,8 @@ button {
 
 .signUpBtn {
   background-color: #004d4d;
+  margin: 1em 0em 1em 0em;
+
   &:hover {
     border-color: #004d4d;
   }

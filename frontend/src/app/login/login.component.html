@@ -1,6 +1,6 @@
 <div class="container">
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <h1>MyConcreteCasting</h1>
+    <h1><strong>Login to my account</strong></h1>
 
     <!--Email-->
     <div>
@@ -47,13 +47,13 @@
       {{ responseErrorMessage }}
     </div>
 
-    <div class="py-2">
+    <div>
       <button mat-button type="submit" class="signInBtn">Sign in</button>
     </div>
 
     <div class="text-divider">OR</div>
 
-    <div class="py-2">
+    <div>
       <button mat-button [routerLink]="'/register'" class="signUpBtn">
         Sign up
       </button>
