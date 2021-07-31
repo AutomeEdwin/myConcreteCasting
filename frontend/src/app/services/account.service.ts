@@ -11,8 +11,8 @@ const headers = new HttpHeaders().set(
   providedIn: 'root',
 })
 export class AccountService {
-  readonly serverURL = 'https://api.concast.digitalconstruction.cloud/';
-  //readonly serverURL = 'http://localhost:8000/';
+  //readonly serverURL = 'https://api.concast.digitalconstruction.cloud/';
+  readonly serverURL = 'http://localhost:8000/';
 
   constructor(
     private httpClient: HttpClient,
@@ -43,7 +43,7 @@ export class AccountService {
     return this.httpClient.delete(
       this.serverURL +
         'deleteUser/' +
-        JSON.parse(String(this.localStorageService.get('user'))).email,
+        JSON.parse(String(this.localStorageService.get('user'))).id,
       {
         headers: new HttpHeaders({
           Authorization: 'Token ' + this.localStorageService.get('token'),
@@ -56,7 +56,7 @@ export class AccountService {
     return this.httpClient.patch(
       this.serverURL +
         'updateUser/' +
-        JSON.parse(String(this.localStorageService.get('user'))).email,
+        JSON.parse(String(this.localStorageService.get('user'))).id,
       modif,
       {
         headers: new HttpHeaders({
@@ -70,7 +70,7 @@ export class AccountService {
     return this.httpClient.patch(
       this.serverURL +
         'updateUserPassword/' +
-        JSON.parse(String(this.localStorageService.get('user'))).email,
+        JSON.parse(String(this.localStorageService.get('user'))).id,
       modif,
       {
         headers: new HttpHeaders({

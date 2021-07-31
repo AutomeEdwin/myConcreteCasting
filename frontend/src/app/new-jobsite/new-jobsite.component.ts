@@ -42,14 +42,14 @@ import { LocalStorageService } from '../services/localstorage.service';
 })
 export class NewJobsiteComponent implements OnInit {
   // Hardcoded data that point the Grand Place of Brussels
-  lattitude = 4.352530764849208;
+  latitude = 4.352530764849208;
   longitude = 50.846642213471654;
 
   form!: FormGroup;
   concreteCastings!: FormArray;
   map!: Map;
   marker = new Feature<Geometry>({
-    geometry: new Point(olProj.fromLonLat([this.lattitude, this.longitude])),
+    geometry: new Point(olProj.fromLonLat([this.latitude, this.longitude])),
   });
 
   constructor(
@@ -70,8 +70,7 @@ export class NewJobsiteComponent implements OnInit {
 
   initForm(): void {
     this.form = this.formBuilder.group({
-      jobsite_owner: JSON.parse(String(this.localStorageService.get('user')))
-        .email,
+      owner_id: JSON.parse(String(this.localStorageService.get('user'))).id,
       jobsite_name: new FormControl('', [Validators.required]),
       jobsite_address: new FormControl('', [Validators.required]),
       jobsite_description: new FormControl(''),
@@ -87,7 +86,7 @@ export class NewJobsiteComponent implements OnInit {
 
     this.form
       .get('jobsite_coordinates')
-      ?.setValue([this.lattitude, this.longitude]);
+      ?.setValue([this.latitude, this.longitude]);
   }
 
   get f() {
@@ -179,7 +178,7 @@ export class NewJobsiteComponent implements OnInit {
         }),
       ],
       view: new View({
-        center: olProj.fromLonLat([this.lattitude, this.longitude]),
+        center: olProj.fromLonLat([this.latitude, this.longitude]),
         zoom: 9,
       }),
       target: 'new-jobsite-map',
@@ -194,7 +193,7 @@ export class NewJobsiteComponent implements OnInit {
 
   updateMarker() {
     this.marker.setGeometry(
-      new Point(olProj.fromLonLat([this.lattitude, this.longitude]))
+      new Point(olProj.fromLonLat([this.latitude, this.longitude]))
     );
   }
 
@@ -205,7 +204,7 @@ export class NewJobsiteComponent implements OnInit {
       'EPSG:4326'
     );
     this.form.get('jobsite_coordinates')?.setValue(convertedCoordinates);
-    this.lattitude = convertedCoordinates[0];
+    this.latitude = convertedCoordinates[0];
     this.longitude = convertedCoordinates[1];
   }
 
@@ -224,7 +223,7 @@ export class NewJobsiteComponent implements OnInit {
             .get('jobsite_coordinates')
             ?.setValue([+json.lon, +json.lat]);
 
-          this.lattitude = json.lon;
+          this.latitude = json.lon;
           this.longitude = json.lat;
 
           this.updateMarker();

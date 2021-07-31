@@ -68,7 +68,7 @@ class DeleteUser(APIView):
 
     def delete(self, *args, **kwargs):
 
-        User.objects.get(email=kwargs['username']).delete()
+        User.objects.get(email=kwargs['user_id']).delete()
         return Response({"status": status.HTTP_200_OK}, status=status.HTTP_200_OK)
 
         return Response({"message": "Email or password is incorrect"}, status=status.HTTP_400_BAD_REQUEST)
@@ -78,7 +78,7 @@ class UpdateUser(APIView):
     permission_classes = [IsAuthenticated]
 
     def patch(self, request, *args, **kwargs):
-        user = User.objects.get(email=kwargs['username'])
+        user = User.objects.get(id=kwargs['user_id'])
         data = JSONParser().parse(request)
         serializer = UserSerializer(user, data=data)
 
@@ -86,6 +86,7 @@ class UpdateUser(APIView):
             serializer.save()
             return Response(status=status.HTTP_200_OK)
 
+        print(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -95,10 +96,10 @@ class UpdateUserPassword(APIView):
     def patch(self, request, *args, **kwargs):
         data = JSONParser().parse(request)
 
-        user = authenticate(
-            username=kwargs['username'], password=data['currentPassword'])
+        username = User.objects.get(id=kwargs['user_id']).email
 
-        print(user)
+        user = authenticate(
+            username=username, password=data['currentPassword'])
 
         if user is not None:
             if data['newPassword'] == data['newPasswordConfirm']:
@@ -123,7 +124,7 @@ class Jobsites(APIView):
 
     def get(self, *args, **kwargs):
         jobsistes = Jobsite.objects.filter(
-            jobsite_owner=kwargs['jobsite_owner'])
+            owner_id=kwargs['owner_id'])
         serializer = JobsiteSerializer(jobsistes, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -133,12 +134,12 @@ class getJobsiteByID(APIView):
 
     def get(self, *args, **kwargs):
         jobsite = Jobsite.objects.get(id=kwargs['id'],
-                                      jobsite_owner=kwargs['jobsite_owner'])
+                                      owner_id=kwargs['owner_id'])
         serializer = JobsiteSerializer(jobsite)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def delete(self, *args, **kwargs):
         jobsite = Jobsite.objects.get(
-            id=kwargs['id'], jobsite_owner=kwargs['jobsite_owner'])
+            id=kwargs['id'], owner_id=kwargs['owner_id'])
         jobsite.delete()
         return Response({"status": status.HTTP_200_OK}, status=status.HTTP_200_OK)

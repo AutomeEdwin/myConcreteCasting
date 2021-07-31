@@ -31,7 +31,7 @@ class Casting(models.Model):
 
 class Jobsite(models.Model):
 
-    jobsite_owner = models.CharField(max_length=50)
+    owner_id = models.IntegerField()
     jobsite_name = models.CharField(max_length=255)
     jobsite_address = models.CharField(max_length=255)
     jobsite_coordinates = models.JSONField()

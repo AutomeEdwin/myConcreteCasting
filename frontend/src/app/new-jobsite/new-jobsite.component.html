@@ -49,7 +49,7 @@
         <!-- Map displayer -->
         <div class="map-container pt-2">
           <div id="new-jobsite-map" class="map"></div>
-          <p>Lattitude : {{ lattitude }} -- Longitude : {{ longitude }}</p>
+          <p>Lattitude : {{ latitude }} -- Longitude : {{ longitude }}</p>
         </div>
 
         <!-- Jobsite description -->
@@ -163,7 +163,7 @@
             <p>Jobsite name : {{ getJobsite("jobsite_name") }}</p>
             <p>Jobsite address : {{ getJobsite("jobsite_address") }}</p>
             <p>Jobsite description : {{ getJobsite("jobsite_description") }}</p>
-            <p>coordinates : [{{ lattitude }} , {{ longitude }}]</p>
+            <p>coordinates : [{{ latitude }} , {{ longitude }}]</p>
           </div>
         </mat-grid-tile>
       </mat-grid-list>
