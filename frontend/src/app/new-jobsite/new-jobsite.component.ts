@@ -9,7 +9,10 @@ import {
   FormControl,
   FormArray,
 } from '@angular/forms';
-import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import {
+  StepperOrientation,
+  STEPPER_GLOBAL_OPTIONS,
+} from '@angular/cdk/stepper';
 
 import Map from 'ol/Map';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
@@ -23,11 +26,13 @@ import Point from 'ol/geom/Point';
 import Feature from 'ol/Feature';
 import Geometry from 'ol/geom/Geometry';
 
-import { timeout } from 'rxjs/operators';
+import { map, timeout } from 'rxjs/operators';
 
 import { JobsitesService } from '../services/jobsites.service';
 import { NominatimService } from '../services/nominatim.service';
 import { LocalStorageService } from '../services/localstorage.service';
+import { Observable } from 'rxjs';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-new-jobsite',
@@ -52,13 +57,20 @@ export class NewJobsiteComponent implements OnInit {
     geometry: new Point(olProj.fromLonLat([this.latitude, this.longitude])),
   });
 
+  stepperOrientation: Observable<StepperOrientation>;
+
   constructor(
     private formBuilder: FormBuilder,
+    private breakpointObserver: BreakpointObserver,
     private jobsitesService: JobsitesService,
     private nominatomService: NominatimService,
     private localStorageService: LocalStorageService,
     public dialog: MatDialogRef<NewJobsiteComponent>
-  ) {}
+  ) {
+    this.stepperOrientation = breakpointObserver
+      .observe('(min-width: 800px)')
+      .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
+  }
 
   ngOnInit(): void {
     this.initForm();
