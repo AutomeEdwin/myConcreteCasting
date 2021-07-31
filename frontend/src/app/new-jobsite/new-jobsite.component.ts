@@ -185,16 +185,17 @@ export class NewJobsiteComponent implements OnInit {
     });
 
     this.map.on('singleclick', (event) => {
-      // get new coordinates
-      this.getClickCoordinates(event);
-      this.updateMarker();
+      let x = this.getClickCoordinates(event);
+
+      this.form.get('jobsite_coordinates')?.setValue(x);
+      this.updateMarker(x[0], x[1]);
+      this.latitude = x[0];
+      this.longitude = x[1];
     });
   }
 
-  updateMarker() {
-    this.marker.setGeometry(
-      new Point(olProj.fromLonLat([this.latitude, this.longitude]))
-    );
+  updateMarker(lon: number, lat: number) {
+    this.marker.setGeometry(new Point(olProj.fromLonLat([lon, lat])));
   }
 
   getClickCoordinates(event: MapBrowserEvent<any>) {
@@ -203,9 +204,7 @@ export class NewJobsiteComponent implements OnInit {
       'EPSG:3857',
       'EPSG:4326'
     );
-    this.form.get('jobsite_coordinates')?.setValue(convertedCoordinates);
-    this.latitude = convertedCoordinates[0];
-    this.longitude = convertedCoordinates[1];
+    return convertedCoordinates;
   }
 
   getCoordinateFromAddress() {
@@ -216,17 +215,21 @@ export class NewJobsiteComponent implements OnInit {
         (res) => {
           let data = JSON.stringify(res);
           data = data.substring(1, data.length - 1);
-          let json = JSON.parse(data);
+          let parsedData = JSON.parse(data);
+          let json = {
+            display_name: parsedData.display_name,
+            lon: Number(parsedData.lat),
+            lat: Number(parsedData.lon),
+          };
 
           this.form.get('jobsite_address')?.setValue(json.display_name);
           this.form
             .get('jobsite_coordinates')
-            ?.setValue([+json.lon, +json.lat]);
+            ?.setValue([+json.lat, +json.lon]);
+          this.latitude = json.lat;
+          this.longitude = json.lon;
 
-          this.latitude = json.lon;
-          this.longitude = json.lat;
-
-          this.updateMarker();
+          this.updateMarker(json.lat, json.lon);
         },
         (err) => {}
       );
