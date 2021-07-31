@@ -68,7 +68,7 @@ class DeleteUser(APIView):
 
     def delete(self, *args, **kwargs):
 
-        User.objects.get(email=kwargs['user_id']).delete()
+        User.objects.get(id=kwargs['user_id']).delete()
         return Response({"status": status.HTTP_200_OK}, status=status.HTTP_200_OK)
 
         return Response({"message": "Email or password is incorrect"}, status=status.HTTP_400_BAD_REQUEST)

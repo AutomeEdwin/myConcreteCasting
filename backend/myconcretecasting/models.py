@@ -31,7 +31,7 @@ class Casting(models.Model):
 
 class Jobsite(models.Model):
 
-    owner_id = models.IntegerField()
+    owner_id = models.ForeignKey(User, on_delete=models.CASCADE)
     jobsite_name = models.CharField(max_length=255)
     jobsite_address = models.CharField(max_length=255)
     jobsite_coordinates = models.JSONField()
