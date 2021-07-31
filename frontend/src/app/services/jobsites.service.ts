@@ -6,8 +6,8 @@ import { LocalStorageService } from './localstorage.service';
   providedIn: 'root',
 })
 export class JobsitesService {
-  //readonly serverURL = 'https://api.concast.digitalconstruction.cloud/';
-  readonly serverURL = 'http://localhost:8000/';
+  readonly serverURL = 'https://api.concast.digitalconstruction.cloud/';
+  //readonly serverURL = 'http://localhost:8000/';
 
   constructor(
     private httpClient: HttpClient,
