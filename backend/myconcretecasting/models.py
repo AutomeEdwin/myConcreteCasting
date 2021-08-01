@@ -23,7 +23,10 @@ class User(AbstractUser):
 class Casting(models.Model):
     casting_name = models.CharField(max_length=50)
     casting_description = models.TextField()
-    casting_infos = models.TextField()
+    casting_fcm2_fcm28_ratio = models.IntegerField()
+    casting_type2_addition = models.BooleanField()
+    casting_rc2_rc28_ratio = models.IntegerField()
+    casting_cement_type = models.CharField(max_length=50)
 
     class Meta:
         abstract = True

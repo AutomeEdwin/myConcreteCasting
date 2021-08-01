@@ -89,6 +89,7 @@
       <ng-template matStepLabel>Create concrete casting</ng-template>
       <mat-hint>required fields* </mat-hint>
 
+      <!-- CASTINGS -->
       <form [formGroup]="form">
         <button
           mat-raised-button
@@ -97,7 +98,7 @@
         >
           Add
         </button>
-        <!-- each casting-->
+
         <div
           formArrayName="jobsite_castings"
           class="form-group py-2"
@@ -115,6 +116,7 @@
             </button>
           </div>
           <div [formGroupName]="i">
+            <!-- CASTING NAME -->
             <div>
               <mat-form-field appearance="outline" MatFormFieldControl="">
                 <mat-label>Name*</mat-label>
@@ -125,6 +127,8 @@
                 />
               </mat-form-field>
             </div>
+
+            <!-- CASTING DESCRIPTION -->
             <div>
               <mat-form-field
                 appearance="outline"
@@ -139,19 +143,61 @@
                 ></textarea>
               </mat-form-field>
             </div>
-            <div>
-              <mat-form-field
-                appearance="outline"
-                MatFormFieldControl=""
-                class="w-100"
-              >
-                <mat-label>Infos*</mat-label>
-                <textarea
-                  matInput
-                  formControlName="casting_infos"
-                  id="casting_infos"
-                ></textarea>
-              </mat-form-field>
+
+            <!-- CASTING INFOS -->
+            <div class="casting-infos-section">
+              <!-- Fcm2/Fcm28 RATIO -->
+              <div class="w-50">
+                Fcm2/Fcm28 Ratio :
+                <mat-form-field appearance="outline" MatFormFieldControl="">
+                  <input
+                    matInput
+                    formControlName="casting_fcm2_fcm28_ratio"
+                    id="casting_fcm2_fcm28_ratio"
+                    type="number"
+                    step="0.01"
+                    min="0"
+                  />
+                </mat-form-field>
+              </div>
+
+              <!-- Rc2/Rc28 RATIO -->
+              <div>
+                Rcm2/Rcm28 Ratio :
+                <mat-form-field appearance="outline" MatFormFieldControl="">
+                  <input
+                    matInput
+                    formControlName="casting_rc2_rc28_ratio"
+                    id="casting_rc2_rc28_ratio"
+                    type="number"
+                    step="0.01"
+                    min="0"
+                  />
+                </mat-form-field>
+              </div>
+
+              <!-- TYPE 2 ADDITION -->
+              <div>
+                Type 2 additions : no
+                <mat-slide-toggle formControlName="casting_type2_addition">
+                </mat-slide-toggle>
+                yes
+              </div>
+
+              <!-- CEMENT TYPE -->
+              <div>
+                Cement type:
+                <mat-form-field appearance="outline">
+                  <mat-select formControlName="casting_cement_type">
+                    <mat-option
+                      *ngFor="let cementType of cementTypes"
+                      [value]="cementType.value"
+                    >
+                      {{ cementType.value }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
             </div>
           </div>
         </div>

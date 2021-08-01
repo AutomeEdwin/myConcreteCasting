@@ -16,6 +16,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSelectModule } from '@angular/material/select';
 
 // Components import
 import { AppComponent } from './app.component';
@@ -52,6 +54,8 @@ import { AccountManagerComponent } from './account-manager/account-manager.compo
     MatCardModule,
     MatMenuModule,
     MatTabsModule,
+    MatSlideToggleModule,
+    MatSelectModule,
   ],
   declarations: [
     AppComponent,

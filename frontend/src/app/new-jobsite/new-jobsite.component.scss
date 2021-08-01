@@ -18,3 +18,11 @@
   width: 50%;
   height: 50%;
 }
+
+.casting-infos-section {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-row: auto auto;
+  grid-column-gap: 1em;
+  grid-row-gap: 1em;
+}

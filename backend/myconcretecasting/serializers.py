@@ -31,4 +31,5 @@ class JobsiteSerializer(serializers.ModelSerializer):
 class CastingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Casting
-        fields = ['id', 'casting_name', 'casting_description', 'casting_infos']
+        fields = ['id', 'casting_name', 'casting_description', 'casting_fcm2_fcm28_ratio',
+                  'casting_type2_addition', 'casting_rc2_rc28_ratio', 'casting_cement_type']
