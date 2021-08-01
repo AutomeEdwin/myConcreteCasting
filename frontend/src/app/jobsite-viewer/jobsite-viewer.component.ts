@@ -39,7 +39,10 @@ export class JobsiteViewerComponent implements OnInit {
       let casting = new Casting(
         castings[j].casting_name,
         castings[j].casting_description,
-        castings[j].casting_infos
+        castings[j].casting_fcm2_fcm28_ratio,
+        castings[j].casting_type2_addition,
+        castings[j].casting_rc2_rc28_ratio,
+        castings[j].casting_cement_type
       );
 
       castingsArray.push(casting);
@@ -85,8 +88,21 @@ export class JobsiteViewerComponent implements OnInit {
   getCastingDescription(i: number) {
     return this.getJobsiteCastings()[i].getDescription();
   }
-  getCastingInfos(i: number) {
-    return this.getJobsiteCastings()[i].getInfos();
+
+  getCastingConcreteRatio(i: number) {
+    return this.getJobsiteCastings()[i].getfcm2_fcm28_ratio();
+  }
+
+  getCastingCementRatio(i: number) {
+    return this.getJobsiteCastings()[i].getrc2_rc28_ratio();
+  }
+
+  getCastingAdditions(i: number) {
+    return this.getJobsiteCastings()[i].getType2Addition();
+  }
+
+  getCastingCementType(i: number) {
+    return this.getJobsiteCastings()[i].getCementType();
   }
 
   onDelete() {

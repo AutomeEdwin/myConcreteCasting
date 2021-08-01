@@ -5,7 +5,7 @@
     <button mat-icon-button (click)="onBack()">
       <mat-icon>keyboard_return</mat-icon>
     </button>
-    <button mat-raised-button color='warn' (click)="onDelete()">Delete</button>
+    <button mat-raised-button color="warn" (click)="onDelete()">Delete</button>
   </div>
 
   <!-- JOBSITE OVERALL -->
@@ -39,7 +39,10 @@
 
         <mat-card-content>
           <p>{{ getCastingDescription(i) }}</p>
-          <p>{{ getCastingInfos(i) }}</p>
+          <p>{{ getCastingConcreteRatio(i) }}</p>
+          <p>{{ getCastingAdditions(i) }}</p>
+          <p>{{ getCastingCementRatio(i) }}</p>
+          <p>{{ getCastingCementType(i) }}</p>
         </mat-card-content>
 
         <mat-card-actions class="d-flex justify-content-end">

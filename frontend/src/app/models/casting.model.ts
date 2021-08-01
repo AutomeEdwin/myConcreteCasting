@@ -2,7 +2,10 @@ export class Casting {
   constructor(
     private casting_name: string,
     private casting_description: string,
-    private casting_infos: string
+    private casting_fcm2_fcm28_ratio: number,
+    private casting_type2_addition: number,
+    private casting_rc2_rc28_ratio: number,
+    private casting_cement_type: boolean
   ) {}
 
   getName() {
@@ -13,7 +16,19 @@ export class Casting {
     return this.casting_description;
   }
 
-  getInfos() {
-    return this.casting_infos;
+  getfcm2_fcm28_ratio() {
+    return this.casting_fcm2_fcm28_ratio;
+  }
+
+  getType2Addition() {
+    return this.casting_type2_addition;
+  }
+
+  getrc2_rc28_ratio() {
+    return this.casting_rc2_rc28_ratio;
+  }
+
+  getCementType() {
+    return this.casting_cement_type;
   }
 }
