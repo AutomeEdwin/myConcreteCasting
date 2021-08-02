@@ -24,7 +24,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 class JobsiteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Jobsite
-        fields = ['id', 'owner_id', 'jobsite_name', 'jobsite_address',
+        fields = ['id', 'owner', 'jobsite_name', 'jobsite_address',
                   'jobsite_coordinates', 'jobsite_description', 'jobsite_castings']
 
 
