@@ -169,70 +169,28 @@ class calculateCuringTime(APIView):
             return Response({"curingDurationDays": curingDurationDays, "endCuringDate": endCuringDate.strftime("%c")}, status=status.HTTP_200_OK)
 
     def getCuringTime(self, resistanceEvolution, envConditions, concrete_temperature):
-        if resistanceEvolution == "fast":
-            if envConditions == "good":
-                if concrete_temperature >= 10:
-                    return 1
-                elif concrete_temperature < 10:
-                    return 2
-            elif envConditions == "normal":
-                if concrete_temperature >= 10:
-                    return 2
-                elif concrete_temperature < 10:
-                    return 4
-            elif envConditions == "bad":
-                if concrete_temperature >= 10:
-                    return 3
-                elif concrete_temperature < 10:
-                    return 5
-        elif resistanceEvolution == "average":
-            if envConditions == "good":
-                if concrete_temperature >= 10:
-                    return 2
-                elif concrete_temperature < 10:
-                    return 4
-            elif envConditions == "normal":
-                if concrete_temperature >= 10:
-                    return 3
-                elif concrete_temperature < 10:
-                    return 6
-            elif envConditions == "bad":
-                if concrete_temperature >= 10:
-                    return 4
-                elif concrete_temperature < 10:
-                    return 8
-        elif resistanceEvolution == "slow":
-            if envConditions == "good":
-                if concrete_temperature >= 10:
-                    return 3
-                elif concrete_temperature < 10:
-                    return 5
-            elif envConditions == "normal":
-                if concrete_temperature >= 10:
-                    return 4
-                elif concrete_temperature < 10:
-                    return 8
-            elif envConditions == "bad":
-                if concrete_temperature >= 10:
-                    return 7
-                elif concrete_temperature < 10:
-                    return 10
-        elif resistanceEvolution == "very slow":
-            if envConditions == "good":
-                if concrete_temperature >= 10:
-                    return 4
-                elif concrete_temperature < 10:
-                    return 6
-            elif envConditions == "normal":
-                if concrete_temperature >= 10:
-                    return 6
-                elif concrete_temperature < 10:
-                    return 12
-            elif envConditions == "bad":
-                if concrete_temperature >= 10:
-                    return 10
-                elif concrete_temperature < 10:
-                    return 15
+        if resistanceEvolution == "fast" and envConditions == "good" and concrete_temperature >= 10:
+            return 1
+        elif (resistanceEvolution == "fast" and envConditions == "good" and concrete_temperature < 10) or (resistanceEvolution == "fast" and envConditions == "normal" and concrete_temperature >= 10) or (resistanceEvolution == "average" and envConditions == "good" and concrete_temperature >= 10):
+            return 2
+        elif (resistanceEvolution == "fast" and envConditions == "bad" and concrete_temperature >= 10) or (resistanceEvolution == "average" and envConditions == "normal" and concrete_temperature >= 10) or (resistanceEvolution == "slow" and envConditions == "good" and concrete_temperature >= 10):
+            return 3
+        elif (resistanceEvolution == "fast" and envConditions == "normal" and concrete_temperature < 10) or (resistanceEvolution == "average" and envConditions == "good" and concrete_temperature < 10) or (resistanceEvolution == "average" and envConditions == "bad" and concrete_temperature >= 10) or (resistanceEvolution == "slow" and envConditions == "normal" and concrete_temperature >= 10) or (resistanceEvolution == "very slow" and envConditions == "good" and concrete_temperature >= 10):
+            return 4
+        elif (resistanceEvolution == "fast" and envConditions == "bad" and concrete_temperature < 10) or (resistanceEvolution == "slow" and envConditions == "good" and concrete_temperature < 10):
+            return 5
+        elif (resistanceEvolution == "average" and envConditions == "normal" and concrete_temperature < 10) or (resistanceEvolution == "very slow" and envConditions == "good" and concrete_temperature < 10) or (resistanceEvolution == "very slow" and envConditions == "normal" and concrete_temperature >= 10):
+            return 6
+        elif (resistanceEvolution == "slow" and envConditions == "bad" and concrete_temperature >= 10):
+            return 7
+        elif (resistanceEvolution == "average" and envConditions == "bad" and concrete_temperature < 10) or (resistanceEvolution == "slow" and envConditions == "normal" and concrete_temperature < 10):
+            return 8
+        elif (resistanceEvolution == "slow" and envConditions == "bad" and concrete_temperature < 10) or (resistanceEvolution == "very slow" and envConditions == "bad" and concrete_temperature >= 10):
+            return 10
+        elif (resistanceEvolution == "very slow" and envConditions == "normal" and concrete_temperature < 10):
+            return 12
+        elif (resistanceEvolution == "very slow" and envConditions == "bad" and concrete_temperature < 10):
+            return 15
 
     def getResistanceEvolution(self, fcm2_fcm28_ratio, type2_addition, rc2_rc28_ratio, cement_type):
         if fcm2_fcm28_ratio is not None:
