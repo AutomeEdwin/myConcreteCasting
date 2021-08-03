@@ -5,12 +5,19 @@
   </mat-card-header>
 
   <mat-card-content>
-    <div class="map-container pt-2">
-      <div id="map" class="map d-flex justify-content-center">
-        <strong>NOT IMPLEMENTED YET</strong>
+    <div class="row">
+      <div class="col">
+        <p>{{ getJobsiteDescription() }}</p>
+      </div>
+      <div class="col border-left border-secondary">
+        <p>Weather : {{ getWeatherDescription() }}</p>
+        <p>Temperature (C°) : {{ getWeatherTemperature() }}</p>
+        <p>Humidity : {{ getWeatherHumidity() }}</p>
+        <p>Clouds (%) : {{ getWeatherClouds() }}</p>
+        <p>Wind speed: {{ getWeatherWindSpeed() }}</p>
+        <img id="wicon" src="{{ getWeatherIcon() }}" alt="Weather icon" />
       </div>
     </div>
-    <p>{{ getJobsiteDescription() }}</p>
   </mat-card-content>
 
   <mat-card-actions class="d-flex justify-content-end">

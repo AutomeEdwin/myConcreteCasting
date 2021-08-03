@@ -1,4 +1,4 @@
-from .views import Register, Login, Logout, DeleteUser, UpdateUser, UpdateUserPassword, Jobsites, getJobsiteByID, calculateCuringTime
+from .views import Register, Login, Logout, DeleteUser, UpdateUser, UpdateUserPassword, Jobsites, getJobsiteByID, calculateCuringTime, getJobsiteWeather
 from django.urls import path
 
 urlpatterns = [
@@ -11,5 +11,6 @@ urlpatterns = [
     path('jobsites/', Jobsites.as_view(), name="jobsite"),
     path('jobsites/<owner_id>', Jobsites.as_view(), name="jobsite"),
     path('jobsites/<owner_id>/<id>', getJobsiteByID.as_view()),
-    path('calculateCuringTime/', calculateCuringTime.as_view())
+    path('calculateCuringTime/', calculateCuringTime.as_view()),
+    path('getJobsiteWeather/', getJobsiteWeather.as_view()),
 ]

@@ -123,4 +123,8 @@ export class JobsiteViewerComponent implements OnInit {
   onBack(): void {
     this.router.navigate(['/dashboard']);
   }
+
+  onStartCuring(i: number) {
+    console.log(this.getJobsiteCastings()[i]);
+  }
 }

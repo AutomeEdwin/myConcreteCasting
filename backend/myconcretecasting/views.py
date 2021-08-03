@@ -10,6 +10,7 @@ from .serializers import UserSerializer, RegisterSerializer, JobsiteSerializer, 
 from .models import Jobsite, User
 
 import datetime
+import requests
 
 
 class Register(APIView):
@@ -146,6 +147,25 @@ class getJobsiteByID(APIView):
         return Response({"status": status.HTTP_200_OK}, status=status.HTTP_200_OK)
 
 
+class getJobsiteWeather(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        data = JSONParser().parse(request)
+        r = requests.get(
+            "http://api.openweathermap.org/data/2.5/weather?lat=" + str(data["lat"]) + "&lon="+str(data["lon"])+"&units=metric&appid=1741bc771947d46a2aac130e41db45cf").json()
+
+        weather = {
+            'description': r['weather'][0]['description'],
+            'icon': r['weather'][0]['icon'],
+            'temperature': r['main']['temp'],
+            'humidity': r['main']['humidity'],
+            'cloudsPercentage': r['clouds']['all'],
+            'windSpeed': r['wind']['speed']
+        }
+        return Response(weather, status=status.HTTP_200_OK)
+
+
 class calculateCuringTime(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -226,22 +246,26 @@ class calculateCuringTime(APIView):
     def cementType(self, type):
         # Determines the evolution of the strength according to the type of cement
         cementTypes = {
-            "oversulfated cement": "very slow",
             # CEM 1
-            "CEM 1 52.5 N": "fast",
-            "CEM 1 52.5 R": "fast",
-            "CEM 1 42.5 N": "average",
-            "CEM 1 42.5 R": "average",
+            "CEM 1 52.5 N ou R": "fast",
+            "CEM 1 42.5 N ou R": "average",
             # CEM 2
-            # TODO
+            "CEM 2/A-M ou -V 42.5 N ou R ou 32.5 R": "average",
+            "CEM 2/A-S, -D ou -LL 52.5 N ou R": "fast",
+            "CEM 2/A-S, -D ou -LL 42.5 N ou R": "fast",
+            "CEM 2/A-S, -D OU -LL 32.5 R": "average",
+            "CEM 2/A-S, -D, -LL, -M ou -V 32.5 N": "slow",
+            "CEM 2/B-S, -LL, -M ou -V 42.5 N ou R ou 32.5 R": "average",
+            "CEM 2/B-S, -LL, -M ou -V 32.5 N": "slow",
             # CEM 3
-            "CEM 3/A 52.5 N": "average",
-            "CEM 3/A 42.5 N": "average",
+            "CEM 3/A 52.5 N ou 42.5 N": "average",
             "CEM 3/A 32.5 N": "slow",
-            "CEM 3/B 42.5 N": "slow",
-            "CEM 3/B 32.5 N": "slow",
+            "CEM 3/B 42.5 N ou 32.5 N": "slow",
             "CEM 3/C 32.5 N": "slow",
             # CEM 5
-            "CEM 5/A 32.5 N": "slow"
+            "CEM 5/A 32.5 N": "slow",
+            # OTHER
+            "oversulfated cement": "very slow",
+
         }
         return cementTypes[type]
