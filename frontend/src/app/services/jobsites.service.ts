@@ -24,7 +24,9 @@ export class JobsitesService {
 
   getJobsites() {
     return this.httpClient.get(
-      this.serverURL + 'jobsites/' + JSON.parse(String(this.localStorageService.get('user'))).id,
+      this.serverURL +
+        'jobsites/' +
+        JSON.parse(String(this.localStorageService.get('user'))).id,
       {
         headers: new HttpHeaders({
           Authorization: 'Token ' + this.localStorageService.get('token'),
@@ -35,7 +37,11 @@ export class JobsitesService {
 
   getJobsiteByID(id: number) {
     return this.httpClient.get(
-      this.serverURL + 'jobsites/' + JSON.parse(String(this.localStorageService.get('user'))).id + '/' + id,
+      this.serverURL +
+        'jobsites/' +
+        JSON.parse(String(this.localStorageService.get('user'))).id +
+        '/' +
+        id,
       {
         headers: new HttpHeaders({
           Authorization: 'Token ' + this.localStorageService.get('token'),
@@ -46,12 +52,24 @@ export class JobsitesService {
 
   deleteJobsite(id: number) {
     return this.httpClient.delete(
-      this.serverURL + 'jobsites/' + JSON.parse(String(this.localStorageService.get('user'))).id + '/' + id,
+      this.serverURL +
+        'jobsites/' +
+        JSON.parse(String(this.localStorageService.get('user'))).id +
+        '/' +
+        id,
       {
         headers: new HttpHeaders({
           Authorization: 'Token ' + this.localStorageService.get('token'),
         }),
       }
     );
+  }
+
+  getCastingCuringTime(body: any) {
+    return this.httpClient.post(this.serverURL + 'calculateCuringTime/', body, {
+      headers: new HttpHeaders({
+        Authorization: 'Token ' + this.localStorageService.get('token'),
+      }),
+    });
   }
 }

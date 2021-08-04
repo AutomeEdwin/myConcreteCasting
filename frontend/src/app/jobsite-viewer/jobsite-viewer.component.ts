@@ -118,11 +118,17 @@ export class JobsiteViewerComponent implements OnInit {
   }
 
   getCastingConcreteRatio(i: number) {
-    return this.getJobsiteCastings()[i].getfcm2_fcm28_ratio();
+    return this.getJobsiteCastings()[i].getfcm2_fcm28_ratio().toString() ===
+      'None'
+      ? 'N/A'
+      : this.getJobsiteCastings()[i].getfcm2_fcm28_ratio().toString();
   }
 
   getCastingCementRatio(i: number) {
-    return this.getJobsiteCastings()[i].getrc2_rc28_ratio();
+    return this.getJobsiteCastings()[i].getrc2_rc28_ratio().toString() ===
+      'None'
+      ? 'N/A'
+      : this.getJobsiteCastings()[i].getrc2_rc28_ratio().toString();
   }
 
   getCastingAdditions(i: number) {
@@ -177,6 +183,33 @@ export class JobsiteViewerComponent implements OnInit {
   }
 
   onStartCuring(i: number) {
-    console.log(this.getJobsiteCastings()[i]);
+    let x = {
+      is_indoor: false,
+      fcm2_fcm28_ratio:
+        this.getCastingConcreteRatio(i).toString() === 'N/A'
+          ? null
+          : this.getCastingConcreteRatio(i),
+      type2_addition: Boolean(this.getCastingAdditions(i)),
+      rc2_rc28_ratio:
+        this.getCastingCementRatio(i) === 'N/A'
+          ? null
+          : this.getCastingCementRatio(i),
+      cement_type: this.getCastingCementType(i),
+      temp: this.getWeatherTemperature(),
+      humidity: this.getWeatherHumidity(),
+      wind: this.getWeatherWindSpeed(),
+      clouds: this.getWeatherClouds(),
+    };
+
+    console.log(x);
+
+    this.jobsiteService.getCastingCuringTime(x).subscribe(
+      (res) => {
+        console.log(res);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 }
