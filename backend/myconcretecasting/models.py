@@ -22,10 +22,10 @@ class User(AbstractUser):
 
 class Casting(models.Model):
     casting_name = models.CharField(max_length=50)
-    casting_description = models.TextField()
-    casting_fcm2_fcm28_ratio = models.IntegerField()
+    casting_description = models.TextField(blank=True)
+    casting_fcm2_fcm28_ratio = models.IntegerField(null=True)
     casting_type2_addition = models.BooleanField()
-    casting_rc2_rc28_ratio = models.IntegerField()
+    casting_rc2_rc28_ratio = models.IntegerField(null=True)
     casting_cement_type = models.CharField(max_length=50)
 
     class Meta:
@@ -38,7 +38,7 @@ class Jobsite(models.Model):
     jobsite_name = models.CharField(max_length=255)
     jobsite_address = models.CharField(max_length=255)
     jobsite_coordinates = models.JSONField()
-    jobsite_description = models.TextField()
+    jobsite_description = models.TextField(blank=True)
     jobsite_castings = models.ArrayField(
         model_container=Casting
     )

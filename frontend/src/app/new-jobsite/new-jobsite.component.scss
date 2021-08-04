@@ -19,10 +19,30 @@
   height: 50%;
 }
 
-.casting-infos-section {
-  display: grid;
-  grid-template-columns: auto auto;
-  grid-row: auto auto;
-  grid-column-gap: 1em;
-  grid-row-gap: 1em;
+.casting-form {
+  border: 1px solid gray;
+}
+
+.text-divider {
+  display: flex;
+  align-items: center;
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  --text-divider-gap: 1rem;
+
+  &::after {
+    content: "";
+    height: 1px;
+    background-color: black;
+    flex-grow: 1;
+  }
+
+  &::before {
+    margin-right: var(--text-divider-gap);
+  }
+
+  &::after {
+    margin-left: var(--text-divider-gap);
+  }
 }

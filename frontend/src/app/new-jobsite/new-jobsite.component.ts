@@ -33,6 +33,7 @@ import { NominatimService } from '../services/nominatim.service';
 import { LocalStorageService } from '../services/localstorage.service';
 import { Observable } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 interface Cement {
   value: string;
@@ -62,6 +63,7 @@ export class NewJobsiteComponent implements OnInit {
   });
 
   stepperOrientation: Observable<StepperOrientation>;
+  advancedConcreteParameters: Array<boolean> = [false];
 
   cementTypes: Cement[] = [
     { value: 'oversulfated cement' },
@@ -150,21 +152,23 @@ export class NewJobsiteComponent implements OnInit {
     return this.formBuilder.group({
       casting_name: new FormControl('', [Validators.required]),
       casting_description: new FormControl(''),
-      casting_fcm2_fcm28_ratio: new FormControl(''),
-      casting_type2_addition: new FormControl(''),
-      casting_rc2_rc28_ratio: new FormControl(''),
-      casting_cement_type: new FormControl(''),
+      casting_fcm2_fcm28_ratio: new FormControl(null),
+      casting_type2_addition: new FormControl(false),
+      casting_rc2_rc28_ratio: new FormControl(null),
+      casting_cement_type: new FormControl('', [Validators.required]),
     });
   }
 
   addConcreteCasting(): void {
     this.concreteCastings = this.form.get('jobsite_castings') as FormArray;
     this.concreteCastings.push(this.createConcreteCasting());
+    this.advancedConcreteParameters.push(false);
   }
 
   removeConcreteCasting(i: number): void {
     this.concreteCastings = this.form.get('jobsite_castings') as FormArray;
     this.concreteCastings.removeAt(i);
+    this.advancedConcreteParameters.splice(i, i + 1);
   }
 
   isLastArea(): boolean {
@@ -172,12 +176,14 @@ export class NewJobsiteComponent implements OnInit {
     return this.concreteCastings.length === 1;
   }
 
+  advancedConcreteParametersToggle(event: MatSlideToggleChange, i: number) {
+    this.advancedConcreteParameters[i] = event.checked;
+  }
+
   onSubmit() {
     if (this.form.invalid) {
       return;
     }
-
-    console.log(this.form.value);
 
     this.jobsitesService.createJobsite(this.form.value).subscribe(
       (res) => {
@@ -189,7 +195,7 @@ export class NewJobsiteComponent implements OnInit {
     );
   }
 
-  // MAP
+  // MAP LOGIC
   initMap() {
     this.marker.setStyle(
       new Style({

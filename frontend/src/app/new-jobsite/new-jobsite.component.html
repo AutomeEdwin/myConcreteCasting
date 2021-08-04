@@ -101,7 +101,7 @@
 
         <div
           formArrayName="jobsite_castings"
-          class="form-group py-2"
+          class="casting-form"
           *ngFor="let area of getCastingsControls.controls; let i = index"
         >
           <div class="d-flex justify-content-between">
@@ -144,50 +144,21 @@
               </mat-form-field>
             </div>
 
+            <div class="text-divider">
+              <mat-slide-toggle
+                [checked]="advancedConcreteParameters[i]"
+                (change)="advancedConcreteParametersToggle($event, i)"
+                >Advanced mode</mat-slide-toggle
+              >
+            </div>
+
             <!-- CASTING INFOS -->
-            <div class="casting-infos-section">
-              <!-- Fcm2/Fcm28 RATIO -->
-              <div class="w-50">
-                Fcm2/Fcm28 Ratio :
-                <mat-form-field appearance="outline" MatFormFieldControl="">
-                  <input
-                    matInput
-                    formControlName="casting_fcm2_fcm28_ratio"
-                    id="casting_fcm2_fcm28_ratio"
-                    type="number"
-                    step="0.01"
-                    min="0"
-                  />
-                </mat-form-field>
-              </div>
-
-              <!-- Rc2/Rc28 RATIO -->
-              <div>
-                Rcm2/Rcm28 Ratio :
-                <mat-form-field appearance="outline" MatFormFieldControl="">
-                  <input
-                    matInput
-                    formControlName="casting_rc2_rc28_ratio"
-                    id="casting_rc2_rc28_ratio"
-                    type="number"
-                    step="0.01"
-                    min="0"
-                  />
-                </mat-form-field>
-              </div>
-
-              <!-- TYPE 2 ADDITION -->
-              <div>
-                Type 2 additions : no
-                <mat-slide-toggle formControlName="casting_type2_addition">
-                </mat-slide-toggle>
-                yes
-              </div>
-
+            <div class="casting-options">
               <!-- CEMENT TYPE -->
               <div>
                 Cement type:
                 <mat-form-field appearance="outline">
+                  <mat-label>Select a cement type</mat-label>
                   <mat-select formControlName="casting_cement_type">
                     <mat-option
                       *ngFor="let cementType of cementTypes"
@@ -197,6 +168,49 @@
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
+              </div>
+
+              <div
+                *ngIf="advancedConcreteParameters[i]"
+                class="casting-options"
+              >
+                <!-- Fcm2/Fcm28 RATIO -->
+                <div class="w-50">
+                  Fcm2/Fcm28 Ratio :
+                  <mat-form-field appearance="outline" MatFormFieldControl="">
+                    <input
+                      matInput
+                      formControlName="casting_fcm2_fcm28_ratio"
+                      id="casting_fcm2_fcm28_ratio"
+                      type="number"
+                      step="0.01"
+                      min="0"
+                    />
+                  </mat-form-field>
+                </div>
+
+                <!-- Rc2/Rc28 RATIO -->
+                <div>
+                  Rcm2/Rcm28 Ratio :
+                  <mat-form-field appearance="outline" MatFormFieldControl="">
+                    <input
+                      matInput
+                      formControlName="casting_rc2_rc28_ratio"
+                      id="casting_rc2_rc28_ratio"
+                      type="number"
+                      step="0.01"
+                      min="0"
+                    />
+                  </mat-form-field>
+                </div>
+
+                <!-- TYPE 2 ADDITION -->
+                <div>
+                  Type 2 additions : no
+                  <mat-slide-toggle formControlName="casting_type2_addition">
+                  </mat-slide-toggle>
+                  yes
+                </div>
               </div>
             </div>
           </div>
@@ -232,7 +246,6 @@
           <div id="castings_overview">
             <p>Name:{{ getCasting(i, "casting_name") }}</p>
             <p>Description:{{ getCasting(i, "casting_description") }}</p>
-            <p>Infos:{{ getCasting(i, "casting_infos") }}</p>
           </div>
         </mat-grid-tile>
       </mat-grid-list>
