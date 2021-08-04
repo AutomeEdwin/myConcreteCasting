@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +12,7 @@ export class NominatimService {
   search(query: string) {
     query = query.replace(/ /g, '+');
     return this.httpClient.get(
-      this.nominatimURL + 'search?q=' + query + '&format=json&limit=1'
+      'https://nominatim.openstreetmap.org/?q=' + query + '&format=json&limit=1'
     );
   }
 }
