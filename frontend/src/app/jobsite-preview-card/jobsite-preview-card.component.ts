@@ -16,7 +16,6 @@ import { Weather } from '../models/weather.model';
 })
 export class JobsitePreviewCardComponent implements OnInit {
   @Input() jobsite!: Jobsite;
-
   weather!: Weather;
 
   constructor(
@@ -47,9 +46,7 @@ export class JobsitePreviewCardComponent implements OnInit {
           res.windSpeed
         );
       },
-      (err) => {
-        console.log(err);
-      }
+      (err) => {}
     );
   }
 

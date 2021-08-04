@@ -65,18 +65,25 @@ export class NewJobsiteComponent implements OnInit {
 
   cementTypes: Cement[] = [
     { value: 'oversulfated cement' },
+
     { value: 'CEM 1 52.5 N ou R' },
-    { value: 'CEM 1 52.5 N ou R' },
+    { value: 'CEM 1 42.5 N ou R' },
+
     { value: 'CEM 2/A-M ou -V 42.5 N ou R ou 32.5 R' },
+
     { value: 'CEM 2/A-S, -D ou -LL 52.5 N ou R' },
     { value: 'CEM 2/A-S, -D ou -LL 42.5 N ou R' },
     { value: 'CEM 2/A-S, -D ou -LL 32.5 R' },
-    { value: 'CEM 2/A-S, -D, -LL, -M ou -V 42.5 N ou R ou 32.5 R' },
+    { value: 'CEM 2/A-S, -D, -LL, -M ou -V 32.5 N' },
+
+    { value: 'CEM 2/B-S, -LL, -M ou -V 42.5 N ou R ou 32.5 R' },
     { value: 'CEM 2/B-S, -LL, -M ou -V 32.5 N' },
+
     { value: 'CEM 3/A 52.5 N ou 42.5 N' },
     { value: 'CEM 3/A 32.5 N' },
     { value: 'CEM 3/B 42.5 N ou 32.5 N' },
     { value: 'CEM 3/C 32.5 N' },
+
     { value: 'CEM 5/A 32.5 N' },
   ];
 
@@ -103,7 +110,7 @@ export class NewJobsiteComponent implements OnInit {
 
   initForm(): void {
     this.form = this.formBuilder.group({
-      owner_id: JSON.parse(String(this.localStorageService.get('user'))).id,
+      owner: JSON.parse(String(this.localStorageService.get('user'))).id,
       jobsite_name: new FormControl('', [Validators.required]),
       jobsite_address: new FormControl('', [Validators.required]),
       jobsite_description: new FormControl(''),
@@ -171,7 +178,7 @@ export class NewJobsiteComponent implements OnInit {
     }
 
     console.log(this.form.value);
-    
+
     this.jobsitesService.createJobsite(this.form.value).subscribe(
       (res) => {
         this.dialog.close();

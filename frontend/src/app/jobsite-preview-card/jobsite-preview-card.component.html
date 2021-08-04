@@ -10,12 +10,15 @@
         <p>{{ getJobsiteDescription() }}</p>
       </div>
       <div class="col border-left border-secondary">
-        <p>Weather : {{ getWeatherDescription() }}</p>
-        <p>Temperature (C°) : {{ getWeatherTemperature() }}</p>
-        <p>Humidity : {{ getWeatherHumidity() }}</p>
-        <p>Clouds (%) : {{ getWeatherClouds() }}</p>
-        <p>Wind speed: {{ getWeatherWindSpeed() }}</p>
-        <img id="wicon" src="{{ getWeatherIcon() }}" alt="Weather icon" />
+        <p>
+          Weather : {{ getWeatherDescription() }}
+          <img id="wicon" src="{{ getWeatherIcon() }}" alt="Weather icon" />
+        </p>
+
+        <p>Temperature : {{ getWeatherTemperature() }} C°</p>
+        <p>Humidity : {{ getWeatherHumidity() }} %</p>
+        <p>Clouds : {{ getWeatherClouds() }} %</p>
+        <p>Wind speed: {{ getWeatherWindSpeed() }} m/s</p>
       </div>
     </div>
   </mat-card-content>

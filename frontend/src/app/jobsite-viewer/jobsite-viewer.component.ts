@@ -4,8 +4,10 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 import { JobsitesService } from '../services/jobsites.service';
+import { OpenweatherService } from '../services/openweather.service';
 import { Jobsite } from '../models/jobsite.model';
 import { Casting } from '../models/casting.model';
+import { Weather } from '../models/weather.model';
 import { ConfirmJobsiteDeleteComponent } from '../confirm-jobsite-delete/confirm-jobsite-delete.component';
 
 @Component({
@@ -15,10 +17,12 @@ import { ConfirmJobsiteDeleteComponent } from '../confirm-jobsite-delete/confirm
 })
 export class JobsiteViewerComponent implements OnInit {
   jobsite!: Jobsite;
+  weather!: Weather;
 
   constructor(
     private router: Router,
     private jobsiteService: JobsitesService,
+    private openweatherService: OpenweatherService,
     public dialog: MatDialog
   ) {
     this.jobsiteService
@@ -26,6 +30,7 @@ export class JobsiteViewerComponent implements OnInit {
       .subscribe(
         (res: any) => {
           this.createJobsite(res);
+          this.getWeather();
         },
         (err) => {}
       );
@@ -60,6 +65,29 @@ export class JobsiteViewerComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  getWeather() {
+    let coordinates = {
+      lat: this.jobsite.getCoordinates()[0],
+      lon: this.jobsite.getCoordinates()[1],
+    };
+
+    this.openweatherService.getJobsiteWeather(coordinates).subscribe(
+      (res: any) => {
+        this.weather = new Weather(
+          res.description,
+          res.icon,
+          res.temperature,
+          res.humidity,
+          res.cloudsPercentage,
+          res.windSpeed
+        );
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
 
   getJobsiteName() {
     return this.jobsite.getName();
@@ -103,6 +131,30 @@ export class JobsiteViewerComponent implements OnInit {
 
   getCastingCementType(i: number) {
     return this.getJobsiteCastings()[i].getCementType();
+  }
+
+  getWeatherDescription() {
+    return this.weather.getDescription();
+  }
+
+  getWeatherIcon() {
+    return 'http://openweathermap.org/img/w/' + this.weather.getIcon() + '.png';
+  }
+
+  getWeatherTemperature() {
+    return this.weather.getTemperature();
+  }
+
+  getWeatherHumidity() {
+    return this.weather.getHumidity();
+  }
+
+  getWeatherClouds() {
+    return this.weather.getCloudsPercentage();
+  }
+
+  getWeatherWindSpeed() {
+    return this.weather.getWindSpeed();
   }
 
   onDelete() {
