@@ -41,6 +41,7 @@ export class JobsiteDashboardComponent implements OnInit {
 
       for (let j in castings) {
         let casting = new Casting(
+          castings[j].casting_id,
           castings[j].casting_name,
           castings[j].casting_description,
           castings[j].casting_isClassEI,

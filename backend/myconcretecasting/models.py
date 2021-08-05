@@ -6,6 +6,8 @@ from djongo import models
 
 from .managers import UserManager
 
+import uuid
+
 
 class User(AbstractUser):
     username = None
@@ -21,6 +23,8 @@ class User(AbstractUser):
 
 
 class Casting(models.Model):
+    casting_id = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False)
     casting_name = models.CharField(max_length=50)
     casting_description = models.TextField(blank=True)
     casting_isClassEI = models.BooleanField()

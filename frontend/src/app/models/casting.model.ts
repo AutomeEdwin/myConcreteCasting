@@ -1,5 +1,6 @@
 export class Casting {
   constructor(
+    private casting_uuid: string,
     private casting_name: string,
     private casting_description: string,
     private casting_isClassEI: boolean,
@@ -8,6 +9,10 @@ export class Casting {
     private casting_rc2_rc28_ratio: number,
     private casting_cement_type: boolean
   ) {}
+
+  getUUID() {
+    return this.casting_uuid;
+  }
 
   getName() {
     return this.casting_name;
