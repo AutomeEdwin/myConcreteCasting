@@ -51,7 +51,6 @@ export class JobsiteViewerComponent implements OnInit {
         castings[j].casting_rc2_rc28_ratio,
         castings[j].casting_cement_type
       );
-      console.log(casting);
       castingsArray.push(casting);
     }
 
@@ -162,28 +161,8 @@ export class JobsiteViewerComponent implements OnInit {
 
   onStartCuring(i: number) {
     let x = {
-      is_indoor: false,
-
-      fcm2_fcm28_ratio:
-        this.getCastingConcreteRatio(i).toString() === 'N/A'
-          ? null
-          : this.getCastingConcreteRatio(i),
-
-      type2_addition:
-        this.jobsite.getCastings()[i].getType2Addition().toString() === 'Yes'
-          ? true
-          : false,
-
-      rc2_rc28_ratio:
-        this.getCastingCementRatio(i) === 'N/A'
-          ? null
-          : this.getCastingCementRatio(i),
-
-      cement_type: this.jobsite.getCastings()[i].getCementType(),
-      temp: this.weather.getTemperature(),
-      humidity: this.weather.getHumidity(),
-      wind: this.weather.getWindSpeed(),
-      clouds: this.weather.getCloudsPercentage(),
+      jobsite_id: this.jobsite.getId(),
+      casting_index: i,
     };
 
     this.jobsiteService.getCastingCuringTime(x).subscribe(

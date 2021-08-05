@@ -170,20 +170,27 @@ class calculateCuringTime(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        casting = JSONParser().parse(request)
+        data = JSONParser().parse(request)
 
-        if casting['is_indoor']:
+        jobsite = Jobsite.objects.get(id=data['jobsite_id'])
+        casting = CastingSerializer(
+            jobsite.jobsite_castings[data['casting_index']])
+        casting = casting.data
+        weather = requests.get("http://api.openweathermap.org/data/2.5/weather?lat=" + str(jobsite.jobsite_coordinates[0]) + "&lon="+str(
+            jobsite.jobsite_coordinates[1])+"&units=metric&appid=1741bc771947d46a2aac130e41db45cf").json()
+
+        if casting['casting_isClassEI']:
             endCuringDate = datetime.datetime.now() + datetime.timedelta(hours=12)
             return Response({"curingDurationDays": 0.5, "endCuringDate": endCuringDate.strftime("%c")}, status=status.HTTP_200_OK)
 
         else:
             resistanceEvolution = self.getResistanceEvolution(
-                casting["fcm2_fcm28_ratio"], casting["type2_addition"], casting["rc2_rc28_ratio"], casting["cement_type"])
+                casting["casting_fcm2_fcm28_ratio"], casting["casting_type2_addition"], casting["casting_rc2_rc28_ratio"], casting["casting_cement_type"])
             envConditions = self.getEnvConditions(
-                casting["clouds"], casting["wind"], casting["humidity"])
+                weather['clouds']['all'], weather['wind']['speed'], weather['main']['humidity'])
 
             curingDurationDays = self.getCuringTime(
-                resistanceEvolution, envConditions, casting["temp"])
+                resistanceEvolution, envConditions, weather['main']['temp'])
             endCuringDate = datetime.datetime.now() + datetime.timedelta(days=curingDurationDays)
 
             return Response({"curingDurationDays": curingDurationDays, "endCuringDate": endCuringDate.strftime("%c")}, status=status.HTTP_200_OK)

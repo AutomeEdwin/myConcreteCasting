@@ -33,9 +33,6 @@ class Casting(models.Model):
     casting_rc2_rc28_ratio = models.IntegerField(null=True)
     casting_cement_type = models.CharField(max_length=50)
 
-    class Meta:
-        abstract = True
-
 
 class Jobsite(models.Model):
 

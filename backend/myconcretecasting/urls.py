@@ -1,4 +1,4 @@
-from .views import Register, Login, Logout, DeleteUser, UpdateUser, UpdateUserPassword, Jobsites, getJobsiteByID, calculateCuringTime, getJobsiteWeather
+from .views import *
 from django.urls import path
 
 urlpatterns = [
