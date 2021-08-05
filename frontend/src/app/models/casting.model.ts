@@ -2,8 +2,9 @@ export class Casting {
   constructor(
     private casting_name: string,
     private casting_description: string,
+    private casting_isClassEI: boolean,
     private casting_fcm2_fcm28_ratio: number,
-    private casting_type2_addition: number,
+    private casting_type2_addition: boolean,
     private casting_rc2_rc28_ratio: number,
     private casting_cement_type: boolean
   ) {}
@@ -14,6 +15,10 @@ export class Casting {
 
   getDescription() {
     return this.casting_description;
+  }
+
+  getIsClassEI() {
+    return this.casting_isClassEI;
   }
 
   getfcm2_fcm28_ratio() {

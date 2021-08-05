@@ -18,6 +18,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 // Components import
 import { AppComponent } from './app.component';
@@ -56,6 +57,7 @@ import { AccountManagerComponent } from './account-manager/account-manager.compo
     MatTabsModule,
     MatSlideToggleModule,
     MatSelectModule,
+    MatCheckboxModule,
   ],
   declarations: [
     AppComponent,

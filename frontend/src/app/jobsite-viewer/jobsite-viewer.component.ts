@@ -44,12 +44,13 @@ export class JobsiteViewerComponent implements OnInit {
       let casting = new Casting(
         castings[j].casting_name,
         castings[j].casting_description,
+        castings[j].casting_isClassEI,
         castings[j].casting_fcm2_fcm28_ratio,
         castings[j].casting_type2_addition,
         castings[j].casting_rc2_rc28_ratio,
         castings[j].casting_cement_type
       );
-
+      console.log(casting);
       castingsArray.push(casting);
     }
 
@@ -83,26 +84,14 @@ export class JobsiteViewerComponent implements OnInit {
           res.windSpeed
         );
       },
-      (err) => {
-        console.log(err);
-      }
+      (err) => {}
     );
   }
 
-  getJobsiteName() {
-    return this.jobsite.getName();
-  }
-
   getJobsiteDescription() {
-    return this.jobsite.getDescription();
-  }
-
-  getJobsiteAddress() {
-    return this.jobsite.getAddress();
-  }
-
-  getJobsiteCoordinates() {
-    return this.jobsite.getCoordinates();
+    return this.jobsite.getDescription() === ''
+      ? 'There is no description for this jobsite'
+      : this.jobsite.getDescription();
   }
 
   getJobsiteCastings() {
@@ -114,7 +103,15 @@ export class JobsiteViewerComponent implements OnInit {
   }
 
   getCastingDescription(i: number) {
-    return this.getJobsiteCastings()[i].getDescription();
+    return this.getJobsiteCastings()[i].getDescription() === ''
+      ? 'There is no description for this casting'
+      : this.getJobsiteCastings()[i].getDescription();
+  }
+
+  getCastingClassEI(i: number) {
+    return this.getJobsiteCastings()[i].getIsClassEI().toString() === 'True'
+      ? 'Yes'
+      : 'No';
   }
 
   getCastingConcreteRatio(i: number) {
@@ -132,35 +129,13 @@ export class JobsiteViewerComponent implements OnInit {
   }
 
   getCastingAdditions(i: number) {
-    return this.getJobsiteCastings()[i].getType2Addition();
-  }
-
-  getCastingCementType(i: number) {
-    return this.getJobsiteCastings()[i].getCementType();
-  }
-
-  getWeatherDescription() {
-    return this.weather.getDescription();
+    return this.getJobsiteCastings()[i].getType2Addition().toString() === 'True'
+      ? 'Yes'
+      : 'No';
   }
 
   getWeatherIcon() {
     return 'http://openweathermap.org/img/w/' + this.weather.getIcon() + '.png';
-  }
-
-  getWeatherTemperature() {
-    return this.weather.getTemperature();
-  }
-
-  getWeatherHumidity() {
-    return this.weather.getHumidity();
-  }
-
-  getWeatherClouds() {
-    return this.weather.getCloudsPercentage();
-  }
-
-  getWeatherWindSpeed() {
-    return this.weather.getWindSpeed();
   }
 
   onDelete() {
@@ -185,23 +160,28 @@ export class JobsiteViewerComponent implements OnInit {
   onStartCuring(i: number) {
     let x = {
       is_indoor: false,
+
       fcm2_fcm28_ratio:
         this.getCastingConcreteRatio(i).toString() === 'N/A'
           ? null
           : this.getCastingConcreteRatio(i),
-      type2_addition: Boolean(this.getCastingAdditions(i)),
+
+      type2_addition:
+        this.jobsite.getCastings()[i].getType2Addition().toString() === 'Yes'
+          ? true
+          : false,
+
       rc2_rc28_ratio:
         this.getCastingCementRatio(i) === 'N/A'
           ? null
           : this.getCastingCementRatio(i),
-      cement_type: this.getCastingCementType(i),
-      temp: this.getWeatherTemperature(),
-      humidity: this.getWeatherHumidity(),
-      wind: this.getWeatherWindSpeed(),
-      clouds: this.getWeatherClouds(),
-    };
 
-    console.log(x);
+      cement_type: this.jobsite.getCastings()[i].getCementType(),
+      temp: this.weather.getTemperature(),
+      humidity: this.weather.getHumidity(),
+      wind: this.weather.getWindSpeed(),
+      clouds: this.weather.getCloudsPercentage(),
+    };
 
     this.jobsiteService.getCastingCuringTime(x).subscribe(
       (res) => {

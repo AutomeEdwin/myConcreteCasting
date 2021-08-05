@@ -43,6 +43,7 @@ export class JobsiteDashboardComponent implements OnInit {
         let casting = new Casting(
           castings[j].casting_name,
           castings[j].casting_description,
+          castings[j].casting_isClassEI,
           castings[j].casting_fcm2_fcm28_ratio,
           castings[j].casting_type2_addition,
           castings[j].casting_rc2_rc28_ratio,

@@ -152,6 +152,7 @@ export class NewJobsiteComponent implements OnInit {
     return this.formBuilder.group({
       casting_name: new FormControl('', [Validators.required]),
       casting_description: new FormControl(''),
+      casting_isClassEI: new FormControl(false),
       casting_fcm2_fcm28_ratio: new FormControl(null),
       casting_type2_addition: new FormControl(false),
       casting_rc2_rc28_ratio: new FormControl(null),
@@ -184,6 +185,8 @@ export class NewJobsiteComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
+
+    console.log(this.form.value);
 
     this.jobsitesService.createJobsite(this.form.value).subscribe(
       (res) => {
@@ -250,12 +253,7 @@ export class NewJobsiteComponent implements OnInit {
   }
 
   getClickCoordinates(event: MapBrowserEvent<any>) {
-    let convertedCoordinates = olProj.transform(
-      event.coordinate,
-      'EPSG:3857',
-      'EPSG:4326'
-    );
-    return convertedCoordinates;
+    return olProj.transform(event.coordinate, 'EPSG:3857', 'EPSG:4326');
   }
 
   getCoordinateFromAddress() {

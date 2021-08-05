@@ -11,8 +11,8 @@
   <!-- JOBSITE OVERALL -->
   <mat-card class="m-2">
     <mat-card-header>
-      <mat-card-title> {{ getJobsiteName() }}</mat-card-title>
-      <mat-card-subtitle>{{ getJobsiteAddress() }}</mat-card-subtitle>
+      <mat-card-title> {{ jobsite.getName() }}</mat-card-title>
+      <mat-card-subtitle>{{ jobsite.getAddress() }}</mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-content>
@@ -22,14 +22,14 @@
         </div>
         <div class="col">
           <p>
-            Weather : {{ getWeatherDescription() }}
+            Weather : {{ weather.getDescription() }}
             <img id="wicon" src="{{ getWeatherIcon() }}" alt="Weather icon" />
           </p>
 
-          <p>Temperature : {{ getWeatherTemperature() }} C°</p>
-          <p>Humidity : {{ getWeatherHumidity() }} %</p>
-          <p>Clouds : {{ getWeatherClouds() }} %</p>
-          <p>Wind speed: {{ getWeatherWindSpeed() }} m/s</p>
+          <p>Temperature : {{ weather.getTemperature() }} C°</p>
+          <p>Humidity : {{ weather.getHumidity() }} %</p>
+          <p>Clouds : {{ weather.getCloudsPercentage() }} %</p>
+          <p>Wind speed: {{ weather.getWindSpeed() }} m/s</p>
         </div>
       </div>
     </mat-card-content>
@@ -40,19 +40,22 @@
   </mat-card>
 
   <div class="grid">
-    <div *ngFor="let casting of getJobsiteCastings(); let i = index">
+    <div *ngFor="let casting of jobsite.getCastings(); let i = index">
       <!-- CASTING -->
       <mat-card class="m-2"
         ><mat-card-header>
-          <mat-card-title>{{ getCastingName(i) }} </mat-card-title>
+          <mat-card-title
+            >{{ this.getJobsiteCastings()[i].getName() }}
+          </mat-card-title>
         </mat-card-header>
 
         <mat-card-content>
-          <p>{{ getCastingDescription(i) }}</p>
-          <p>{{ getCastingConcreteRatio(i) }}</p>
-          <p>{{ getCastingAdditions(i) }}</p>
-          <p>{{ getCastingCementRatio(i) }}</p>
-          <p>{{ getCastingCementType(i) }}</p>
+          <p>Description : {{ getCastingDescription(i) }}</p>
+          <p>Classe EI : {{ getCastingClassEI(i) }}</p>
+          <p>Concrete compression Ratio : {{ getCastingConcreteRatio(i) }}</p>
+          <p>Type 2 addition : {{ getCastingAdditions(i) }}</p>
+          <p>Cement compression Ratio : {{ getCastingCementRatio(i) }}</p>
+          <p>Cement type : {{ jobsite.getCastings()[i].getCementType() }}</p>
         </mat-card-content>
 
         <mat-card-actions class="d-flex justify-content-end">

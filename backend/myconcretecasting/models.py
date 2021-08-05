@@ -23,6 +23,7 @@ class User(AbstractUser):
 class Casting(models.Model):
     casting_name = models.CharField(max_length=50)
     casting_description = models.TextField(blank=True)
+    casting_isClassEI = models.BooleanField()
     casting_fcm2_fcm28_ratio = models.IntegerField(null=True)
     casting_type2_addition = models.BooleanField()
     casting_rc2_rc28_ratio = models.IntegerField(null=True)
