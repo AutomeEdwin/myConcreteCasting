@@ -7,7 +7,9 @@ export class Casting {
     private casting_fcm2_fcm28_ratio: number,
     private casting_type2_addition: boolean,
     private casting_rc2_rc28_ratio: number,
-    private casting_cement_type: boolean
+    private casting_cement_type: boolean,
+    private casting_curing_start: Date,
+    private casting_curing_end: Date
   ) {}
 
   getUUID() {
@@ -40,5 +42,21 @@ export class Casting {
 
   getCementType() {
     return this.casting_cement_type;
+  }
+
+  getCuringStartDate() {
+    return this.casting_curing_start;
+  }
+
+  getCuringEndDate() {
+    return this.casting_curing_end;
+  }
+
+  setCuringStartDate(x: Date) {
+    this.casting_curing_start = x;
+  }
+
+  setCuringEndDate(x: Date) {
+    this.casting_curing_end = x;
   }
 }

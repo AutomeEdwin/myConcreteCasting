@@ -181,7 +181,13 @@ class calculateCuringTime(APIView):
 
         if casting['casting_isClassEI']:
             endCuringDate = datetime.datetime.now() + datetime.timedelta(hours=12)
-            return Response({"curingDurationDays": 0.5, "endCuringDate": endCuringDate.strftime("%c")}, status=status.HTTP_200_OK)
+
+            casting['casting_curing_end'] = endCuringDate
+            casting['casting_curing_start'] = datetime.datetime.now()
+            jobsite.jobsite_castings[data['casting_index']] = casting
+            jobsite.save()
+
+            return Response({"startCuringDate": datetime.datetime.now(), "endCuringDate": endCuringDate}, status=status.HTTP_200_OK)
 
         else:
             resistanceEvolution = self.getResistanceEvolution(
@@ -192,6 +198,11 @@ class calculateCuringTime(APIView):
             curingDurationDays = self.getCuringTime(
                 resistanceEvolution, envConditions, weather['main']['temp'])
             endCuringDate = datetime.datetime.now() + datetime.timedelta(days=curingDurationDays)
+
+            casting['casting_curing_end'] = endCuringDate
+            casting['casting_curing_start'] = datetime.datetime.now()
+            jobsite.jobsite_castings[data['casting_index']] = casting
+            jobsite.save()
 
             return Response({"curingDurationDays": curingDurationDays, "endCuringDate": endCuringDate.strftime("%c")}, status=status.HTTP_200_OK)
 

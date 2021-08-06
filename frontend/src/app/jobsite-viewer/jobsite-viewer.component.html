@@ -50,17 +50,35 @@
         </mat-card-header>
 
         <mat-card-content>
-          <p>Description : {{ getCastingDescription(i) }}</p>
-          <p>Classe EI : {{ getCastingClassEI(i) }}</p>
-          <p>Concrete compression Ratio : {{ getCastingConcreteRatio(i) }}</p>
-          <p>Type 2 addition : {{ getCastingAdditions(i) }}</p>
-          <p>Cement compression Ratio : {{ getCastingCementRatio(i) }}</p>
-          <p>Cement type : {{ jobsite.getCastings()[i].getCementType() }}</p>
+          <div class="row">
+            <div class="col">
+              <p>Description : {{ getCastingDescription(i) }}</p>
+              <p>Classe EI : {{ getCastingClassEI(i) }}</p>
+              <p>
+                Concrete compression Ratio : {{ getCastingConcreteRatio(i) }}
+              </p>
+              <p>Type 2 addition : {{ getCastingAdditions(i) }}</p>
+              <p>Cement compression Ratio : {{ getCastingCementRatio(i) }}</p>
+              <p>
+                Cement type : {{ jobsite.getCastings()[i].getCementType() }}
+              </p>
+            </div>
+            <div class="col">
+              <div class="timer">
+                <span id="days"> 10 </span>Day(s)
+                <span id="hours"> 10 </span>Hrs
+                <span id="minutes"> 10 </span>Min
+                <span id="seconds"> 10 </span>S
+              </div>
+            </div>
+          </div>
         </mat-card-content>
 
         <mat-card-actions class="d-flex justify-content-end">
           <button mat-button>Edit</button>
-          <button mat-button (click)="onStartCuring(i)">Start Curing</button>
+          <div *ngIf="true">
+            <button mat-button (click)="onStartCuring(i)">Start Curing</button>
+          </div>
         </mat-card-actions>
       </mat-card>
     </div>

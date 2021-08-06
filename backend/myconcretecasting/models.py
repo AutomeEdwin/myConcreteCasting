@@ -32,6 +32,8 @@ class Casting(models.Model):
     casting_type2_addition = models.BooleanField()
     casting_rc2_rc28_ratio = models.IntegerField(null=True)
     casting_cement_type = models.CharField(max_length=50)
+    casting_curing_start = models.DateTimeField(default=None, null=True)
+    casting_curing_end = models.DateTimeField(default=None, null=True)
 
 
 class Jobsite(models.Model):

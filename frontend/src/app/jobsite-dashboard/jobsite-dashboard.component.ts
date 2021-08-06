@@ -48,7 +48,9 @@ export class JobsiteDashboardComponent implements OnInit {
           castings[j].casting_fcm2_fcm28_ratio,
           castings[j].casting_type2_addition,
           castings[j].casting_rc2_rc28_ratio,
-          castings[j].casting_cement_type
+          castings[j].casting_cement_type,
+          castings[j].casting_curing_start,
+          castings[j].casting_curing_end
         );
 
         castingsArray.push(casting);

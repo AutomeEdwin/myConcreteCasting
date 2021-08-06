@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { MatDialog } from '@angular/material/dialog';
@@ -49,7 +49,9 @@ export class JobsiteViewerComponent implements OnInit {
         castings[j].casting_fcm2_fcm28_ratio,
         castings[j].casting_type2_addition,
         castings[j].casting_rc2_rc28_ratio,
-        castings[j].casting_cement_type
+        castings[j].casting_cement_type,
+        castings[j].casting_curing_start,
+        castings[j].casting_curing_end
       );
       castingsArray.push(casting);
     }
@@ -65,9 +67,7 @@ export class JobsiteViewerComponent implements OnInit {
     );
   }
 
-  ngOnInit(): void {
-    console.log(this.jobsite);
-  }
+  ngOnInit(): void {}
 
   getWeather() {
     let coordinates = {
@@ -140,6 +140,12 @@ export class JobsiteViewerComponent implements OnInit {
     return 'http://openweathermap.org/img/w/' + this.weather.getIcon() + '.png';
   }
 
+  /*
+  isCastingDoneOrInProgress(){
+    return 
+  }
+*/
+
   onDelete() {
     const dialog = this.dialog.open(ConfirmJobsiteDeleteComponent);
 
@@ -166,8 +172,13 @@ export class JobsiteViewerComponent implements OnInit {
     };
 
     this.jobsiteService.getCastingCuringTime(x).subscribe(
-      (res) => {
-        console.log(res);
+      (res: any) => {
+        this.jobsite
+          .getCastings()
+          [i].setCuringStartDate(new Date(res.startCuringDate));
+        this.jobsite
+          .getCastings()
+          [i].setCuringEndDate(new Date(res.endCuringDate));
       },
       (err) => {
         console.log(err);
