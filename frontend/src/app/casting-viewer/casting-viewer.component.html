@@ -27,7 +27,8 @@
 
   <mat-card-actions class="d-flex justify-content-end">
     <button mat-button>Edit</button>
-    <!--<div *ngIf="!isCuringInProgress()">-->
-    <button mat-button (click)="onStartCuring()">Start Curing</button>
+    <div *ngIf="!isCuringInProgress()">
+      <button mat-button (click)="onStartCuring()">Start Curing</button>
+    </div>
   </mat-card-actions>
 </mat-card>
