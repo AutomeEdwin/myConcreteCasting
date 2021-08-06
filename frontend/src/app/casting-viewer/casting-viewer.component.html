@@ -1,0 +1,33 @@
+<!-- CASTING -->
+<mat-card class="m-2">
+  <mat-card-header>
+    <mat-card-title>{{ getCastingName() }} </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="row">
+      <div class="col">
+        <p>Description : {{ getCastingDescription() }}</p>
+        <p>Classe EI : {{ getCastingClassEI() }}</p>
+        <p>Concrete compression Ratio : {{ getCastingConcreteRatio() }}</p>
+        <p>Type 2 addition : {{ getCastingAdditions() }}</p>
+        <p>Cement compression Ratio : {{ getCastingCementRatio() }}</p>
+        <p>Cement type : {{ casting.getCementType() }}</p>
+      </div>
+      <div class="col" *ngIf="isCuringInProgress()">
+        <div class="timer">
+          <span id="days"> {{ days }} </span>Day(s)
+          <span id="hours"> {{ hours }} </span>Hrs
+          <span id="minutes"> {{ minutes }} </span>Min
+          <span id="seconds"> {{ seconds }} </span>S
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions class="d-flex justify-content-end">
+    <button mat-button>Edit</button>
+    <!--<div *ngIf="!isCuringInProgress()">-->
+    <button mat-button (click)="onStartCuring()">Start Curing</button>
+  </mat-card-actions>
+</mat-card>

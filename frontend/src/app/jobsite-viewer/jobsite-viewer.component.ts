@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { MatDialog } from '@angular/material/dialog';
@@ -96,57 +96,11 @@ export class JobsiteViewerComponent implements OnInit {
       : this.jobsite.getDescription();
   }
 
-  getJobsiteCastings() {
-    return this.jobsite.getCastings();
-  }
-
-  getCastingName(i: number) {
-    return this.getJobsiteCastings()[i].getName();
-  }
-
-  getCastingDescription(i: number) {
-    return this.getJobsiteCastings()[i].getDescription() === ''
-      ? 'There is no description for this casting'
-      : this.getJobsiteCastings()[i].getDescription();
-  }
-
-  getCastingClassEI(i: number) {
-    return this.getJobsiteCastings()[i].getIsClassEI().toString() === 'True'
-      ? 'Yes'
-      : 'No';
-  }
-
-  getCastingConcreteRatio(i: number) {
-    return this.getJobsiteCastings()[i].getfcm2_fcm28_ratio().toString() ===
-      'None'
-      ? 'N/A'
-      : this.getJobsiteCastings()[i].getfcm2_fcm28_ratio().toString();
-  }
-
-  getCastingCementRatio(i: number) {
-    return this.getJobsiteCastings()[i].getrc2_rc28_ratio().toString() ===
-      'None'
-      ? 'N/A'
-      : this.getJobsiteCastings()[i].getrc2_rc28_ratio().toString();
-  }
-
-  getCastingAdditions(i: number) {
-    return this.getJobsiteCastings()[i].getType2Addition().toString() === 'True'
-      ? 'Yes'
-      : 'No';
-  }
-
   getWeatherIcon() {
     return 'http://openweathermap.org/img/w/' + this.weather.getIcon() + '.png';
   }
 
-  /*
-  isCastingDoneOrInProgress(){
-    return 
-  }
-*/
-
-  onDelete() {
+  onDeleteJobsite() {
     const dialog = this.dialog.open(ConfirmJobsiteDeleteComponent);
 
     dialog.afterClosed().subscribe((result) => {
@@ -163,26 +117,5 @@ export class JobsiteViewerComponent implements OnInit {
 
   onBack(): void {
     this.router.navigate(['/dashboard']);
-  }
-
-  onStartCuring(i: number) {
-    let x = {
-      jobsite_id: this.jobsite.getId(),
-      casting_index: i,
-    };
-
-    this.jobsiteService.getCastingCuringTime(x).subscribe(
-      (res: any) => {
-        this.jobsite
-          .getCastings()
-          [i].setCuringStartDate(new Date(res.startCuringDate));
-        this.jobsite
-          .getCastings()
-          [i].setCuringEndDate(new Date(res.endCuringDate));
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
   }
 }

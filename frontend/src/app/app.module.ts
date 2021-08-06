@@ -33,6 +33,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { JobsitePreviewCardComponent } from './jobsite-preview-card/jobsite-preview-card.component';
 import { ConfirmJobsiteDeleteComponent } from './confirm-jobsite-delete/confirm-jobsite-delete.component';
 import { AccountManagerComponent } from './account-manager/account-manager.component';
+import { CastingViewerComponent } from './casting-viewer/casting-viewer.component';
 
 @NgModule({
   imports: [
@@ -71,6 +72,7 @@ import { AccountManagerComponent } from './account-manager/account-manager.compo
     JobsitePreviewCardComponent,
     ConfirmJobsiteDeleteComponent,
     AccountManagerComponent,
+    CastingViewerComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],

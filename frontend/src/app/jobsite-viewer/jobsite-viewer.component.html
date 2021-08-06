@@ -5,7 +5,9 @@
     <button mat-icon-button (click)="onBack()">
       <mat-icon>keyboard_return</mat-icon>
     </button>
-    <button mat-raised-button color="warn" (click)="onDelete()">Delete</button>
+    <button mat-raised-button color="warn" (click)="onDeleteJobsite()">
+      Delete
+    </button>
   </div>
 
   <!-- JOBSITE OVERALL -->
@@ -41,46 +43,12 @@
 
   <div class="grid">
     <div *ngFor="let casting of jobsite.getCastings(); let i = index">
-      <!-- CASTING -->
-      <mat-card class="m-2"
-        ><mat-card-header>
-          <mat-card-title
-            >{{ this.getJobsiteCastings()[i].getName() }}
-          </mat-card-title>
-        </mat-card-header>
-
-        <mat-card-content>
-          <div class="row">
-            <div class="col">
-              <p>Description : {{ getCastingDescription(i) }}</p>
-              <p>Classe EI : {{ getCastingClassEI(i) }}</p>
-              <p>
-                Concrete compression Ratio : {{ getCastingConcreteRatio(i) }}
-              </p>
-              <p>Type 2 addition : {{ getCastingAdditions(i) }}</p>
-              <p>Cement compression Ratio : {{ getCastingCementRatio(i) }}</p>
-              <p>
-                Cement type : {{ jobsite.getCastings()[i].getCementType() }}
-              </p>
-            </div>
-            <div class="col">
-              <div class="timer">
-                <span id="days"> 10 </span>Day(s)
-                <span id="hours"> 10 </span>Hrs
-                <span id="minutes"> 10 </span>Min
-                <span id="seconds"> 10 </span>S
-              </div>
-            </div>
-          </div>
-        </mat-card-content>
-
-        <mat-card-actions class="d-flex justify-content-end">
-          <button mat-button>Edit</button>
-          <div *ngIf="true">
-            <button mat-button (click)="onStartCuring(i)">Start Curing</button>
-          </div>
-        </mat-card-actions>
-      </mat-card>
+      <app-casting-viewer
+        [casting]="casting"
+        [index]="i"
+        [coordinates]="this.jobsite.getCoordinates()"
+        [jobsiteID]="this.jobsite.getId()"
+      ></app-casting-viewer>
     </div>
   </div>
 </div>
