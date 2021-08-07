@@ -72,6 +72,10 @@ export class CastingViewerComponent implements OnInit, OnDestroy {
     return new Date() < new Date(this.casting.getCuringEndDate());
   }
 
+  isCuringFinished() {
+    return new Date(this.casting.getCuringEndDate()) < new Date();
+  }
+
   onStartCuring() {
     let x = {
       jobsite_id: this.jobsiteID,
