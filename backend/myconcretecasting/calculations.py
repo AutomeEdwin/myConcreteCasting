@@ -1,5 +1,5 @@
 # CURING CALCULATIONS
-def getCuringTime(self, resistanceEvolution, envConditions, concrete_temperature):
+def getCuringTime(resistanceEvolution, envConditions, concrete_temperature):
     if resistanceEvolution == "fast" and envConditions == "good" and concrete_temperature >= 10:
         return 1
     elif (resistanceEvolution == "fast" and envConditions == "good" and concrete_temperature < 10) or (resistanceEvolution == "fast" and envConditions == "normal" and concrete_temperature >= 10) or (resistanceEvolution == "average" and envConditions == "good" and concrete_temperature >= 10):
@@ -24,7 +24,7 @@ def getCuringTime(self, resistanceEvolution, envConditions, concrete_temperature
         return 15
 
 
-def getResistanceEvolution(self, fcm2_fcm28_ratio, type2_addition, rc2_rc28_ratio, cement_type):
+def getResistanceEvolution(fcm2_fcm28_ratio, type2_addition, rc2_rc28_ratio, cement_type):
     if fcm2_fcm28_ratio is not None:
         return ratio(fcm2_fcm28_ratio)
     elif type2_addition:
@@ -37,7 +37,7 @@ def getResistanceEvolution(self, fcm2_fcm28_ratio, type2_addition, rc2_rc28_rati
         return ("very slow")
 
 
-def getEnvConditions(self, clouds, wind, humidity):
+def getEnvConditions(clouds, wind, humidity):
     if humidity < 50 or clouds < 25 or wind > 5:
         return 'bad'
     elif 50 <= humidity < 80 or 25 <= clouds < 75:
@@ -46,7 +46,7 @@ def getEnvConditions(self, clouds, wind, humidity):
         return 'good'
 
 
-def ratio(self, ratio):
+def ratio(ratio):
     # Determines the evolution of the strength according to the ratio Fcm2/Fcm28 of the concrete or Rc2/Rc25 of the cement
     if 0 > ratio >= 0.5:
         return "fast"
@@ -58,7 +58,7 @@ def ratio(self, ratio):
         return "very slow"
 
 
-def cementType(self, type):
+def cementType(type):
     # Determines the evolution of the strength according to the type of cement
     cementTypes = {
         # CEM 1
