@@ -17,7 +17,7 @@ import { LocalStorageService } from '../services/localstorage.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  form!: FormGroup;
+  loginForm!: FormGroup;
   submitted = false;
 
   responseErrorMessage!: string;
@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
   }
 
   initForm() {
-    this.form = this.formBuilder.group({
+    this.loginForm = this.formBuilder.group({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', Validators.required),
     });
@@ -49,16 +49,16 @@ export class LoginComponent implements OnInit {
    * Helper function for easier access to form fields
    */
   get f() {
-    return this.form.controls;
+    return this.loginForm.controls;
   }
 
   onSubmit() {
     this.submitted = true;
 
-    if (this.form.invalid) {
+    if (this.loginForm.invalid) {
       return;
     } else {
-      this.accountService.loginUser(JSON.stringify(this.form.value)).subscribe(
+      this.accountService.loginUser(JSON.stringify(this.loginForm.value)).subscribe(
         (response: any) => {
           this.accountService.storeToken(response.token);
           this.localStorageService.set(

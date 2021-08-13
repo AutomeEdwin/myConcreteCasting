@@ -6,13 +6,13 @@
   >
     <!-- STEP 1 : Jobsite creation -->
     <mat-step
-      [stepControl]="form"
+      [stepControl]="newJobsiteForm"
       errorMessage="Please fill all required fields"
     >
       <ng-template matStepLabel>Create a jobsite</ng-template>
       <mat-hint>required fields* </mat-hint>
 
-      <form [formGroup]="form">
+      <form [formGroup]="newJobsiteForm">
         <!-- Jobsite name -->
         <div>
           <mat-form-field
@@ -83,14 +83,14 @@
 
     <!-- STEP 2 : Concrete casting -->
     <mat-step
-      [stepControl]="form"
+      [stepControl]="newJobsiteForm"
       errorMessage="Please fill all required fields"
     >
       <ng-template matStepLabel>Create concrete casting</ng-template>
       <mat-hint>required fields* </mat-hint>
 
       <!-- CASTINGS -->
-      <form [formGroup]="form">
+      <form [formGroup]="newJobsiteForm">
         <button
           mat-raised-button
           color="primary"

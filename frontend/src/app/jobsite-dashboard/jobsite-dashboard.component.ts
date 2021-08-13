@@ -69,10 +69,6 @@ export class JobsiteDashboardComponent implements OnInit {
     }
   }
 
-  getJobsite(i: number) {
-    return this.jobsiteArray[i];
-  }
-
   openForm() {
     const dialog = this.dialog.open(NewJobsiteComponent, {
       height: '98%',

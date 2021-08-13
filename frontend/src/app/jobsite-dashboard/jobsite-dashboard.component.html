@@ -28,7 +28,7 @@
   <div class="grid" id="cards">
     <div *ngFor="let jobsite of jobsiteArray; let i = index" class="pb-2 row">
       <app-jobsite-preview-card
-        [jobsite]="getJobsite(i)"
+        [jobsite]="jobsiteArray[i]"
       ></app-jobsite-preview-card>
     </div>
   </div>

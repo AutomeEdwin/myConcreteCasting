@@ -59,12 +59,4 @@ describe('LogoutComponent', () => {
     tick();
     expect(component.logout).toHaveBeenCalled();
   }));
-
-  it('should test response handling', () => {
-    component.handleHttpResponse({ status: 200 });
-    expect(location.path()).toBe('');
-    expect(localStorage.getItem('token')).toBeNull();
-    expect(localStorage.getItem('email')).toBeNull();
-    expect(localStorage.getItem('userID')).toBeNull();
-  });
 });

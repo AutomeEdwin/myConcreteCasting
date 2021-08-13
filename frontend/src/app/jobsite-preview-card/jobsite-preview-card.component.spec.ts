@@ -8,6 +8,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 import { JobsitePreviewCardComponent } from './jobsite-preview-card.component';
 import { Casting } from '../models/casting.model';
+import { Weather } from '../models/weather.model';
 
 describe('JobsitePreviewCardComponent', () => {
   let component: JobsitePreviewCardComponent;
@@ -15,7 +16,18 @@ describe('JobsitePreviewCardComponent', () => {
   let router: Router;
 
   let castingsArray: Array<Casting> = [
-    new Casting('name', 'description', 'infos'),
+    new Casting(
+      'fqs4d56f4qds65f',
+      'name',
+      'description',
+      true,
+      0.2,
+      false,
+      0.2,
+      'oversulfated cement',
+      new Date(),
+      new Date()
+    ),
   ];
   const jobsite = new Jobsite(
     1,
@@ -39,6 +51,7 @@ describe('JobsitePreviewCardComponent', () => {
     router = TestBed.get(Router);
     component = fixture.componentInstance;
     component.jobsite = jobsite;
+    component.weather = new Weather('clear sky', '01d', 7, 100, 1, 1.5);
 
     fixture.detectChanges();
   });

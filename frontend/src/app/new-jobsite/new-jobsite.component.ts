@@ -55,7 +55,7 @@ export class NewJobsiteComponent implements OnInit {
   latitude = 4.352530764849208;
   longitude = 50.846642213471654;
 
-  form!: FormGroup;
+  newJobsiteForm!: FormGroup;
   concreteCastings!: FormArray;
   map!: Map;
   marker = new Feature<Geometry>({
@@ -111,7 +111,7 @@ export class NewJobsiteComponent implements OnInit {
   }
 
   initForm(): void {
-    this.form = this.formBuilder.group({
+    this.newJobsiteForm = this.formBuilder.group({
       owner: JSON.parse(String(this.localStorageService.get('user'))).id,
       jobsite_name: new FormControl('', [Validators.required]),
       jobsite_address: new FormControl('', [Validators.required]),
@@ -126,25 +126,25 @@ export class NewJobsiteComponent implements OnInit {
       jobsite_castings: this.formBuilder.array([this.createConcreteCasting()]),
     });
 
-    this.form
+    this.newJobsiteForm
       .get('jobsite_coordinates')
       ?.setValue([this.latitude, this.longitude]);
   }
 
   get f() {
-    return this.form.controls;
+    return this.newJobsiteForm.controls;
   }
 
   getJobsite(field: string): string {
-    return this.form.get(field)?.value;
+    return this.newJobsiteForm.get(field)?.value;
   }
 
   get getCastingsControls() {
-    return <FormArray>this.form.get('jobsite_castings');
+    return <FormArray>this.newJobsiteForm.get('jobsite_castings');
   }
 
   getCasting(i: number, prop: string): string {
-    this.concreteCastings = this.form.get('jobsite_castings') as FormArray;
+    this.concreteCastings = this.newJobsiteForm.get('jobsite_castings') as FormArray;
     return this.concreteCastings.at(i).get(prop)?.value;
   }
 
@@ -161,19 +161,19 @@ export class NewJobsiteComponent implements OnInit {
   }
 
   addConcreteCasting(): void {
-    this.concreteCastings = this.form.get('jobsite_castings') as FormArray;
+    this.concreteCastings = this.newJobsiteForm.get('jobsite_castings') as FormArray;
     this.concreteCastings.push(this.createConcreteCasting());
     this.advancedConcreteParameters.push(false);
   }
 
   removeConcreteCasting(i: number): void {
-    this.concreteCastings = this.form.get('jobsite_castings') as FormArray;
+    this.concreteCastings = this.newJobsiteForm.get('jobsite_castings') as FormArray;
     this.concreteCastings.removeAt(i);
     this.advancedConcreteParameters.splice(i, i + 1);
   }
 
   isLastArea(): boolean {
-    this.concreteCastings = this.form.get('jobsite_castings') as FormArray;
+    this.concreteCastings = this.newJobsiteForm.get('jobsite_castings') as FormArray;
     return this.concreteCastings.length === 1;
   }
 
@@ -182,13 +182,13 @@ export class NewJobsiteComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.form.invalid) {
+    if (this.newJobsiteForm.invalid) {
       return;
     }
 
-    console.log(this.form.value);
+    console.log(this.newJobsiteForm.value);
 
-    this.jobsitesService.createJobsite(this.form.value).subscribe(
+    this.jobsitesService.createJobsite(this.newJobsiteForm.value).subscribe(
       (res) => {
         this.dialog.close();
       },
@@ -241,7 +241,7 @@ export class NewJobsiteComponent implements OnInit {
     this.map.on('singleclick', (event) => {
       let x = this.getClickCoordinates(event);
 
-      this.form.get('jobsite_coordinates')?.setValue(x);
+      this.newJobsiteForm.get('jobsite_coordinates')?.setValue(x);
       this.updateMarker(x[0], x[1]);
       this.latitude = x[0];
       this.longitude = x[1];
@@ -258,7 +258,7 @@ export class NewJobsiteComponent implements OnInit {
 
   getCoordinateFromAddress() {
     this.nominatomService
-      .search(this.form.get('jobsite_address')?.value)
+      .search(this.newJobsiteForm.get('jobsite_address')?.value)
       .pipe(timeout(1000))
       .subscribe(
         (res) => {
@@ -271,8 +271,8 @@ export class NewJobsiteComponent implements OnInit {
             lat: Number(parsedData.lon),
           };
 
-          this.form.get('jobsite_address')?.setValue(json.display_name);
-          this.form
+          this.newJobsiteForm.get('jobsite_address')?.setValue(json.display_name);
+          this.newJobsiteForm
             .get('jobsite_coordinates')
             ?.setValue([+json.lat, +json.lon]);
           this.latitude = json.lat;

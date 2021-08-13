@@ -1,9 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from '@angular/common/http/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { JobsitesService } from './jobsites.service';
 
@@ -16,17 +13,10 @@ describe('JobsitesService', () => {
       providers: [JobsitesService],
     });
     jobsiteService = TestBed.inject(JobsitesService);
-  });
-
-  let httpTestingController: HttpTestingController;
-  beforeEach(
-    () => (httpTestingController = TestBed.get(HttpTestingController))
-  );
-
-  beforeEach(() => (jobsiteService = TestBed.get(JobsitesService)));
-
-  afterEach(() => {
-    httpTestingController.verify();
+    localStorage.setItem(
+      'user',
+      '{"id":1,"firstName":"test","lastName":"test","email":"test@test.com"}'
+    );
   });
 
   it('should be created', () => {

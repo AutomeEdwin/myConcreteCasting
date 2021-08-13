@@ -28,4 +28,10 @@ describe('LocalstorageService', () => {
     localStorageService.remove('token');
     expect(localStorage.getItem('token')).toEqual(null);
   });
+
+  it('should clear the localstorage', () => {
+    localStorage.setItem('token', 'testToken');
+    localStorageService.clear();
+    expect(localStorage.getItem('token')).toBe(null);
+  });
 });

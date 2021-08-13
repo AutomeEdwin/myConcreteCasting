@@ -7,9 +7,9 @@ export class Casting {
     private casting_fcm2_fcm28_ratio: number,
     private casting_type2_addition: boolean,
     private casting_rc2_rc28_ratio: number,
-    private casting_cement_type: boolean,
-    private casting_curing_start: Date,
-    private casting_curing_end: Date
+    private casting_cement_type: string,
+    private casting_curing_start: Date | string,
+    private casting_curing_end: Date | string
   ) {}
 
   getUUID() {

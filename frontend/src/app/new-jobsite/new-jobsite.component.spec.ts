@@ -6,17 +6,23 @@ import {
 } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormArray, ReactiveFormsModule } from '@angular/forms';
-import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { HarnessLoader } from '@angular/cdk/testing';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatInputModule } from '@angular/material/input';
+
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  BrowserDynamicTestingModule,
+  platformBrowserDynamicTesting,
+} from '@angular/platform-browser-dynamic/testing';
 
 import { NewJobsiteComponent } from './new-jobsite.component';
 
 describe('NewJobsiteComponent', () => {
   let component: NewJobsiteComponent;
   let fixture: ComponentFixture<NewJobsiteComponent>;
-  let loader: HarnessLoader;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -24,7 +30,12 @@ describe('NewJobsiteComponent', () => {
         ReactiveFormsModule,
         HttpClientTestingModule,
         MatDialogModule,
+        MatSelectModule,
+        MatCheckboxModule,
+        MatSlideToggleModule,
+        MatInputModule,
         NoopAnimationsModule,
+        BrowserDynamicTestingModule,
       ],
       providers: [
         {
@@ -34,13 +45,16 @@ describe('NewJobsiteComponent', () => {
       ],
       declarations: [NewJobsiteComponent],
     }).compileComponents();
+    localStorage.setItem(
+      'user',
+      '{"id":1,"firstName":"test","lastName":"test","email":"test@test.com"}'
+    );
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(NewJobsiteComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    loader = TestbedHarnessEnvironment.documentRootLoader(fixture);
   });
 
   // TEST THE FORM ITSELF
@@ -66,8 +80,23 @@ describe('NewJobsiteComponent', () => {
     const casting_descriptionInput = compiled.querySelector(
       'textarea[id="casting_description"]'
     );
-    const casting_infosInput = compiled.querySelector(
-      'textarea[id="casting_infos"]'
+
+    const casting_isClassEIInput = compiled.querySelector(
+      'textarea[id="casting_isClassEI"]'
+    );
+
+    const casting_fcm2_fcm28_ratioInput = compiled.querySelector(
+      'textarea[id="casting_fcm2_fcm28_ratio"]'
+    );
+
+    const casting_type2_additionInput = compiled.querySelector(
+      'textarea[id="casting_type2_addition"]'
+    );
+    const casting_rc2_rc28_ratioInput = compiled.querySelector(
+      'textarea[id="casting_rc2_rc28_ratio"]'
+    );
+    const casting_cement_typeInput = compiled.querySelector(
+      'textarea[id="casting_cement_type"]'
     );
 
     const jobsite_overview = compiled.querySelector(
@@ -86,24 +115,29 @@ describe('NewJobsiteComponent', () => {
     expect(jobsite_descriptionInput).toBeTruthy();
     expect(casting_nameInput).toBeTruthy();
     expect(casting_descriptionInput).toBeTruthy();
-    expect(casting_infosInput).toBeTruthy();
+    expect(casting_isClassEIInput).toBeFalsy();
+    expect(casting_fcm2_fcm28_ratioInput).toBeFalsy();
+    expect(casting_type2_additionInput).toBeFalsy();
+    expect(casting_rc2_rc28_ratioInput).toBeFalsy();
+    expect(casting_cement_typeInput).toBe(null);
     expect(jobsite_overview).toBeTruthy();
     expect(castings_overview).toBeTruthy();
   });
 
   it('should test form validity', () => {
-    const form = component.form;
-    const jobsite_owner = form.controls.jobsite_owner;
-    const jobsite_nameInput = form.controls.jobsite_name;
-    const jobsite_addressInput = form.controls.jobsite_address;
-    const jobsite_coordinates = form.controls.jobsite_coordinates;
-    const jobsite_descriptionInput = form.controls.jobsite_description;
+    const newJobsiteForm = component.newJobsiteForm;
+    const owner = newJobsiteForm.controls.owner;
+    const jobsite_nameInput = newJobsiteForm.controls.jobsite_name;
+    const jobsite_addressInput = newJobsiteForm.controls.jobsite_address;
+    const jobsite_coordinates = newJobsiteForm.controls.jobsite_coordinates;
+    const jobsite_descriptionInput =
+      newJobsiteForm.controls.jobsite_description;
 
-    const castingForm = form.controls.jobsite_castings;
+    const castingForm = newJobsiteForm.controls.jobsite_castings;
 
-    expect(form.valid).toBeFalsy();
+    expect(newJobsiteForm.valid).toBeFalsy();
 
-    jobsite_owner.setValue('test');
+    owner.setValue('1');
     jobsite_nameInput.setValue('myjobsitename');
     jobsite_addressInput.setValue('myjobsiteaddress');
     jobsite_coordinates.setValue([0, 0]);
@@ -112,37 +146,59 @@ describe('NewJobsiteComponent', () => {
       {
         casting_name: 'casting_name',
         casting_description: 'casting_description',
-        casting_infos: 'casting_infos',
+        casting_isClassEI: false,
+        casting_fcm2_fcm28_ratio: null,
+        casting_type2_addition: false,
+        casting_rc2_rc28_ratio: null,
+        casting_cement_type: 'oversulfated cement',
       },
     ]);
 
-    expect(form.valid).toBeTruthy();
+    expect(newJobsiteForm.valid).toBeTruthy();
   });
 
   it('should test input validity', () => {
-    const form = component.form;
-    const jobsite_nameInput = form.controls.jobsite_name;
-    const jobsite_addressInput = form.controls.jobsite_address;
+    const newJobsiteForm = component.newJobsiteForm;
+    const jobsite_nameInput = newJobsiteForm.controls.jobsite_name;
+    const jobsite_addressInput = newJobsiteForm.controls.jobsite_address;
 
-    const castingsForm = form.get('jobsite_castings') as FormArray;
+    const castingsForm = newJobsiteForm.get('jobsite_castings') as FormArray;
     const casting0 = castingsForm.controls[0];
     const casting_nameInput = casting0.get('casting_name');
-    const casting_infosInput = casting0.get('casting_infos');
+    const casting_isClassEIInput = casting0.get('casting_isClassEI');
+    const casting_fcm2_fcm28_ratioInput = casting0.get(
+      'casting_fcm2_fcm28_ratio'
+    );
+    const casting_type2_additionInput = casting0.get('casting_type2_addition');
+    const casting_rc2_rc28_ratioInput = casting0.get('casting_rc2_rc28_ratio');
+    const casting_cement_typeInput = casting0.get('casting_cement_type');
 
     expect(jobsite_nameInput.valid).toBeFalsy();
     expect(jobsite_addressInput.valid).toBeFalsy();
     expect(casting_nameInput?.valid).toBeFalsy();
-    expect(casting_infosInput?.valid).toBeFalsy();
+    expect(casting_isClassEIInput?.valid).toBeTruthy();
+    expect(casting_fcm2_fcm28_ratioInput?.valid).toBeTruthy();
+    expect(casting_type2_additionInput?.valid).toBeTruthy();
+    expect(casting_rc2_rc28_ratioInput?.valid).toBeTruthy();
+    expect(casting_cement_typeInput?.valid).toBeFalsy();
 
     jobsite_nameInput.setValue('jobsite name');
     jobsite_addressInput.setValue('jobsite_address');
     casting_nameInput?.setValue('casting_name');
-    casting_infosInput?.setValue('casting_infos');
+    casting_isClassEIInput?.setValue('casting_infos');
+    casting_fcm2_fcm28_ratioInput?.setValue('casting_infos');
+    casting_type2_additionInput?.setValue('casting_infos');
+    casting_rc2_rc28_ratioInput?.setValue('casting_infos');
+    casting_cement_typeInput?.setValue('casting_infos');
 
     expect(jobsite_nameInput.valid).toBeTruthy();
     expect(jobsite_addressInput.valid).toBeTruthy();
     expect(casting_nameInput?.valid).toBeTruthy();
-    expect(casting_infosInput?.valid).toBeTruthy();
+    expect(casting_isClassEIInput?.valid).toBeTruthy();
+    expect(casting_fcm2_fcm28_ratioInput?.valid).toBeTruthy();
+    expect(casting_type2_additionInput?.valid).toBeTruthy();
+    expect(casting_rc2_rc28_ratioInput?.valid).toBeTruthy();
+    expect(casting_cement_typeInput?.valid).toBeTruthy();
   });
 
   it('should submit the form', fakeAsync(() => {
@@ -158,21 +214,22 @@ describe('NewJobsiteComponent', () => {
 
   // TEST COMPONENT LOGIC
   it('should get form control', () => {
-    expect(component.f).toEqual(component.form.controls);
+    expect(component.f).toEqual(component.newJobsiteForm.controls);
   });
 
   it('should get casting controls', () => {
     expect(component.getCastingsControls).toEqual(
-      <FormArray>component.form.get('jobsite_castings')
+      <FormArray>component.newJobsiteForm.get('jobsite_castings')
     );
   });
 
   it('should get jobsite values', () => {
-    const form = component.form;
-    const jobsite_nameInput = form.controls.jobsite_name;
-    const jobsite_addressInput = form.controls.jobsite_address;
-    const jobsite_coordinates = form.controls.jobsite_coordinates;
-    const jobsite_descriptionInput = form.controls.jobsite_description;
+    const newJobsiteForm = component.newJobsiteForm;
+    const jobsite_nameInput = newJobsiteForm.controls.jobsite_name;
+    const jobsite_addressInput = newJobsiteForm.controls.jobsite_address;
+    const jobsite_coordinates = newJobsiteForm.controls.jobsite_coordinates;
+    const jobsite_descriptionInput =
+      newJobsiteForm.controls.jobsite_description;
 
     jobsite_nameInput.setValue('myjobsitename');
     jobsite_addressInput.setValue('myjobsiteaddress');
@@ -190,11 +247,15 @@ describe('NewJobsiteComponent', () => {
   });
 
   it('should get casting values', () => {
-    component.form.controls.jobsite_castings.setValue([
+    component.newJobsiteForm.controls.jobsite_castings.setValue([
       {
         casting_name: 'casting_name',
         casting_description: 'casting_description',
-        casting_infos: 'casting_infos',
+        casting_isClassEI: false,
+        casting_fcm2_fcm28_ratio: null,
+        casting_type2_addition: false,
+        casting_rc2_rc28_ratio: null,
+        casting_cement_type: 'oversulfated cement',
       },
     ]);
 
@@ -202,12 +263,18 @@ describe('NewJobsiteComponent', () => {
     expect(component.getCasting(0, 'casting_description')).toEqual(
       'casting_description'
     );
-    expect(component.getCasting(0, 'casting_infos')).toEqual('casting_infos');
+    expect(component.getCasting(0, 'casting_isClassEI')).toBeFalse();
+    expect(component.getCasting(0, 'casting_fcm2_fcm28_ratio')).toBeNull();
+    expect(component.getCasting(0, 'casting_type2_addition')).toBeFalse();
+    expect(component.getCasting(0, 'casting_rc2_rc28_ratio')).toBeNull();
+    expect(component.getCasting(0, 'casting_cement_type')).toBe(
+      'oversulfated cement'
+    );
   });
 
   it('should add a new casting to the jobsite', () => {
-    const form = component.form;
-    let castingsArray = form.get('jobsite_castings') as FormArray;
+    const newJobsiteForm = component.newJobsiteForm;
+    let castingsArray = newJobsiteForm.get('jobsite_castings') as FormArray;
 
     expect(castingsArray.length).toEqual(1);
 
@@ -217,51 +284,71 @@ describe('NewJobsiteComponent', () => {
   });
 
   it('should remove a casting from the jobsite', () => {
-    const form = component.form;
-    const castingForm = form.controls.jobsite_castings;
+    const newJobsiteForm = component.newJobsiteForm;
+    const castingForm = newJobsiteForm.controls.jobsite_castings;
     component.addConcreteCasting();
     component.addConcreteCasting();
 
     castingForm.setValue([
       {
-        casting_name: '1',
-        casting_description: '1',
-        casting_infos: '1',
+        casting_name: 'casting_name1',
+        casting_description: 'casting_description',
+        casting_isClassEI: false,
+        casting_fcm2_fcm28_ratio: null,
+        casting_type2_addition: false,
+        casting_rc2_rc28_ratio: null,
+        casting_cement_type: 'oversulfated cement',
       },
       {
-        casting_name: '2',
-        casting_description: '2',
-        casting_infos: '2',
+        casting_name: 'casting_name2',
+        casting_description: 'casting_description',
+        casting_isClassEI: false,
+        casting_fcm2_fcm28_ratio: null,
+        casting_type2_addition: false,
+        casting_rc2_rc28_ratio: null,
+        casting_cement_type: 'oversulfated cement',
       },
       {
-        casting_name: '3',
-        casting_description: '3',
-        casting_infos: '3',
+        casting_name: 'casting_name3',
+        casting_description: 'casting_description',
+        casting_isClassEI: false,
+        casting_fcm2_fcm28_ratio: null,
+        casting_type2_addition: false,
+        casting_rc2_rc28_ratio: null,
+        casting_cement_type: 'oversulfated cement',
       },
     ]);
 
     component.removeConcreteCasting(1);
 
-    let x = form.get('jobsite_castings') as FormArray;
+    let x = newJobsiteForm.get('jobsite_castings') as FormArray;
 
     expect(x.length).toEqual(2);
     expect(x.value).toEqual([
       {
-        casting_name: '1',
-        casting_description: '1',
-        casting_infos: '1',
+        casting_name: 'casting_name1',
+        casting_description: 'casting_description',
+        casting_isClassEI: false,
+        casting_fcm2_fcm28_ratio: null,
+        casting_type2_addition: false,
+        casting_rc2_rc28_ratio: null,
+        casting_cement_type: 'oversulfated cement',
       },
       {
-        casting_name: '3',
-        casting_description: '3',
-        casting_infos: '3',
+        casting_name: 'casting_name3',
+        casting_description: 'casting_description',
+        casting_isClassEI: false,
+        casting_fcm2_fcm28_ratio: null,
+        casting_type2_addition: false,
+        casting_rc2_rc28_ratio: null,
+        casting_cement_type: 'oversulfated cement',
       },
     ]);
   });
 
   it('should know if there is only one casting in the jobsite', () => {
-    const form = component.form;
-    let castingsArray = form.get('jobsite_castings') as FormArray;
+    const newJobsiteForm = component.newJobsiteForm;
+    let castingsArray = newJobsiteForm.get('jobsite_castings') as FormArray;
 
     expect(component.isLastArea()).toBeTruthy();
 
@@ -271,7 +358,4 @@ describe('NewJobsiteComponent', () => {
 
     component.removeConcreteCasting(castingsArray.length);
   });
-
-  // TODO test angular material components
-  // TODO test map
 });
