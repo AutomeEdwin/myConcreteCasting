@@ -15,13 +15,16 @@
         <p>Cement type : {{ casting.getCementType() }}</p>
       </div>
       <div class="col">
-        <div class="timer" *ngIf="isCuringInProgress()">
+        <div class="timer" *ngIf="casting.isCuringInProgress()">
+          <p>Curing finished in</p>
           <span id="days"> {{ days }} </span>Day(s)
           <span id="hours"> {{ hours }} </span>Hrs
           <span id="minutes"> {{ minutes }} </span>Min
           <span id="seconds"> {{ seconds }} </span>S
         </div>
-        <div *ngIf="isCuringFinished()">
+        <div>
+        </div>
+        <div *ngIf="casting.isCuringFinished()">
           <p>Curing done</p>
         </div>
       </div>
@@ -29,9 +32,12 @@
   </mat-card-content>
 
   <mat-card-actions class="d-flex justify-content-end">
-    <button mat-button>Edit</button>
-    <div *ngIf="!isCuringInProgress() && !isCuringFinished()">
-      <button id='startCuring' mat-button (click)="onStartCuring()">Start Curing</button>
+    <div *ngIf="!casting.isCuringInProgress() && !casting.isCuringFinished()">
+      <button mat-button>Edit</button>
+
+      <button id="startCuring" mat-button (click)="onStartCuring()">
+        Start Curing
+      </button>
     </div>
   </mat-card-actions>
 </mat-card>

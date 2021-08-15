@@ -25,7 +25,7 @@ export class CastingViewerComponent implements OnInit, OnDestroy {
   constructor(private jobsiteService: JobsitesService) {}
 
   ngOnInit(): void {
-    if (this.isCuringInProgress()) {
+    if (this.casting.isCuringInProgress()) {
       this.subscription = interval(1000).subscribe((x) => {
         this.setTimeUnits();
       });
@@ -66,14 +66,6 @@ export class CastingViewerComponent implements OnInit, OnDestroy {
 
   getCastingAdditions() {
     return this.casting.getType2Addition().toString() === 'True' ? 'Yes' : 'No';
-  }
-
-  isCuringInProgress() {
-    return new Date() < new Date(this.casting.getCuringEndDate());
-  }
-
-  isCuringFinished() {
-    return new Date(this.casting.getCuringEndDate()) < new Date();
   }
 
   onStartCuring() {

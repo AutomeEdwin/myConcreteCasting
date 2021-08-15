@@ -59,4 +59,12 @@ export class Casting {
   setCuringEndDate(x: Date) {
     this.curing_end = x;
   }
+
+  isCuringInProgress() {
+    return new Date() < new Date(this.getCuringEndDate());
+  }
+
+  isCuringFinished() {
+    return new Date(this.getCuringEndDate()) < new Date();
+  }
 }

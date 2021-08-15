@@ -1,4 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -39,4 +44,40 @@ describe('AccountManagerComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should get forms control', () => {
+    expect(component.accountForm).toEqual(component.editAccountForm.controls);
+    expect(component.passwordForm).toEqual(
+      component.changePasswordForm.controls
+    );
+  });
+
+  it('should go back to the dashboard', fakeAsync(() => {
+    spyOn(component, 'onBack');
+
+    let backButton =
+      fixture.debugElement.nativeElement.querySelector('#backBtn');
+
+    backButton.click();
+
+    tick();
+    expect(component.onBack).toHaveBeenCalled();
+  }));
+
+  it('should submit forms', fakeAsync(() => {
+    spyOn(component, 'onEditAccountSubmit');
+    spyOn(component, 'onEditPasswordSubmit');
+
+    let editButton =
+      fixture.debugElement.nativeElement.querySelector('#edit-btn');
+    let pwdButton =
+      fixture.debugElement.nativeElement.querySelector('#pwd-btn');
+
+    editButton.click();
+    pwdButton.click();
+
+    tick();
+    expect(component.onEditAccountSubmit).toHaveBeenCalled();
+    expect(component.onEditPasswordSubmit).toHaveBeenCalled();
+  }));
 });

@@ -3,7 +3,7 @@ import { Casting } from './casting.model';
 export class Jobsite {
   constructor(
     private id: number,
-    private owner: string,
+    private owner: number,
     private name: string,
     private address: string,
     private coordinates: Array<number>,

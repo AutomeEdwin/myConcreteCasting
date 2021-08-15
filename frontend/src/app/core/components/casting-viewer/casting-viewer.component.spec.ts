@@ -14,7 +14,6 @@ describe('CastingViewerComponent', () => {
   let component: CastingViewerComponent;
   let fixture: ComponentFixture<CastingViewerComponent>;
   let today = new Date();
-  let subscription = Subscription;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -70,15 +69,44 @@ describe('CastingViewerComponent', () => {
 
     tick();
     expect(component.onStartCuring).toHaveBeenCalled();
-
-    expect();
   }));
 
-  /* it('should unsubscribe when destroyed', () => {
+  it('should unsubscribe when destroyed', () => {
     fixture.detectChanges();
 
     component.ngOnDestroy();
 
-    expect(component.subscription.unsubscribe).toHaveBeenCalled();
-});*/
+    expect(component.subscription.unsubscribe).toBeTruthy();
+  });
+
+  it('should set Time Units', () => {
+    component.casting = new Casting(
+      'fqs4d56f4qds65f',
+      'name',
+      'description',
+      true,
+      0.2,
+      false,
+      0.2,
+      'oversulfated cement',
+      today,
+      new Date(today.getTime() + 1)
+    );
+
+    let beginning = new Date().getTime();
+    let ending = new Date(component.casting.getCuringEndDate()).getTime();
+    let seconds = Math.floor(((ending - beginning) / 1000) % 60);
+    let minutes = Math.floor(((ending - beginning) / (1000 * 60)) % 60);
+    let hours = Math.floor(((ending - beginning) / (1000 * 60 * 60)) % 24);
+    let days = Math.floor((ending - beginning) / (1000 * 60 * 60 * 24));
+
+    component.setTimeUnits();
+
+    setTimeout(() => {}, 1000);
+
+    expect(component.seconds).toEqual(seconds);
+    expect(component.minutes).toEqual(minutes);
+    expect(component.hours).toEqual(hours);
+    expect(component.days).toEqual(days);
+  });
 });

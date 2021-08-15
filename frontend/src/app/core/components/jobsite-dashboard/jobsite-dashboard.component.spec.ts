@@ -27,7 +27,7 @@ describe('JobsiteDashboardComponent', () => {
 
   let jobsite = new Jobsite(
     1,
-    'owner',
+    1,
     'name',
     'address',
     [0, 0],
@@ -40,24 +40,24 @@ describe('JobsiteDashboardComponent', () => {
   const requestResponse = [
     {
       id: 12,
-      jobsite_owner: 'test@test.com',
-      jobsite_name: 'test',
-      jobsite_address:
+      owner: 'test@test.com',
+      name: 'test',
+      address:
         '16, Rue de la Loi, Quartier Royal, Pentagon, Brussels, City of Brussels, Brussels-Capital, 1000, Belgium',
-      jobsite_coordinates: '[4.3665285, 50.8461624]',
-      jobsite_description: 'dsqdsqd',
-      jobsite_castings:
-        '[{"casting_id": "484223de-edd7-45d5-9397-be9c14f040b8", "casting_name": "name", "casting_description": "description", "casting_isClassEI": "True", "casting_fcm2_fcm28_ratio": "0", "casting_type2_addition": "True", "casting_rc2_rc28_ratio": "0", "casting_cement_type": "CEM 1 52.5 N ou R", "casting_curing_start": "", "casting_curing_end": ""}]',
+      coordinates: '[4.3665285, 50.8461624]',
+      description: 'dsqdsqd',
+      castings:
+        '[{"id": "484223de-edd7-45d5-9397-be9c14f040b8", "name": "name", "description": "description", "isClassEI": "True", "fcm2_fcm28_ratio": "0", "type2_addition": "True", "rc2_rc28_ratio": "0", "cement_type": "CEM 1 52.5 N ou R", "curing_start": "", "curing_end": ""}]',
     },
     {
       id: 13,
-      jobsite_owner: 'test@test.com',
-      jobsite_name: 'dsfds',
-      jobsite_address: 'fdsfdsf',
-      jobsite_coordinates: '[4.254469203264735, 50.893171073773544]',
-      jobsite_description: 'fdsfsfsfds',
-      jobsite_castings:
-        '[{"casting_id": "484223de-edd7-45d5-9397-be9c14f040b8", "casting_name": "name", "casting_description": "description", "casting_isClassEI": "True", "casting_fcm2_fcm28_ratio": "0", "casting_type2_addition": "True", "casting_rc2_rc28_ratio": "0", "casting_cement_type": "CEM 1 52.5 N ou R", "casting_curing_start": "", "casting_curing_end": ""}]',
+      owner: 'test@test.com',
+      name: 'dsfds',
+      address: 'fdsfdsf',
+      coordinates: '[4.254469203264735, 50.893171073773544]',
+      description: 'fdsfsfsfds',
+      castings:
+        '[{"id": "484223de-edd7-45d5-9397-be9c14f040b8", "name": "name", "description": "description", "isClassEI": "True", "fcm2_fcm28_ratio": "0", "type2_addition": "True", "rc2_rc28_ratio": "0", "cement_type": "CEM 1 52.5 N ou R", "curing_start": "", "curing_end": ""}]',
     },
   ];
 

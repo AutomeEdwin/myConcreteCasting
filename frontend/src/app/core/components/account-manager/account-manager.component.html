@@ -1,5 +1,5 @@
 <div class="back-button">
-  <button mat-icon-button (click)="onBack()">
+  <button mat-icon-button id='backBtn' (click)="onBack()">
     <mat-icon>keyboard_return</mat-icon>
   </button>
 </div>
@@ -52,7 +52,7 @@
         </mat-form-field>
       </div>
       <div class="d-flex justify-content-end">
-        <button mat-raised-button color="primary" type="submit">
+        <button id='edit-btn' mat-raised-button color="primary" type="submit">
           Save changes
         </button>
       </div>
@@ -129,7 +129,7 @@
           </mat-form-field>
         </div>
         <div class="d-flex justify-content-end">
-          <button mat-raised-button color="primary" type="submit">
+          <button id='pwd-btn' mat-raised-button color="primary" type="submit">
             Change password
           </button>
         </div>

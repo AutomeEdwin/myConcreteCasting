@@ -19,7 +19,7 @@ describe('Jobsite', () => {
     ];
     let jobsite = new Jobsite(
       1,
-      'owner',
+      1,
       'name',
       'address',
       [0, 0],
