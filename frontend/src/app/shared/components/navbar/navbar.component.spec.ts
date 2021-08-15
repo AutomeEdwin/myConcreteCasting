@@ -34,10 +34,8 @@ describe('NavbarComponent', () => {
 
   it('should render elements', () => {
     const compiled = fixture.debugElement.nativeElement;
-    const nav = compiled.querySelector('nav');
-    const myaccountBtn = compiled.querySelector('button');
+    const myaccountBtn = compiled.querySelector('button[id="menuBtn"]');
 
-    expect(nav).toBeTruthy();
     expect(myaccountBtn).toBeTruthy();
   });
 });
