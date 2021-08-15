@@ -29,6 +29,7 @@ export class JobsiteViewerComponent implements OnInit {
       .getJobsiteByID(+this.router.url.replace('/jobsite/', ''))
       .subscribe(
         (res: any) => {
+          console.log(res);
           this.createJobsite(res);
           this.getWeather();
         },
@@ -38,31 +39,31 @@ export class JobsiteViewerComponent implements OnInit {
 
   createJobsite(res: any) {
     let castingsArray: Array<Casting> = [];
-    let castings = JSON.parse(res.jobsite_castings);
+    let castings = JSON.parse(res.castings);
 
     for (let j in castings) {
       let casting = new Casting(
-        castings[j].casting_id,
-        castings[j].casting_name,
-        castings[j].casting_description,
-        castings[j].casting_isClassEI,
-        castings[j].casting_fcm2_fcm28_ratio,
-        castings[j].casting_type2_addition,
-        castings[j].casting_rc2_rc28_ratio,
-        castings[j].casting_cement_type,
-        castings[j].casting_curing_start,
-        castings[j].casting_curing_end
+        castings[j].id,
+        castings[j].name,
+        castings[j].description,
+        castings[j].isClassEI,
+        castings[j].fcm2_fcm28_ratio,
+        castings[j].type2_addition,
+        castings[j].rc2_rc28_ratio,
+        castings[j].cement_type,
+        castings[j].curing_start,
+        castings[j].curing_end
       );
       castingsArray.push(casting);
     }
 
     this.jobsite = new Jobsite(
       res.id,
-      res.jobsite_owner,
-      res.jobsite_name,
-      res.jobsite_address,
-      JSON.parse(res.jobsite_coordinates),
-      res.jobsite_description,
+      res.owner,
+      res.name,
+      res.address,
+      JSON.parse(res.coordinates),
+      res.description,
       castingsArray
     );
   }

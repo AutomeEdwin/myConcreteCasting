@@ -3,12 +3,12 @@ import { Casting } from './casting.model';
 export class Jobsite {
   constructor(
     private id: number,
-    private jobsite_owner: string,
-    private jobsite_name: string,
-    private jobsite_address: string,
-    private jobsite_coordinates: Array<number>,
-    private jobsite_description: string,
-    private jobsite_castings: Array<Casting>
+    private owner: string,
+    private name: string,
+    private address: string,
+    private coordinates: Array<number>,
+    private description: string,
+    private castings: Array<Casting>
   ) {}
 
   getId() {
@@ -16,26 +16,26 @@ export class Jobsite {
   }
 
   getOwner() {
-    return this.jobsite_owner;
+    return this.owner;
   }
 
   getName() {
-    return this.jobsite_name;
+    return this.name;
   }
 
   getAddress() {
-    return this.jobsite_address;
+    return this.address;
   }
 
   getCoordinates() {
-    return this.jobsite_coordinates;
+    return this.coordinates;
   }
 
   getDescription() {
-    return this.jobsite_description;
+    return this.description;
   }
 
   getCastings() {
-    return this.jobsite_castings;
+    return this.castings;
   }
 }

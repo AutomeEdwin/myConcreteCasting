@@ -137,7 +137,7 @@ class getJobsiteByID(APIView):
 
     def get(self, *args, **kwargs):
         jobsite = Jobsite.objects.get(id=kwargs['id'],
-                                      owner_id=kwargs['owner_id'])
+                                      owner=kwargs['owner_id'])
         serializer = JobsiteSerializer(jobsite)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -175,23 +175,23 @@ class calculateCuringTime(APIView):
 
         jobsite = Jobsite.objects.get(id=data['jobsite_id'])
         casting = CastingSerializer(
-            jobsite.jobsite_castings[data['casting_index']])
+            jobsite.castings[data['casting_index']])
         casting = casting.data
-        weather = requests.get("http://api.openweathermap.org/data/2.5/weather?lat=" + str(jobsite.jobsite_coordinates[0]) + "&lon="+str(
-            jobsite.jobsite_coordinates[1])+"&units=metric&appid=1741bc771947d46a2aac130e41db45cf").json()
+        weather = requests.get("http://api.openweathermap.org/data/2.5/weather?lat=" + str(jobsite.coordinates[0]) + "&lon="+str(
+            jobsite.coordinates[1])+"&units=metric&appid=1741bc771947d46a2aac130e41db45cf").json()
 
-        if casting['casting_isClassEI']:
+        if casting['isClassEI']:
             endCuringDate = datetime.datetime.now() + datetime.timedelta(hours=12)
 
-            casting['casting_curing_end'] = endCuringDate
-            casting['casting_curing_start'] = datetime.datetime.now()
-            jobsite.jobsite_castings[data['casting_index']] = casting
+            casting['curing_end'] = endCuringDate
+            casting['curing_start'] = datetime.datetime.now()
+            jobsite.castings[data['casting_index']] = casting
             jobsite.save()
 
             return Response({"startCuringDate": datetime.datetime.now(), "endCuringDate": endCuringDate}, status=status.HTTP_200_OK)
         else:
             resistanceEvolution = getResistanceEvolution(
-                casting["casting_fcm2_fcm28_ratio"], casting["casting_type2_addition"], casting["casting_rc2_rc28_ratio"], casting["casting_cement_type"])
+                casting["fcm2_fcm28_ratio"], casting["type2_addition"], casting["rc2_rc28_ratio"], casting["cement_type"])
             envConditions = getEnvConditions(
                 weather['clouds']['all'], weather['wind']['speed'], weather['main']['humidity'])
 
@@ -199,9 +199,9 @@ class calculateCuringTime(APIView):
                 resistanceEvolution, envConditions, weather['main']['temp'])
             endCuringDate = datetime.datetime.now() + datetime.timedelta(days=curingDurationDays)
 
-            casting['casting_curing_end'] = endCuringDate
-            casting['casting_curing_start'] = datetime.datetime.now()
-            jobsite.jobsite_castings[data['casting_index']] = casting
+            casting['curing_end'] = endCuringDate
+            casting['curing_start'] = datetime.datetime.now()
+            jobsite.castings[data['casting_index']] = casting
             jobsite.save()
 
             return Response({"startCuringDate": datetime.datetime.now(), "endCuringDate": endCuringDate}, status=status.HTTP_200_OK)

@@ -17,24 +17,24 @@
         <div>
           <mat-form-field
             appearance="outline"
-            MatFormFieldControl="jobsite_name"
+            MatFormFieldControl="name"
           >
             <mat-label>Name *</mat-label>
-            <input matInput formControlName="jobsite_name" id="jobsite_name" />
+            <input matInput formControlName="name" id="name" />
           </mat-form-field>
         </div>
 
         <!-- Jobsite address -->
         <div>
           <mat-form-field
-            MatFormFieldControl="jobsite_address"
+            MatFormFieldControl="address"
             appearance="outline"
             class="w-75"
           >
             <mat-label>Address *</mat-label>
             <input
               matInput
-              formControlName="jobsite_address"
+              formControlName="address"
               id="jobsite_address"
             />
             <mat-hint
@@ -63,14 +63,14 @@
         <div>
           <mat-form-field
             appearance="outline"
-            MatFormFieldControl="jobsite_description"
+            MatFormFieldControl="description"
             class="w-100"
           >
             <mat-label>Description</mat-label>
             <textarea
               matInput
-              formControlName="jobsite_description"
-              id="jobsite_description"
+              formControlName="description"
+              id="description"
             ></textarea>
           </mat-form-field>
         </div>
@@ -100,7 +100,7 @@
         </button>
 
         <div
-          formArrayName="jobsite_castings"
+          formArrayName="castings"
           class="casting-form"
           *ngFor="let area of getCastingsControls.controls; let i = index"
         >
@@ -122,8 +122,8 @@
                 <mat-label>Name*</mat-label>
                 <input
                   matInput
-                  formControlName="casting_name"
-                  id="casting_name"
+                  formControlName="name"
+                  id="name"
                 />
               </mat-form-field>
             </div>
@@ -138,8 +138,8 @@
                 <mat-label>Description</mat-label>
                 <textarea
                   matInput
-                  formControlName="casting_description"
-                  id="casting_description"
+                  formControlName="description"
+                  id="description"
                 ></textarea>
               </mat-form-field>
             </div>
@@ -156,7 +156,7 @@
             <div class="casting-options">
               <!-- CLASS EI -->
               <div>
-                <mat-checkbox formControlName="casting_isClassEI">
+                <mat-checkbox formControlName="isClassEI">
                   concrete in environment class EI
                 </mat-checkbox>
               </div>
@@ -166,7 +166,7 @@
                 Cement type:
                 <mat-form-field appearance="outline">
                   <mat-label>Select a cement type</mat-label>
-                  <mat-select formControlName="casting_cement_type">
+                  <mat-select formControlName="cement_type">
                     <mat-option
                       *ngFor="let cementType of cementTypes"
                       [value]="cementType.value"
@@ -187,8 +187,8 @@
                   <mat-form-field appearance="outline" MatFormFieldControl="">
                     <input
                       matInput
-                      formControlName="casting_fcm2_fcm28_ratio"
-                      id="casting_fcm2_fcm28_ratio"
+                      formControlName="fcm2_fcm28_ratio"
+                      id="fcm2_fcm28_ratio"
                       type="number"
                       step="0.01"
                       min="0"
@@ -202,8 +202,8 @@
                   <mat-form-field appearance="outline" MatFormFieldControl="">
                     <input
                       matInput
-                      formControlName="casting_rc2_rc28_ratio"
-                      id="casting_rc2_rc28_ratio"
+                      formControlName="rc2_rc28_ratio"
+                      id="rc2_rc28_ratio"
                       type="number"
                       step="0.01"
                       min="0"
@@ -214,7 +214,7 @@
                 <!-- TYPE 2 ADDITION -->
                 <div>
                   Type 2 additions : no
-                  <mat-slide-toggle formControlName="casting_type2_addition">
+                  <mat-slide-toggle formControlName="type2_addition">
                   </mat-slide-toggle>
                   yes
                 </div>
@@ -237,9 +237,9 @@
         <mat-grid-tile [colspan]="2">
           <mat-grid-tile-header>Jobsite</mat-grid-tile-header>
           <div class="jobsiteGridContent" id="jobsite_overview">
-            <p>Jobsite name : {{ getJobsite("jobsite_name") }}</p>
-            <p>Jobsite address : {{ getJobsite("jobsite_address") }}</p>
-            <p>Jobsite description : {{ getJobsite("jobsite_description") }}</p>
+            <p>Jobsite name : {{ getJobsite("name") }}</p>
+            <p>Jobsite address : {{ getJobsite("address") }}</p>
+            <p>Jobsite description : {{ getJobsite("description") }}</p>
             <p>coordinates : [{{ latitude }} , {{ longitude }}]</p>
           </div>
         </mat-grid-tile>
@@ -251,8 +251,8 @@
         >
           <mat-grid-tile-header>Casting {{ i + 1 }}</mat-grid-tile-header>
           <div id="castings_overview">
-            <p>Name:{{ getCasting(i, "casting_name") }}</p>
-            <p>Description:{{ getCasting(i, "casting_description") }}</p>
+            <p>Name:{{ getCasting(i, "name") }}</p>
+            <p>Description:{{ getCasting(i, "description") }}</p>
           </div>
         </mat-grid-tile>
       </mat-grid-list>

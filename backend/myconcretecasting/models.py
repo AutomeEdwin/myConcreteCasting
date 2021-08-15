@@ -23,26 +23,26 @@ class User(AbstractUser):
 
 
 class Casting(models.Model):
-    casting_id = models.UUIDField(
+    id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False)
-    casting_name = models.CharField(max_length=50)
-    casting_description = models.TextField(blank=True)
-    casting_isClassEI = models.BooleanField()
-    casting_fcm2_fcm28_ratio = models.IntegerField(null=True)
-    casting_type2_addition = models.BooleanField()
-    casting_rc2_rc28_ratio = models.IntegerField(null=True)
-    casting_cement_type = models.CharField(max_length=50)
-    casting_curing_start = models.DateTimeField(default=None, null=True)
-    casting_curing_end = models.DateTimeField(default=None, null=True)
+    name = models.CharField(max_length=50)
+    description = models.TextField(blank=True)
+    isClassEI = models.BooleanField()
+    fcm2_fcm28_ratio = models.IntegerField(null=True)
+    type2_addition = models.BooleanField()
+    rc2_rc28_ratio = models.IntegerField(null=True)
+    cement_type = models.CharField(max_length=50)
+    curing_start = models.DateTimeField(default=None, null=True)
+    curing_end = models.DateTimeField(default=None, null=True)
 
 
 class Jobsite(models.Model):
 
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    jobsite_name = models.CharField(max_length=255)
-    jobsite_address = models.CharField(max_length=255)
-    jobsite_coordinates = models.JSONField()
-    jobsite_description = models.TextField(blank=True)
-    jobsite_castings = models.ArrayField(
+    name = models.CharField(max_length=255)
+    address = models.CharField(max_length=255)
+    coordinates = models.JSONField()
+    description = models.TextField(blank=True)
+    castings = models.ArrayField(
         model_container=Casting
     )

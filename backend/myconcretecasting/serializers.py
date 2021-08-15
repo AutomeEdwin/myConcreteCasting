@@ -24,12 +24,12 @@ class RegisterSerializer(serializers.ModelSerializer):
 class JobsiteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Jobsite
-        fields = ['id', 'owner', 'jobsite_name', 'jobsite_address',
-                  'jobsite_coordinates', 'jobsite_description', 'jobsite_castings']
+        fields = ['id', 'owner', 'name', 'address',
+                  'coordinates', 'description', 'castings']
 
 
 class CastingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Casting
-        fields = ['casting_id', 'casting_name', 'casting_description', 'casting_isClassEI', 'casting_fcm2_fcm28_ratio',
-                  'casting_type2_addition', 'casting_rc2_rc28_ratio', 'casting_cement_type', 'casting_curing_start', 'casting_curing_end']
+        fields = ['id', 'name', 'description', 'isClassEI', 'fcm2_fcm28_ratio',
+                  'type2_addition', 'rc2_rc28_ratio', 'cement_type', 'curing_start', 'curing_end']

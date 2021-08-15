@@ -113,21 +113,21 @@ export class NewJobsiteComponent implements OnInit {
   initForm(): void {
     this.newJobsiteForm = this.formBuilder.group({
       owner: JSON.parse(String(this.localStorageService.get('user'))).id,
-      jobsite_name: new FormControl('', [Validators.required]),
-      jobsite_address: new FormControl('', [Validators.required]),
-      jobsite_description: new FormControl(''),
-      jobsite_coordinates: new FormControl(
+      name: new FormControl('', [Validators.required]),
+      address: new FormControl('', [Validators.required]),
+      description: new FormControl(''),
+      coordinates: new FormControl(
         {
           lattitude: Number,
           longitude: Number,
         },
         [Validators.required]
       ),
-      jobsite_castings: this.formBuilder.array([this.createConcreteCasting()]),
+      castings: this.formBuilder.array([this.createConcreteCasting()]),
     });
 
     this.newJobsiteForm
-      .get('jobsite_coordinates')
+      .get('coordinates')
       ?.setValue([this.latitude, this.longitude]);
   }
 
@@ -140,48 +140,40 @@ export class NewJobsiteComponent implements OnInit {
   }
 
   get getCastingsControls() {
-    return <FormArray>this.newJobsiteForm.get('jobsite_castings');
+    return <FormArray>this.newJobsiteForm.get('castings');
   }
 
   getCasting(i: number, prop: string): string {
-    this.concreteCastings = this.newJobsiteForm.get(
-      'jobsite_castings'
-    ) as FormArray;
+    this.concreteCastings = this.newJobsiteForm.get('castings') as FormArray;
     return this.concreteCastings.at(i).get(prop)?.value;
   }
 
   createConcreteCasting(): FormGroup {
     return this.formBuilder.group({
-      casting_name: new FormControl('', [Validators.required]),
-      casting_description: new FormControl(''),
-      casting_isClassEI: new FormControl(false),
-      casting_fcm2_fcm28_ratio: new FormControl(null),
-      casting_type2_addition: new FormControl(false),
-      casting_rc2_rc28_ratio: new FormControl(null),
-      casting_cement_type: new FormControl('', [Validators.required]),
+      name: new FormControl('', [Validators.required]),
+      description: new FormControl(''),
+      isClassEI: new FormControl(false),
+      fcm2_fcm28_ratio: new FormControl(null),
+      type2_addition: new FormControl(false),
+      rc2_rc28_ratio: new FormControl(null),
+      cement_type: new FormControl('', [Validators.required]),
     });
   }
 
   addConcreteCasting(): void {
-    this.concreteCastings = this.newJobsiteForm.get(
-      'jobsite_castings'
-    ) as FormArray;
+    this.concreteCastings = this.newJobsiteForm.get('castings') as FormArray;
     this.concreteCastings.push(this.createConcreteCasting());
     this.advancedConcreteParameters.push(false);
   }
 
   removeConcreteCasting(i: number): void {
-    this.concreteCastings = this.newJobsiteForm.get(
-      'jobsite_castings'
-    ) as FormArray;
+    this.concreteCastings = this.newJobsiteForm.get('castings') as FormArray;
     this.concreteCastings.removeAt(i);
     this.advancedConcreteParameters.splice(i, i + 1);
   }
 
   isLastArea(): boolean {
-    this.concreteCastings = this.newJobsiteForm.get(
-      'jobsite_castings'
-    ) as FormArray;
+    this.concreteCastings = this.newJobsiteForm.get('castings') as FormArray;
     return this.concreteCastings.length === 1;
   }
 
@@ -245,7 +237,7 @@ export class NewJobsiteComponent implements OnInit {
     this.map.on('singleclick', (event) => {
       let x = this.getClickCoordinates(event);
 
-      this.newJobsiteForm.get('jobsite_coordinates')?.setValue(x);
+      this.newJobsiteForm.get('coordinates')?.setValue(x);
       this.updateMarker(x[0], x[1]);
       this.latitude = x[0];
       this.longitude = x[1];
@@ -262,7 +254,7 @@ export class NewJobsiteComponent implements OnInit {
 
   getCoordinateFromAddress() {
     this.nominatomService
-      .search(this.newJobsiteForm.get('jobsite_address')?.value)
+      .search(this.newJobsiteForm.get('address')?.value)
       .pipe(timeout(1000))
       .subscribe(
         (res) => {
@@ -275,11 +267,9 @@ export class NewJobsiteComponent implements OnInit {
             lat: Number(parsedData.lon),
           };
 
+          this.newJobsiteForm.get('address')?.setValue(json.display_name);
           this.newJobsiteForm
-            .get('jobsite_address')
-            ?.setValue(json.display_name);
-          this.newJobsiteForm
-            .get('jobsite_coordinates')
+            .get('coordinates')
             ?.setValue([+json.lat, +json.lon]);
           this.latitude = json.lat;
           this.longitude = json.lon;

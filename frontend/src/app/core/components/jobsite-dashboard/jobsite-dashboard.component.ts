@@ -37,20 +37,20 @@ export class JobsiteDashboardComponent implements OnInit {
   fillJobsitesArray(data: any) {
     for (let i in data) {
       let castingsArray: Array<Casting> = [];
-      let castings = JSON.parse(data[i].jobsite_castings);
+      let castings = JSON.parse(data[i].castings);
 
       for (let j in castings) {
         let casting = new Casting(
-          castings[j].casting_id,
-          castings[j].casting_name,
-          castings[j].casting_description,
-          castings[j].casting_isClassEI,
-          castings[j].casting_fcm2_fcm28_ratio,
-          castings[j].casting_type2_addition,
-          castings[j].casting_rc2_rc28_ratio,
-          castings[j].casting_cement_type,
-          castings[j].casting_curing_start,
-          castings[j].casting_curing_end
+          castings[j].id,
+          castings[j].name,
+          castings[j].description,
+          castings[j].isClassEI,
+          castings[j].fcm2_fcm28_ratio,
+          castings[j].type2_addition,
+          castings[j].rc2_rc28_ratio,
+          castings[j].cement_type,
+          castings[j].curing_start,
+          castings[j].curing_end
         );
 
         castingsArray.push(casting);
@@ -58,11 +58,11 @@ export class JobsiteDashboardComponent implements OnInit {
       this.jobsiteArray.push(
         new Jobsite(
           data[i].id,
-          data[i].jobsite_owner,
-          data[i].jobsite_name,
-          data[i].jobsite_address,
-          JSON.parse(data[i].jobsite_coordinates),
-          data[i].jobsite_description,
+          data[i].owner,
+          data[i].name,
+          data[i].address,
+          JSON.parse(data[i].coordinates),
+          data[i].description,
           castingsArray
         )
       );

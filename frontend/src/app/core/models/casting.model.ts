@@ -1,15 +1,15 @@
 export class Casting {
   constructor(
     private casting_uuid: string,
-    private casting_name: string,
-    private casting_description: string,
-    private casting_isClassEI: boolean,
-    private casting_fcm2_fcm28_ratio: number,
-    private casting_type2_addition: boolean,
-    private casting_rc2_rc28_ratio: number,
-    private casting_cement_type: string,
-    private casting_curing_start: Date | string,
-    private casting_curing_end: Date | string
+    private name: string,
+    private description: string,
+    private isClassEI: boolean,
+    private fcm2_fcm28_ratio: number,
+    private type2_addition: boolean,
+    private rc2_rc28_ratio: number,
+    private cement_type: string,
+    private curing_start: Date | string,
+    private curing_end: Date | string
   ) {}
 
   getUUID() {
@@ -17,46 +17,46 @@ export class Casting {
   }
 
   getName() {
-    return this.casting_name;
+    return this.name;
   }
 
   getDescription() {
-    return this.casting_description;
+    return this.description;
   }
 
   getIsClassEI() {
-    return this.casting_isClassEI;
+    return this.isClassEI;
   }
 
   getfcm2_fcm28_ratio() {
-    return this.casting_fcm2_fcm28_ratio;
+    return this.fcm2_fcm28_ratio;
   }
 
   getType2Addition() {
-    return this.casting_type2_addition;
+    return this.type2_addition;
   }
 
   getrc2_rc28_ratio() {
-    return this.casting_rc2_rc28_ratio;
+    return this.rc2_rc28_ratio;
   }
 
   getCementType() {
-    return this.casting_cement_type;
+    return this.cement_type;
   }
 
   getCuringStartDate() {
-    return this.casting_curing_start;
+    return this.curing_start;
   }
 
   getCuringEndDate() {
-    return this.casting_curing_end;
+    return this.curing_end;
   }
 
   setCuringStartDate(x: Date) {
-    this.casting_curing_start = x;
+    this.curing_start = x;
   }
 
   setCuringEndDate(x: Date) {
-    this.casting_curing_end = x;
+    this.curing_end = x;
   }
 }
