@@ -1,12 +1,11 @@
-<nav class="navbar">
-  <h1><strong>MyConcreteCasting</strong></h1>
-
+<mat-toolbar class="navbar">
   <div class="my-account-button">
     <button mat-button [matMenuTriggerFor]="menu">
-      My account
-      <mat-icon>account_circle</mat-icon>
+      <mat-icon>menu</mat-icon>
     </button>
   </div>
+
+  <h1><strong>MyConcreteCasting</strong></h1>
 
   <!-- MENU -->
   <mat-menu #menu="matMenu">
@@ -20,4 +19,4 @@
       <button mat-button (click)="logout()">Logout</button>
     </button>
   </mat-menu>
-</nav>
+</mat-toolbar>

@@ -9,6 +9,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [NavbarComponent],
@@ -20,6 +21,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     MatIconModule,
     MatSnackBarModule,
     NoopAnimationsModule,
+    MatToolbarModule,
   ],
   exports: [NavbarComponent],
 })
