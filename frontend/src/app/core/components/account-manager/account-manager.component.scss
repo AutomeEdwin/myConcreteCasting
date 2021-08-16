@@ -23,7 +23,8 @@ h1 {
   text-align: center;
 }
 
-form{  padding: 1em 0 0 0;
+form {
+  padding: 1em 0 0 0;
 }
 
 .col {
@@ -41,4 +42,16 @@ form{  padding: 1em 0 0 0;
 
 .back-button {
   margin: 1em;
+}
+
+.edit-btn,
+.pwd-btn {
+  background-color: #f3941f;
+  transition: all 0.1s ease-in-out;
+  border: solid 1px transparent;
+
+  &:hover {
+    border-color: #f3941f;
+    background-color: transparent;
+  }
 }

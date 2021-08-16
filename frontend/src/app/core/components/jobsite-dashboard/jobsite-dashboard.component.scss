@@ -2,3 +2,14 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
 }
+
+button {
+  background-color: #f3941f;
+  transition: all 0.1s ease-in-out;
+  border: solid 1px transparent;
+
+  &:hover {
+    border-color: #f3941f;
+    background-color: transparent;
+  }
+}
