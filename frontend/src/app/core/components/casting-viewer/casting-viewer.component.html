@@ -1,5 +1,5 @@
 <!-- CASTING -->
-<mat-card class="m-2">
+<mat-card class="container">
   <mat-card-header>
     <mat-card-title>{{ getCastingName() }} </mat-card-title>
   </mat-card-header>
@@ -22,8 +22,7 @@
           <span id="minutes"> {{ minutes }} </span>Min
           <span id="seconds"> {{ seconds }} </span>S
         </div>
-        <div>
-        </div>
+        <div></div>
         <div *ngIf="casting.isCuringFinished()">
           <p>Curing done</p>
         </div>
