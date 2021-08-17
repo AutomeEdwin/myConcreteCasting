@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { NewJobsiteComponent } from '../../../features/components/new-jobsite/new-jobsite.component';
 import { Jobsite } from '../../models/jobsite.model';
 import { JobsitesService } from '../../services/jobsites.service';
 import { Casting } from '../../models/casting.model';
@@ -14,10 +12,7 @@ export class JobsiteDashboardComponent implements OnInit {
   //  data: any;
   jobsiteArray: Array<Jobsite> = [];
 
-  constructor(
-    public dialog: MatDialog,
-    private jobsitesService: JobsitesService
-  ) {}
+  constructor(private jobsitesService: JobsitesService) {}
 
   ngOnInit(): void {
     this.getJobsites();
@@ -67,16 +62,5 @@ export class JobsiteDashboardComponent implements OnInit {
         )
       );
     }
-  }
-
-  openForm() {
-    const dialog = this.dialog.open(NewJobsiteComponent, {
-      height: '98%',
-      width: '100%',
-    });
-
-    dialog.afterClosed().subscribe((result) => {
-      this.getJobsites();
-    });
   }
 }

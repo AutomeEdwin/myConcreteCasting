@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import { MatDialogRef } from '@angular/material/dialog';
-
 import {
   FormGroup,
   FormBuilder,
@@ -94,8 +92,7 @@ export class NewJobsiteComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
     private jobsitesService: JobsitesService,
     private nominatomService: NominatimService,
-    private localStorageService: LocalStorageService,
-    public dialog: MatDialogRef<NewJobsiteComponent>
+    private localStorageService: LocalStorageService
   ) {
     this.stepperOrientation = breakpointObserver
       .observe('(min-width: 800px)')
@@ -187,9 +184,7 @@ export class NewJobsiteComponent implements OnInit {
     }
 
     this.jobsitesService.createJobsite(this.newJobsiteForm.value).subscribe(
-      (res) => {
-        this.dialog.close();
-      },
+      (res) => {},
       (err) => {}
     );
   }

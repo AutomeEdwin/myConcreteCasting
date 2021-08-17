@@ -7,6 +7,7 @@ import { JobsiteDashboardComponent } from './core/components/jobsite-dashboard/j
 import { JobsiteViewerComponent } from './core/components/jobsite-viewer/jobsite-viewer.component';
 import { AccountManagerComponent } from './core/components/account-manager/account-manager.component';
 import { AuthguardService } from './core/services/authguard.service';
+import { NewJobsiteComponent } from './features/components/new-jobsite/new-jobsite.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -16,6 +17,11 @@ export const routes: Routes = [
     path: 'dashboard',
     canActivate: [AuthguardService],
     component: JobsiteDashboardComponent,
+  },
+  {
+    path: 'newJobsite',
+    canActivate: [AuthguardService],
+    component: NewJobsiteComponent,
   },
   {
     path: 'jobsite/:id',

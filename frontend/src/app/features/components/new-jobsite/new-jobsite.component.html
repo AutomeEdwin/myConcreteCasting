@@ -1,265 +1,243 @@
-<div mat-dialog-content class="mat-dialog-content">
-  <mat-stepper
-    class="mat-horizontal-stepper"
-    [orientation]="(stepperOrientation | async)!"
-    labelPosition="bottom"
+<mat-stepper
+  class="container p-2"
+  [orientation]="(stepperOrientation | async)!"
+  labelPosition="bottom"
+>
+  <!-- STEP 1 : Jobsite creation -->
+  <mat-step
+    [stepControl]="newJobsiteForm"
+    errorMessage="Please fill all required fields"
   >
-    <!-- STEP 1 : Jobsite creation -->
-    <mat-step
-      [stepControl]="newJobsiteForm"
-      errorMessage="Please fill all required fields"
-    >
-      <ng-template matStepLabel>Create a jobsite</ng-template>
-      <mat-hint>required fields* </mat-hint>
+    <ng-template matStepLabel>Create a jobsite</ng-template>
+    <mat-hint>required fields* </mat-hint>
 
-      <form [formGroup]="newJobsiteForm">
-        <!-- Jobsite name -->
-        <div>
-          <mat-form-field
-            appearance="outline"
-            MatFormFieldControl="name"
-          >
-            <mat-label>Name *</mat-label>
-            <input matInput formControlName="name" id="name" />
-          </mat-form-field>
-        </div>
+    <form [formGroup]="newJobsiteForm">
+      <!-- Jobsite name -->
+      <div>
+        <mat-form-field appearance="outline" MatFormFieldControl="name">
+          <mat-label>Name *</mat-label>
+          <input matInput formControlName="name" id="name" />
+        </mat-form-field>
+      </div>
 
-        <!-- Jobsite address -->
-        <div>
-          <mat-form-field
-            MatFormFieldControl="address"
-            appearance="outline"
-            class="w-75"
+      <!-- Jobsite address -->
+      <div>
+        <mat-form-field
+          MatFormFieldControl="address"
+          appearance="outline"
+          class="w-75"
+        >
+          <mat-label>Address *</mat-label>
+          <input matInput formControlName="address" id="address" />
+          <mat-hint
+            >Enter the address and click "search" to get the coordinates ... or
+            click on the map to get the coordinates but you still have to enter
+            an addres without clicking on the button</mat-hint
           >
-            <mat-label>Address *</mat-label>
-            <input
-              matInput
-              formControlName="address"
-              id="address"
-            />
-            <mat-hint
-              >Enter the address and click "search" to get the coordinates ...
-              or click on the map to get the coordinates but you still have to
-              enter an addres without clicking on the button</mat-hint
-            >
-          </mat-form-field>
+        </mat-form-field>
+        <button
+          mat-button
+          class="ms-2 search-address-btn"
+          (click)="getCoordinateFromAddress()"
+        >
+          Search
+        </button>
+      </div>
+
+      <!-- Map displayer -->
+      <div class="map-container pt-2">
+        <div id="new-jobsite-map" class="map"></div>
+        <p>Lattitude : {{ latitude }} -- Longitude : {{ longitude }}</p>
+      </div>
+
+      <!-- Jobsite description -->
+      <div>
+        <mat-form-field
+          appearance="outline"
+          MatFormFieldControl="description"
+          class="w-100"
+        >
+          <mat-label>Description</mat-label>
+          <textarea
+            matInput
+            formControlName="description"
+            id="jobsite_description"
+          ></textarea>
+        </mat-form-field>
+      </div>
+    </form>
+
+    <div class="d-flex justify-content-around">
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+
+  <!-- STEP 2 : Concrete casting -->
+  <mat-step
+    [stepControl]="newJobsiteForm"
+    errorMessage="Please fill all required fields"
+  >
+    <ng-template matStepLabel>Create concrete casting</ng-template>
+    <mat-hint>required fields* </mat-hint>
+
+    <!-- CASTINGS -->
+    <form [formGroup]="newJobsiteForm">
+      <button mat-button (click)="addConcreteCasting()">Add</button>
+
+      <div
+        formArrayName="castings"
+        class="casting-form"
+        *ngFor="let area of getCastingsControls.controls; let i = index"
+      >
+        <div class="d-flex justify-content-between">
+          <h1>Casting {{ i + 1 }}</h1>
           <button
-            mat-button
-            class="ms-2 search-address-btn"
-            (click)="getCoordinateFromAddress()"
+            mat-fab
+            color="warn"
+            [disabled]="isLastArea()"
+            (click)="removeConcreteCasting(i)"
           >
-            Search
+            <mat-icon>delete</mat-icon>
           </button>
         </div>
-
-        <!-- Map displayer -->
-        <div class="map-container pt-2">
-          <div id="new-jobsite-map" class="map"></div>
-          <p>Lattitude : {{ latitude }} -- Longitude : {{ longitude }}</p>
-        </div>
-
-        <!-- Jobsite description -->
-        <div>
-          <mat-form-field
-            appearance="outline"
-            MatFormFieldControl="description"
-            class="w-100"
-          >
-            <mat-label>Description</mat-label>
-            <textarea
-              matInput
-              formControlName="description"
-              id="jobsite_description"
-            ></textarea>
-          </mat-form-field>
-        </div>
-      </form>
-
-      <div class="d-flex justify-content-around">
-        <button mat-button matStepperNext>Next</button>
-      </div>
-    </mat-step>
-
-    <!-- STEP 2 : Concrete casting -->
-    <mat-step
-      [stepControl]="newJobsiteForm"
-      errorMessage="Please fill all required fields"
-    >
-      <ng-template matStepLabel>Create concrete casting</ng-template>
-      <mat-hint>required fields* </mat-hint>
-
-      <!-- CASTINGS -->
-      <form [formGroup]="newJobsiteForm">
-        <button
-          mat-raised-button
-          color="primary"
-          (click)="addConcreteCasting()"
-        >
-          Add
-        </button>
-
-        <div
-          formArrayName="castings"
-          class="casting-form"
-          *ngFor="let area of getCastingsControls.controls; let i = index"
-        >
-          <div class="d-flex justify-content-between">
-            <h1>Casting {{ i + 1 }}</h1>
-            <button
-              mat-fab
-              color="warn"
-              [disabled]="isLastArea()"
-              (click)="removeConcreteCasting(i)"
-            >
-              <mat-icon>delete</mat-icon>
-            </button>
+        <div [formGroupName]="i">
+          <!-- CASTING NAME -->
+          <div>
+            <mat-form-field appearance="outline" MatFormFieldControl="">
+              <mat-label>Name*</mat-label>
+              <input matInput formControlName="name" id="name" />
+            </mat-form-field>
           </div>
-          <div [formGroupName]="i">
-            <!-- CASTING NAME -->
+
+          <!-- CASTING DESCRIPTION -->
+          <div>
+            <mat-form-field
+              appearance="outline"
+              MatFormFieldControl=""
+              class="w-100"
+            >
+              <mat-label>Description</mat-label>
+              <textarea
+                matInput
+                formControlName="description"
+                id="casting_description"
+              ></textarea>
+            </mat-form-field>
+          </div>
+
+          <div class="text-divider">
+            <mat-slide-toggle
+              [checked]="advancedConcreteParameters[i]"
+              (change)="advancedConcreteParametersToggle($event, i)"
+              >Advanced mode</mat-slide-toggle
+            >
+          </div>
+
+          <!-- CASTING INFOS -->
+          <div class="casting-options">
+            <!-- CLASS EI -->
             <div>
-              <mat-form-field appearance="outline" MatFormFieldControl="">
-                <mat-label>Name*</mat-label>
-                <input
-                  matInput
-                  formControlName="name"
-                  id="name"
-                />
+              <mat-checkbox formControlName="isClassEI">
+                concrete in environment class EI
+              </mat-checkbox>
+            </div>
+
+            <!-- CEMENT TYPE -->
+            <div>
+              Cement type:
+              <mat-form-field appearance="outline">
+                <mat-label>Select a cement type</mat-label>
+                <mat-select formControlName="cement_type">
+                  <mat-option
+                    *ngFor="let cementType of cementTypes"
+                    [value]="cementType.value"
+                  >
+                    {{ cementType.value }}
+                  </mat-option>
+                </mat-select>
               </mat-form-field>
             </div>
 
-            <!-- CASTING DESCRIPTION -->
-            <div>
-              <mat-form-field
-                appearance="outline"
-                MatFormFieldControl=""
-                class="w-100"
-              >
-                <mat-label>Description</mat-label>
-                <textarea
-                  matInput
-                  formControlName="description"
-                  id="casting_description"
-                ></textarea>
-              </mat-form-field>
-            </div>
-
-            <div class="text-divider">
-              <mat-slide-toggle
-                [checked]="advancedConcreteParameters[i]"
-                (change)="advancedConcreteParametersToggle($event, i)"
-                >Advanced mode</mat-slide-toggle
-              >
-            </div>
-
-            <!-- CASTING INFOS -->
-            <div class="casting-options">
-              <!-- CLASS EI -->
-              <div>
-                <mat-checkbox formControlName="isClassEI">
-                  concrete in environment class EI
-                </mat-checkbox>
-              </div>
-
-              <!-- CEMENT TYPE -->
-              <div>
-                Cement type:
-                <mat-form-field appearance="outline">
-                  <mat-label>Select a cement type</mat-label>
-                  <mat-select formControlName="cement_type">
-                    <mat-option
-                      *ngFor="let cementType of cementTypes"
-                      [value]="cementType.value"
-                    >
-                      {{ cementType.value }}
-                    </mat-option>
-                  </mat-select>
+            <div *ngIf="advancedConcreteParameters[i]" class="casting-options">
+              <!-- Fcm2/Fcm28 RATIO -->
+              <div class="w-50">
+                Fcm2/Fcm28 Ratio :
+                <mat-form-field appearance="outline" MatFormFieldControl="">
+                  <input
+                    matInput
+                    formControlName="fcm2_fcm28_ratio"
+                    id="fcm2_fcm28_ratio"
+                    type="number"
+                    step="0.01"
+                    min="0"
+                  />
                 </mat-form-field>
               </div>
 
-              <div
-                *ngIf="advancedConcreteParameters[i]"
-                class="casting-options"
-              >
-                <!-- Fcm2/Fcm28 RATIO -->
-                <div class="w-50">
-                  Fcm2/Fcm28 Ratio :
-                  <mat-form-field appearance="outline" MatFormFieldControl="">
-                    <input
-                      matInput
-                      formControlName="fcm2_fcm28_ratio"
-                      id="fcm2_fcm28_ratio"
-                      type="number"
-                      step="0.01"
-                      min="0"
-                    />
-                  </mat-form-field>
-                </div>
+              <!-- Rc2/Rc28 RATIO -->
+              <div>
+                Rcm2/Rcm28 Ratio :
+                <mat-form-field appearance="outline" MatFormFieldControl="">
+                  <input
+                    matInput
+                    formControlName="rc2_rc28_ratio"
+                    id="rc2_rc28_ratio"
+                    type="number"
+                    step="0.01"
+                    min="0"
+                  />
+                </mat-form-field>
+              </div>
 
-                <!-- Rc2/Rc28 RATIO -->
-                <div>
-                  Rcm2/Rcm28 Ratio :
-                  <mat-form-field appearance="outline" MatFormFieldControl="">
-                    <input
-                      matInput
-                      formControlName="rc2_rc28_ratio"
-                      id="rc2_rc28_ratio"
-                      type="number"
-                      step="0.01"
-                      min="0"
-                    />
-                  </mat-form-field>
-                </div>
-
-                <!-- TYPE 2 ADDITION -->
-                <div>
-                  Type 2 additions : no
-                  <mat-slide-toggle formControlName="type2_addition">
-                  </mat-slide-toggle>
-                  yes
-                </div>
+              <!-- TYPE 2 ADDITION -->
+              <div>
+                Type 2 additions : no
+                <mat-slide-toggle formControlName="type2_addition">
+                </mat-slide-toggle>
+                yes
               </div>
             </div>
           </div>
         </div>
-      </form>
-      <div class="d-flex justify-content-around">
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
       </div>
-    </mat-step>
+    </form>
+    <div class="d-flex justify-content-around">
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
 
-    <!-- STEP 3 : Overview -->
-    <mat-step>
-      <ng-template matStepLabel>Overview</ng-template>
+  <!-- STEP 3 : Overview -->
+  <mat-step>
+    <ng-template matStepLabel>Overview</ng-template>
 
-      <mat-grid-list cols="2" rowHeigth="2:1">
-        <mat-grid-tile [colspan]="2">
-          <mat-grid-tile-header>Jobsite</mat-grid-tile-header>
-          <div class="jobsiteGridContent" id="jobsite_overview">
-            <p>Jobsite name : {{ getJobsite("name") }}</p>
-            <p>Jobsite address : {{ getJobsite("address") }}</p>
-            <p>Jobsite description : {{ getJobsite("description") }}</p>
-            <p>coordinates : [{{ latitude }} , {{ longitude }}]</p>
-          </div>
-        </mat-grid-tile>
-      </mat-grid-list>
+    <mat-grid-list cols="2" rowHeigth="2:1">
+      <mat-grid-tile [colspan]="2">
+        <mat-grid-tile-header>Jobsite</mat-grid-tile-header>
+        <div class="jobsiteGridContent" id="jobsite_overview">
+          <p>Jobsite name : {{ getJobsite("name") }}</p>
+          <p>Jobsite address : {{ getJobsite("address") }}</p>
+          <p>Jobsite description : {{ getJobsite("description") }}</p>
+          <p>coordinates : [{{ latitude }} , {{ longitude }}]</p>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
 
-      <mat-grid-list cols="2" rowHeigth="fit" gutterSize="3px">
-        <mat-grid-tile
-          *ngFor="let casting of getCastingsControls.controls; let i = index"
-        >
-          <mat-grid-tile-header>Casting {{ i + 1 }}</mat-grid-tile-header>
-          <div id="castings_overview">
-            <p>Name:{{ getCasting(i, "name") }}</p>
-            <p>Description:{{ getCasting(i, "description") }}</p>
-          </div>
-        </mat-grid-tile>
-      </mat-grid-list>
+    <mat-grid-list cols="2" rowHeigth="fit" gutterSize="3px">
+      <mat-grid-tile
+        *ngFor="let casting of getCastingsControls.controls; let i = index"
+      >
+        <mat-grid-tile-header>Casting {{ i + 1 }}</mat-grid-tile-header>
+        <div id="castings_overview">
+          <p>Name:{{ getCasting(i, "name") }}</p>
+          <p>Description:{{ getCasting(i, "description") }}</p>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
 
-      <div class="d-flex justify-content-around">
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="onSubmit()" id="submit">Create</button>
-      </div>
-    </mat-step>
-  </mat-stepper>
-</div>
+    <div class="d-flex justify-content-around">
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="onSubmit()" id="submit">Create</button>
+    </div>
+  </mat-step>
+</mat-stepper>
