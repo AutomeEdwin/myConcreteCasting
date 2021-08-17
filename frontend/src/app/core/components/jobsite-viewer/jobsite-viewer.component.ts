@@ -29,7 +29,6 @@ export class JobsiteViewerComponent implements OnInit {
       .getJobsiteByID(+this.router.url.replace('/jobsite/', ''))
       .subscribe(
         (res: any) => {
-          console.log(res);
           this.createJobsite(res);
           this.getWeather();
         },

@@ -21,10 +21,6 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  goToAccountManager() {
-    this.router.navigate(['account/']);
-  }
-
   logout() {
     this.accountService.logoutUser().subscribe(
       (res) => {

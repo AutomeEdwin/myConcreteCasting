@@ -32,6 +32,7 @@ import { LocalStorageService } from '../../../core/services/localstorage.service
 import { Observable } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { Router } from '@angular/router';
 
 interface Cement {
   value: string;
@@ -92,7 +93,8 @@ export class NewJobsiteComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
     private jobsitesService: JobsitesService,
     private nominatomService: NominatimService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private router: Router
   ) {
     this.stepperOrientation = breakpointObserver
       .observe('(min-width: 800px)')
@@ -184,7 +186,9 @@ export class NewJobsiteComponent implements OnInit {
     }
 
     this.jobsitesService.createJobsite(this.newJobsiteForm.value).subscribe(
-      (res) => {},
+      (res) => {
+        this.router.navigate(['dashboard']);
+      },
       (err) => {}
     );
   }

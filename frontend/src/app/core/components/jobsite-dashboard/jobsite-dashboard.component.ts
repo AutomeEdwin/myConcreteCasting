@@ -9,7 +9,6 @@ import { Casting } from '../../models/casting.model';
   styleUrls: ['./jobsite-dashboard.component.scss'],
 })
 export class JobsiteDashboardComponent implements OnInit {
-  //  data: any;
   jobsiteArray: Array<Jobsite> = [];
 
   constructor(private jobsitesService: JobsitesService) {}
