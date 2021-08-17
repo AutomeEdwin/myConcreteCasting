@@ -3,12 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { LocalStorageService } from './localstorage.service';
 
+import { environment } from '../../../environments/environment';
+
 @Injectable({
   providedIn: 'root',
 })
 export class OpenweatherService {
-  //readonly serverURL = 'https://api.concast.digitalconstruction.cloud/';
-  readonly serverURL = 'http://localhost:8000/';
+  serverURL = environment.apiURL;
 
   constructor(
     private httpClient: HttpClient,

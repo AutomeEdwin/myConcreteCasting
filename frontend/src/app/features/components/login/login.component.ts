@@ -58,27 +58,29 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     } else {
-      this.accountService.loginUser(JSON.stringify(this.loginForm.value)).subscribe(
-        (response: any) => {
-          this.accountService.storeToken(response.token);
-          this.localStorageService.set(
-            'user',
-            JSON.stringify(
-              new User(
-                response.user.id,
-                response.user.first_name,
-                response.user.last_name,
-                response.user.email
+      this.accountService
+        .loginUser(JSON.stringify(this.loginForm.value))
+        .subscribe(
+          (response: any) => {
+            this.accountService.storeToken(response.token);
+            this.localStorageService.set(
+              'user',
+              JSON.stringify(
+                new User(
+                  response.user.id,
+                  response.user.first_name,
+                  response.user.last_name,
+                  response.user.email
+                )
               )
-            )
-          );
-          this.router.navigate(['/dashboard']);
-        },
-        (error: any) => {
-          this.responseError = true;
-          this.responseErrorMessage = error.error.message;
-        }
-      );
+            );
+            this.router.navigate(['/dashboard']);
+          },
+          (error: any) => {
+            this.responseError = true;
+            this.responseErrorMessage = error.error.message;
+          }
+        );
     }
   }
 
