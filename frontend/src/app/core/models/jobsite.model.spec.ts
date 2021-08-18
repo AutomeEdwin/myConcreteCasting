@@ -13,6 +13,7 @@ describe('Jobsite', () => {
         false,
         0.2,
         'oversulfated cement',
+        'C20_25',
         new Date(),
         new Date()
       ),

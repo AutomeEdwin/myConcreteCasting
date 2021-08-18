@@ -4,6 +4,8 @@ import {
   TestBed,
   tick,
 } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormArray, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -27,6 +29,7 @@ describe('NewJobsiteComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
+        RouterTestingModule,
         ReactiveFormsModule,
         HttpClientTestingModule,
         MatDialogModule,
@@ -76,21 +79,25 @@ describe('NewJobsiteComponent', () => {
     );
 
     const casting_isClassEIInput = compiled.querySelector(
-      'textarea[id="isClassEI"]'
+      'mat-checkbox[id="isClassEI"]'
     );
 
     const casting_fcm2_fcm28_ratioInput = compiled.querySelector(
-      'textarea[id="fcm2_fcm28_ratio"]'
+      'input[id="fcm2_fcm28_ratio"]'
     );
 
     const casting_type2_additionInput = compiled.querySelector(
-      'textarea[id="type2_addition"]'
+      'mat-slide-toggle[id="type2_addition"]'
     );
     const casting_rc2_rc28_ratioInput = compiled.querySelector(
-      'textarea[id="rc2_rc28_ratio"]'
+      'input[id="rc2_rc28_ratio"]'
     );
     const casting_cement_typeInput = compiled.querySelector(
-      'textarea[id="cement_type"]'
+      'mat-select[id="cement_type"]'
+    );
+
+    const casting_strength_classInput = compiled.querySelector(
+      'mat-select[id="strength_class"]'
     );
 
     const jobsite_overview = compiled.querySelector(
@@ -109,11 +116,12 @@ describe('NewJobsiteComponent', () => {
     expect(jobsite_descriptionInput).toBeTruthy();
     expect(casting_nameInput).toBeTruthy();
     expect(casting_descriptionInput).toBeTruthy();
-    expect(casting_isClassEIInput).toBeFalsy();
+    expect(casting_isClassEIInput).toBeTruthy();
     expect(casting_fcm2_fcm28_ratioInput).toBeFalsy();
     expect(casting_type2_additionInput).toBeFalsy();
     expect(casting_rc2_rc28_ratioInput).toBeFalsy();
-    expect(casting_cement_typeInput).toBe(null);
+    expect(casting_cement_typeInput).toBeTruthy();
+    expect(casting_strength_classInput).toBeTruthy();
     expect(jobsite_overview).toBeTruthy();
     expect(castings_overview).toBeTruthy();
   });
@@ -144,6 +152,7 @@ describe('NewJobsiteComponent', () => {
         type2_addition: false,
         rc2_rc28_ratio: null,
         cement_type: 'oversulfated cement',
+        strength_class: 'C20_25',
       },
     ]);
 
@@ -242,6 +251,7 @@ describe('NewJobsiteComponent', () => {
         type2_addition: false,
         rc2_rc28_ratio: null,
         cement_type: 'oversulfated cement',
+        strength_class: 'C20_25',
       },
     ]);
 
@@ -253,6 +263,7 @@ describe('NewJobsiteComponent', () => {
     expect(component.getCasting(0, 'type2_addition')).toBeFalse();
     expect(component.getCasting(0, 'rc2_rc28_ratio')).toBeNull();
     expect(component.getCasting(0, 'cement_type')).toBe('oversulfated cement');
+    expect(component.getCasting(0, 'strength_class')).toBe('C20_25');
   });
 
   it('should add a new casting to the jobsite', () => {
@@ -281,6 +292,7 @@ describe('NewJobsiteComponent', () => {
         type2_addition: false,
         rc2_rc28_ratio: null,
         cement_type: 'oversulfated cement',
+        strength_class: 'C20_25',
       },
       {
         name: 'name2',
@@ -290,6 +302,7 @@ describe('NewJobsiteComponent', () => {
         type2_addition: false,
         rc2_rc28_ratio: null,
         cement_type: 'oversulfated cement',
+        strength_class: 'C20_25',
       },
       {
         name: 'name3',
@@ -299,6 +312,7 @@ describe('NewJobsiteComponent', () => {
         type2_addition: false,
         rc2_rc28_ratio: null,
         cement_type: 'oversulfated cement',
+        strength_class: 'C20_25',
       },
     ]);
 
@@ -316,6 +330,7 @@ describe('NewJobsiteComponent', () => {
         type2_addition: false,
         rc2_rc28_ratio: null,
         cement_type: 'oversulfated cement',
+        strength_class: 'C20_25',
       },
       {
         name: 'name3',
@@ -325,6 +340,7 @@ describe('NewJobsiteComponent', () => {
         type2_addition: false,
         rc2_rc28_ratio: null,
         cement_type: 'oversulfated cement',
+        strength_class: 'C20_25',
       },
     ]);
   });

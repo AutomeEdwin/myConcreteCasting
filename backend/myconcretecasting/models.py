@@ -31,7 +31,8 @@ class Casting(models.Model):
     fcm2_fcm28_ratio = models.IntegerField(null=True)
     type2_addition = models.BooleanField()
     rc2_rc28_ratio = models.IntegerField(null=True)
-    cement_type = models.CharField(max_length=50)
+    cement_type = models.CharField(max_length=15)
+    strength_class = models.CharField(max_length=10)
     curing_start = models.DateTimeField(default=None, null=True)
     curing_end = models.DateTimeField(default=None, null=True)
 

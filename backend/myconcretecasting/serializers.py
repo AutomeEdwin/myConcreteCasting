@@ -32,4 +32,5 @@ class CastingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Casting
         fields = ['id', 'name', 'description', 'isClassEI', 'fcm2_fcm28_ratio',
-                  'type2_addition', 'rc2_rc28_ratio', 'cement_type', 'curing_start', 'curing_end']
+                  'type2_addition', 'rc2_rc28_ratio', 'cement_type', 'strength_class',
+                  'curing_start', 'curing_end']

@@ -8,6 +8,7 @@ export class Casting {
     private type2_addition: boolean,
     private rc2_rc28_ratio: number,
     private cement_type: string,
+    private strength_class: string,
     private curing_start: Date | string,
     private curing_end: Date | string
   ) {}
@@ -42,6 +43,10 @@ export class Casting {
 
   getCementType() {
     return this.cement_type;
+  }
+
+  getStrengthClass() {
+    return this.strength_class;
   }
 
   getCuringStartDate() {

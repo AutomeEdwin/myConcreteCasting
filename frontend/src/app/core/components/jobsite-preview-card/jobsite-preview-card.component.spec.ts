@@ -25,6 +25,7 @@ describe('JobsitePreviewCardComponent', () => {
       false,
       0.2,
       'oversulfated cement',
+      "C20_25",
       new Date(),
       new Date()
     ),

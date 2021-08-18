@@ -34,6 +34,7 @@ describe('CastingViewerComponent', () => {
       false,
       0.2,
       'oversulfated cement',
+      'C20_25',
       '',
       ''
     );
@@ -57,6 +58,7 @@ describe('CastingViewerComponent', () => {
       false,
       0.2,
       'oversulfated cement',
+      'C20_25',
       today,
       new Date(today.getTime() + 1)
     );
@@ -89,6 +91,7 @@ describe('CastingViewerComponent', () => {
       false,
       0.2,
       'oversulfated cement',
+      'C20_25',
       today,
       new Date(today.getTime() + 1)
     );

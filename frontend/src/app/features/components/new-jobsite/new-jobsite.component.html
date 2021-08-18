@@ -139,7 +139,7 @@
             <div class="casting-options">
               <!-- CLASS EI -->
               <div>
-                <mat-checkbox formControlName="isClassEI">
+                <mat-checkbox formControlName="isClassEI" id="isClassEI">
                   concrete in environment class EI
                 </mat-checkbox>
               </div>
@@ -149,12 +149,33 @@
                 Cement type:
                 <mat-form-field appearance="fill">
                   <mat-label>Select a cement type</mat-label>
-                  <mat-select formControlName="cement_type">
+                  <mat-select formControlName="cement_type" id="cement_type">
                     <mat-option
                       *ngFor="let cementType of cementTypes"
                       [value]="cementType.value"
                     >
                       {{ cementType.value }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <!-- CLASS STRENGTH -->
+              <div>
+                Strength class:
+                <mat-form-field appearance="fill">
+                  <mat-label
+                    >Select the strength class of this casting</mat-label
+                  >
+                  <mat-select
+                    formControlName="strength_class"
+                    id="strength_class"
+                  >
+                    <mat-option
+                      *ngFor="let class of strengthClasses"
+                      [value]="class.value"
+                    >
+                      {{ class.value }}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>

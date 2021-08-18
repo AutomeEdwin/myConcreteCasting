@@ -26,6 +26,7 @@ describe('JobsiteViewerComponent', () => {
       false,
       0.2,
       'oversulfated cement',
+      'C20_25',
       new Date(),
       new Date()
     ),
@@ -94,6 +95,7 @@ describe('JobsiteViewerComponent', () => {
         castings[j].type2_addition,
         castings[j].rc2_rc28_ratio,
         castings[j].cement_type,
+        castings[j].strength_class,
         castings[j].curing_start,
         castings[j].curing_end
       );

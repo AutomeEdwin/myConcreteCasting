@@ -38,6 +38,10 @@ interface Cement {
   value: string;
 }
 
+interface StrengthClass {
+  value: string;
+}
+
 @Component({
   selector: 'app-new-jobsite',
   templateUrl: './new-jobsite.component.html',
@@ -65,27 +69,28 @@ export class NewJobsiteComponent implements OnInit {
   advancedConcreteParameters: Array<boolean> = [false];
 
   cementTypes: Cement[] = [
-    { value: 'oversulfated cement' },
+    { value: 'CEM 42.5 R' },
+    { value: 'CEM 52.5 N' },
+    { value: 'CEM 52.5 R' },
 
-    { value: 'CEM 1 52.5 N ou R' },
-    { value: 'CEM 1 42.5 N ou R' },
+    { value: 'CEM 32.5 R' },
+    { value: 'CEM 42.5 N' },
 
-    { value: 'CEM 2/A-M ou -V 42.5 N ou R ou 32.5 R' },
+    { value: 'CEM 32.5 N' },
+  ];
 
-    { value: 'CEM 2/A-S, -D ou -LL 52.5 N ou R' },
-    { value: 'CEM 2/A-S, -D ou -LL 42.5 N ou R' },
-    { value: 'CEM 2/A-S, -D ou -LL 32.5 R' },
-    { value: 'CEM 2/A-S, -D, -LL, -M ou -V 32.5 N' },
-
-    { value: 'CEM 2/B-S, -LL, -M ou -V 42.5 N ou R ou 32.5 R' },
-    { value: 'CEM 2/B-S, -LL, -M ou -V 32.5 N' },
-
-    { value: 'CEM 3/A 52.5 N ou 42.5 N' },
-    { value: 'CEM 3/A 32.5 N' },
-    { value: 'CEM 3/B 42.5 N ou 32.5 N' },
-    { value: 'CEM 3/C 32.5 N' },
-
-    { value: 'CEM 5/A 32.5 N' },
+  strengthClasses: StrengthClass[] = [
+    { value: 'C20_25' },
+    { value: 'C25_30' },
+    { value: 'C30_37' },
+    { value: 'C40_50' },
+    { value: 'C45_55' },
+    { value: 'C50_60' },
+    { value: 'C55_67' },
+    { value: 'C60_75' },
+    { value: 'C70_85' },
+    { value: 'C80_95' },
+    { value: 'C100_105' },
   ];
 
   constructor(
@@ -156,6 +161,7 @@ export class NewJobsiteComponent implements OnInit {
       type2_addition: new FormControl(false),
       rc2_rc28_ratio: new FormControl(null),
       cement_type: new FormControl('', [Validators.required]),
+      strength_class: new FormControl('', [Validators.required]),
     });
   }
 

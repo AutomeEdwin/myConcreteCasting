@@ -2,22 +2,14 @@
   <app-navbar></app-navbar>
 
   <div class="d-flex justify-content-end p-2">
-    <button
-      id="newJobsiteButton"
-      mat-button
-      [routerLink]="'/newJobsite'"
-    >
+    <button id="newJobsiteButton" mat-button [routerLink]="'/newJobsite'">
       New Jobsite
     </button>
   </div>
 
   <!-- REFRESH BUTTON -->
   <div class="d-flex justify-content-end pb-2 px-2">
-    <button
-      id="refreshButton"
-      mat-button
-      (click)="getJobsites()"
-    >
+    <button id="refreshButton" mat-button (click)="getJobsites()">
       <mat-icon>sync</mat-icon>
     </button>
   </div>

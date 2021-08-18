@@ -50,6 +50,7 @@ export class JobsiteViewerComponent implements OnInit {
         castings[j].type2_addition,
         castings[j].rc2_rc28_ratio,
         castings[j].cement_type,
+        castings[j].strength_class,
         castings[j].curing_start,
         castings[j].curing_end
       );
