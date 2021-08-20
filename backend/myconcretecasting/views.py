@@ -154,7 +154,7 @@ class getJobsiteWeather(APIView):
     def post(self, request, *args, **kwargs):
         data = JSONParser().parse(request)
         r = requests.get(
-            "http://api.openweathermap.org/data/2.5/weather?lat=" + str(data["lat"]) + "&lon="+str(data["lon"])+"&units=metric&appid=1741bc771947d46a2aac130e41db45cf").json()
+            "http://api.openweathermap.org/data/2.5/weather?lat=" + str(data["lon"]) + "&lon="+str(data["lat"])+"&units=metric&appid=1741bc771947d46a2aac130e41db45cf").json()
 
         weather = {
             'description': r['weather'][0]['description'],
