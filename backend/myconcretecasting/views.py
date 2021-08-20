@@ -170,16 +170,47 @@ class getJobsiteWeather(APIView):
 class calculateCuringTime(APIView):
     permission_classes = [IsAuthenticated]
 
+    def getWeatherDatas(self, jobsite):
+        today = datetime.datetime.today().replace(
+            hour=10, minute=00, second=00, microsecond=00)
+        temperatures = {}  # day_timestamp: avg_temp
+
+        # Getting historical datas
+        for i in range(6, 0, -1):
+            averageTemp = 0
+            timestamp = today - datetime.timedelta(days=i)
+            previousWeather = requests.get("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=" + str(jobsite.coordinates[0])+"&lon="+str(
+                jobsite.coordinates[1])+"&dt="+str(int(timestamp.timestamp()))+"&units=metric&appid=1741bc771947d46a2aac130e41db45cf").json()
+
+            for hour in previousWeather["hourly"]:
+                averageTemp += round(hour["temp"], 2)
+
+            averageTemp = round(averageTemp/len(previousWeather["hourly"]), 2)
+            temperatures[str(int(timestamp.timestamp()))] = averageTemp
+
+        # Getting current and futur weather data's
+        futurWeather = requests.get("https://api.openweathermap.org/data/2.5/onecall?lat=" + str(jobsite.coordinates[1])+"&lon="+str(
+            jobsite.coordinates[0])+"&exclude=current,minutely,hourly,alerts&units=metric&appid=1741bc771947d46a2aac130e41db45cf").json()
+
+        for day in futurWeather["daily"]:
+            temperatures[str(int(day["dt"]))] = round(
+                (day["temp"]["min"] + day["temp"]["max"])/2, 2)
+
+        print(temperatures)
+
     def post(self, request):
         data = JSONParser().parse(request)
 
         jobsite = Jobsite.objects.get(id=data['jobsite_id'])
-        casting = CastingSerializer(
-            jobsite.castings[data['casting_index']])
+        casting = CastingSerializer(jobsite.castings[data['casting_index']])
         casting = casting.data
-        weather = requests.get("http://api.openweathermap.org/data/2.5/weather?lat=" + str(jobsite.coordinates[0]) + "&lon="+str(
-            jobsite.coordinates[1])+"&units=metric&appid=1741bc771947d46a2aac130e41db45cf").json()
 
+        self.getWeatherDatas(jobsite)
+
+        return Response({"msg": "ok"}, status=status.HTTP_200_OK)
+
+
+"""
         if casting['isClassEI']:
             endCuringDate = datetime.datetime.now() + datetime.timedelta(hours=12)
 
@@ -205,3 +236,4 @@ class calculateCuringTime(APIView):
             jobsite.save()
 
             return Response({"startCuringDate": datetime.datetime.now(), "endCuringDate": endCuringDate}, status=status.HTTP_200_OK)
+"""
