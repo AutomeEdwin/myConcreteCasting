@@ -17,8 +17,6 @@ export class CastingViewerComponent implements OnInit, OnDestroy {
 
   subscription!: Subscription;
 
-  seconds!: number;
-  minutes!: number;
   hours!: number;
   days!: number;
 
@@ -91,8 +89,6 @@ export class CastingViewerComponent implements OnInit, OnDestroy {
     let timeDiff =
       new Date(this.casting.getCuringEndDate()).getTime() -
       new Date().getTime();
-    this.seconds = Math.floor((timeDiff / 1000) % 60);
-    this.minutes = Math.floor((timeDiff / (1000 * 60)) % 60);
     this.hours = Math.floor((timeDiff / (1000 * 60 * 60)) % 24);
     this.days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
   }

@@ -12,7 +12,7 @@
         <p>Concrete compression Ratio : {{ getCastingConcreteRatio() }}</p>
         <p>Type 2 addition : {{ getCastingAdditions() }}</p>
         <p>Cement compression Ratio : {{ getCastingCementRatio() }}</p>
-        <p>Strength class : {{casting.getStrengthClass()}} </p>
+        <p>Strength class : {{ casting.getStrengthClass() }}</p>
         <p>Cement type : {{ casting.getCementType() }}</p>
       </div>
       <div class="col">
@@ -20,8 +20,6 @@
           <p>Curing finished in</p>
           <span id="days"> {{ days }} </span>Day(s)
           <span id="hours"> {{ hours }} </span>Hrs
-          <span id="minutes"> {{ minutes }} </span>Min
-          <span id="seconds"> {{ seconds }} </span>S
         </div>
         <div></div>
         <div *ngIf="casting.isCuringFinished()">
@@ -34,10 +32,7 @@
   <mat-card-actions class="d-flex justify-content-end">
     <div *ngIf="!casting.isCuringInProgress() && !casting.isCuringFinished()">
       <button mat-button>Edit</button>
-
-      <button id="startCuring" mat-button (click)="onStartCuring()">
-        Start Curing
-      </button>
     </div>
+    <button id="startCuring" mat-button (click)="onStartCuring()">Start</button>
   </mat-card-actions>
 </mat-card>
