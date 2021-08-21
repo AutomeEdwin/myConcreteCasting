@@ -174,29 +174,43 @@ class calculateCuringTime(APIView):
         today = datetime.datetime.today().replace(
             hour=10, minute=00, second=00, microsecond=00)
         temperatures = {}  # day_timestamp: avg_temp
+        humidities = {}
+        winds = {}
 
-        # Getting historical datas
-        for i in range(6, 0, -1):
-            averageTemp = 0
+        # Getting historical and current weather datas
+        # iterate from 5 days ago until today
+        for i in range(5, 0, -1):
+            averageTemp, averageHumidity, averageWinds = 0, 0, 0
             timestamp = today - datetime.timedelta(days=i)
             previousWeather = requests.get("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=" + str(jobsite.coordinates[0])+"&lon="+str(
                 jobsite.coordinates[1])+"&dt="+str(int(timestamp.timestamp()))+"&units=metric&appid=1741bc771947d46a2aac130e41db45cf").json()
 
             for hour in previousWeather["hourly"]:
                 averageTemp += round(hour["temp"], 2)
+                averageHumidity += hour["humidity"]
+                averageWinds += hour["wind_speed"]
 
             averageTemp = round(averageTemp/len(previousWeather["hourly"]), 2)
-            temperatures[str(int(timestamp.timestamp()))] = averageTemp
+            averageHumidity = round(
+                averageHumidity/len(previousWeather["hourly"]), 2)
+            averageWinds = round(
+                averageWinds/len(previousWeather["hourly"]), 2)
 
-        # Getting current and futur weather data's
+            temperatures[str(int(timestamp.timestamp()))] = averageTemp
+            humidities[str(int(timestamp.timestamp()))] = averageHumidity
+            winds[str(int(timestamp.timestamp()))] = averageWinds
+
+        # Getting futur weather datas
         futurWeather = requests.get("https://api.openweathermap.org/data/2.5/onecall?lat=" + str(jobsite.coordinates[1])+"&lon="+str(
             jobsite.coordinates[0])+"&exclude=current,minutely,hourly,alerts&units=metric&appid=1741bc771947d46a2aac130e41db45cf").json()
 
         for day in futurWeather["daily"]:
             temperatures[str(int(day["dt"]))] = round(
                 (day["temp"]["min"] + day["temp"]["max"])/2, 2)
+            humidities[str(int(day["dt"]))] = day["humidity"]
+            winds[str(int(day["dt"]))] = day["wind_speed"]
 
-        print(temperatures)
+        return temperatures, humidities, winds
 
     def post(self, request):
         data = JSONParser().parse(request)
@@ -205,35 +219,45 @@ class calculateCuringTime(APIView):
         casting = CastingSerializer(jobsite.castings[data['casting_index']])
         casting = casting.data
 
-        self.getWeatherDatas(jobsite)
-
-        return Response({"msg": "ok"}, status=status.HTTP_200_OK)
-
-
-"""
         if casting['isClassEI']:
-            endCuringDate = datetime.datetime.now() + datetime.timedelta(hours=12)
+            casting["curing_start"] = data["startingDate"]
 
-            casting['curing_end'] = endCuringDate
-            casting['curing_start'] = datetime.datetime.now()
+            curingDurationDays = 43200
+
+            endCuringDate = datetime.datetime.fromtimestamp(
+                data["startingDate"]) + datetime.timedelta(hours=12)
+            remainingCuringTime = endCuringDate - datetime.datetime.now()
+
+            # 43200 seconds = 12 hours
+            casting["curing_duration"] = curingDurationDays
+
             jobsite.castings[data['casting_index']] = casting
+
             jobsite.save()
 
-            return Response({"startCuringDate": datetime.datetime.now(), "endCuringDate": endCuringDate}, status=status.HTTP_200_OK)
+            return Response({"remainingCuringTime": remainingCuringTime}, status=status.HTTP_200_OK)
         else:
+            casting["curing_start"] = data["startingDate"]
+
+            temp, humidity, winds = self.getWeatherDatas(jobsite)
+
             resistanceEvolution = getResistanceEvolution(
                 casting["fcm2_fcm28_ratio"], casting["type2_addition"], casting["rc2_rc28_ratio"], casting["cement_type"])
+
             envConditions = getEnvConditions(
-                weather['clouds']['all'], weather['wind']['speed'], weather['main']['humidity'])
+                sum(winds.values())/len(humidity), sum(humidity.values())/len(humidity))
 
             curingDurationDays = getCuringTime(
-                resistanceEvolution, envConditions, weather['main']['temp'])
-            endCuringDate = datetime.datetime.now() + datetime.timedelta(days=curingDurationDays)
+                resistanceEvolution, envConditions, sum(temp.values())/len(temp))
 
-            casting['curing_end'] = endCuringDate
-            casting['curing_start'] = datetime.datetime.now()
+            endingCuringDate = datetime.datetime.fromtimestamp(
+                data["startingDate"]) + datetime.timedelta(days=curingDurationDays)
+            remainingCuringTime = endingCuringDate - datetime.datetime.now()
+
+            casting["curing_duration"] = curingDurationDays
+
             jobsite.castings[data['casting_index']] = casting
+
             jobsite.save()
 
-            return Response({"startCuringDate": datetime.datetime.now(), "endCuringDate": endCuringDate}, status=status.HTTP_200_OK)
-"""
+            return Response({"remainingCuringTime": remainingCuringTime}, status=status.HTTP_200_OK)

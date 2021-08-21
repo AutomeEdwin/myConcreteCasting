@@ -37,13 +37,15 @@ def getResistanceEvolution(fcm2_fcm28_ratio, type2_addition, rc2_rc28_ratio, cem
         return ("S")
 
 
-def getEnvConditions(clouds, wind, humidity):
-    if humidity < 50 or clouds < 25 or wind > 5:
+def getEnvConditions(wind, humidity):
+    if humidity < 50 and wind > 5:
         return 'bad'
-    elif 50 <= humidity < 80 or 25 <= clouds < 75:
+    elif 50 <= humidity < 80:
         return "normal"
-    elif humidity >= 80 and clouds > 75 and wind < 5:
+    elif humidity >= 80 and wind < 5:
         return 'good'
+    else:
+        return "normal"
 
 
 def ratio(ratio):
