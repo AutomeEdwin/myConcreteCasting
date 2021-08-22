@@ -9,6 +9,8 @@ from rest_framework.response import Response
 from .serializers import UserSerializer, RegisterSerializer, JobsiteSerializer, CastingSerializer
 from .models import Jobsite, User
 from .calculations import *
+from .concrete_hardening import StrengthClass, CementType, ConcreteStrength
+
 
 import datetime
 import requests
@@ -219,8 +221,32 @@ class calculateCuringTime(APIView):
         casting = CastingSerializer(jobsite.castings[data['casting_index']])
         casting = casting.data
 
+        casting["casting_start"] = data["startingDate"]
+
+        temp, humidity, winds = self.getWeatherDatas(jobsite)
+
+        strengthClass = casting['strength_class']
+        cementType = casting['cement_type']
+        if cementType == "CEM 42.5 R" or cementType == "CEM 52.5 N" or cementType == "CEM 52.5 R":
+            cementType = "R"
+        elif cementType == "CEM 32.5 R" or cementType == "CEM 42.5 N":
+            cementType = "N"
+        elif cementType == "CEM 32.5 N":
+            cementType = "S"
+
+        hardening = ConcreteStrength(
+            CementType[cementType], StrengthClass[strengthClass])
+        hardening.setTempHistory(list(temp.keys()), list(temp.values()))
+        hardening.setCastingTime(casting["casting_start"])
+        hardening.computeMaturity()
+
+        t = hardening.getTimeStrength(25)
+        unCastLeft = t.x[0] / 1000
+
+        casting["hardening_duration"] = unCastLeft
+
         if casting['isClassEI']:
-            casting["curing_start"] = data["startingDate"]
+            casting["casting_start"] = data["startingDate"]
 
             curingDurationDays = 43200
 
@@ -230,37 +256,29 @@ class calculateCuringTime(APIView):
 
             # 43200 seconds = 12 hours
             casting["curing_duration"] = curingDurationDays
-
             jobsite.castings[data['casting_index']] = casting
-
             jobsite.save()
 
-            return Response({"remainingCuringTime": remainingCuringTime}, status=status.HTTP_200_OK)
+            return Response({"startCuringDate": data["startingDate"], "curingDuration": int(curingDurationDays), "hardening_duration": unCastLeft}, status=status.HTTP_200_OK)
         else:
-            casting["curing_start"] = data["startingDate"]
+            casting["casting_start"] = data["startingDate"]
 
             temp, humidity, winds = self.getWeatherDatas(jobsite)
 
             resistanceEvolution = getResistanceEvolution(
                 casting["fcm2_fcm28_ratio"], casting["type2_addition"], casting["rc2_rc28_ratio"], casting["cement_type"])
-
             envConditions = getEnvConditions(
                 sum(winds.values())/len(humidity), sum(humidity.values())/len(humidity))
-
             curingDurationDays = getCuringTime(
                 resistanceEvolution, envConditions, sum(temp.values())/len(temp))
-
             endingCuringDate = datetime.datetime.fromtimestamp(
                 data["startingDate"]) + datetime.timedelta(days=curingDurationDays)
-            remainingCuringTime = endingCuringDate - datetime.datetime.now()
-
-            print(curingDurationDays)
 
             # converting days in seconds
-            casting["curing_duration"] = curingDurationDays * 24 * 60 *60
-
+            casting["curing_duration"] = int(curingDurationDays * 24 * 60 * 60)
             jobsite.castings[data['casting_index']] = casting
-
             jobsite.save()
 
-            return Response({"remainingCuringTime": remainingCuringTime}, status=status.HTTP_200_OK)
+            return Response({"startCuringDate": data["startingDate"], "curingDuration": int(curingDurationDays * 24 * 60 * 60), "hardening_duration": unCastLeft}, status=status.HTTP_200_OK)
+
+        return Response(status=status.HTTP_400_BAD_REQUEST)

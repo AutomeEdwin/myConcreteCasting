@@ -33,8 +33,9 @@ class Casting(models.Model):
     rc2_rc28_ratio = models.IntegerField(null=True)
     cement_type = models.CharField(max_length=15)
     strength_class = models.CharField(max_length=10)
-    curing_start = models.IntegerField(default=None, null=True)
+    casting_start = models.IntegerField(default=None, null=True)
     curing_duration = models.IntegerField(default=None, null=True)
+    hardening_duration = models.IntegerField(default=None, null=True)
 
 
 class Jobsite(models.Model):
