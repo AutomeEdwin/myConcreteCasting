@@ -41,6 +41,16 @@
             ></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
+          <mat-form-field appearance="fill" [formGroup]="datePicker">
+            <mat-label>Choose a target strength (MPa)</mat-label>
+            <input
+              matInput
+              type="number"
+              min="0"
+              max="100"
+              formControlName="targetStrength"
+            />
+          </mat-form-field>
         </div>
       </div>
     </div>

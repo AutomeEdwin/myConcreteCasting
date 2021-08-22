@@ -240,7 +240,7 @@ class calculateCuringTime(APIView):
         hardening.setCastingTime(casting["casting_start"])
         hardening.computeMaturity()
 
-        t = hardening.getTimeStrength(25)
+        t = hardening.getTimeStrength(data["targetStrength"])
         unCastLeft = t.x[0] / 1000
 
         casting["hardening_duration"] = unCastLeft

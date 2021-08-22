@@ -18,14 +18,13 @@ export class CastingViewerComponent implements OnInit, OnDestroy {
 
   datePicker = new FormGroup({
     startingDate: new FormControl('', [Validators.required]),
+    targetStrength: new FormControl('', [Validators.required]),
   });
-  displayedDate!: string;
 
   subscription!: Subscription;
 
   curinghours!: number;
   curingdays!: number;
-
   hardeninghours!: number;
   hardeningdays!: number;
 
@@ -81,6 +80,7 @@ export class CastingViewerComponent implements OnInit, OnDestroy {
       jobsite_id: this.jobsiteID,
       casting_index: this.index,
       startingDate: date.getTime() / 1000,
+      targetStrength: this.datePicker.get('targetStrength')?.value,
     };
 
     this.jobsiteService.getCastingCuringTime(x).subscribe(
