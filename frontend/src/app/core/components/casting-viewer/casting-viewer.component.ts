@@ -19,11 +19,15 @@ export class CastingViewerComponent implements OnInit, OnDestroy {
   datePicker = new FormGroup({
     startingDate: new FormControl('', [Validators.required]),
   });
+  displayedDate!: string;
 
   subscription!: Subscription;
 
-  hours!: number;
-  days!: number;
+  curinghours!: number;
+  curingdays!: number;
+
+  hardeninghours!: number;
+  hardeningdays!: number;
 
   constructor(private jobsiteService: JobsitesService) {}
 
@@ -83,6 +87,7 @@ export class CastingViewerComponent implements OnInit, OnDestroy {
       (res: any) => {
         this.casting.setCuringStartDate(res.startCuringDate);
         this.casting.setCuringDuration(res.curingDuration);
+        this.casting.setHardeningDuration(res.hardening_duration);
 
         this.subscription = interval(1000).subscribe((x) => {
           this.setTimeUnits();
@@ -93,12 +98,18 @@ export class CastingViewerComponent implements OnInit, OnDestroy {
   }
 
   setTimeUnits() {
-    let ending =
+    let curingEnding =
       this.casting.getCuringStartDate() + this.casting.getCuringDuration();
+    let hardeningEnding =
+      this.casting.getCuringStartDate() + this.casting.getHardeningDuration();
 
-    let remainingTime = ending - new Date().getTime() / 1000;
+    let curingRemainingTime = curingEnding - new Date().getTime() / 1000;
+    let hardeningRemainingTime = hardeningEnding - new Date().getTime() / 1000;
 
-    this.hours = Math.floor((remainingTime / (60 * 60)) % 24);
-    this.days = Math.floor(remainingTime / (60 * 60 * 24));
+    this.curinghours = Math.floor((curingRemainingTime / (60 * 60)) % 24);
+    this.curingdays = Math.floor(curingRemainingTime / (60 * 60 * 24));
+
+    this.hardeningdays = Math.floor(hardeningRemainingTime / (60 * 60 * 24));
+    this.hardeninghours = Math.floor((hardeningRemainingTime / (60 * 60)) % 24);
   }
 }

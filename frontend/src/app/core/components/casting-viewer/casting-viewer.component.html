@@ -18,13 +18,16 @@
       <div class="col">
         <div class="timer" *ngIf="casting.isCuringInProgress()">
           <p>Curing finished in</p>
-          <span id="days"> {{ days }} </span>Day(s)
-          <span id="hours"> {{ hours }} </span>Hrs
+          <span id="days"> {{ curingdays }} </span>Day(s)
+          <span id="hours"> {{ curinghours }} </span>Hrs <br /><br />
+          <p>Hardening finished in</p>
+          <span id="days"> {{ hardeningdays }} </span>Day(s)
+          <span id="hours"> {{ hardeninghours }} </span>Hrs
         </div>
         <div *ngIf="casting.isCuringFinished()">
           <p>Curing done</p>
         </div>
-        <div>
+        <div class="row">
           <mat-form-field appearance="fill" [formGroup]="datePicker">
             <mat-label>Choose a starting date</mat-label>
             <input
@@ -32,7 +35,10 @@
               [matDatepicker]="picker"
               formControlName="startingDate"
             />
-            <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
         </div>

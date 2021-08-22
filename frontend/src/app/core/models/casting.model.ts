@@ -9,8 +9,9 @@ export class Casting {
     private rc2_rc28_ratio: number,
     private cement_type: string,
     private strength_class: string,
-    private curing_start: number,
-    private curing_duration: number
+    private casting_start: number,
+    private curing_duration: number,
+    private hardening_duration: number
   ) {}
 
   getUUID() {
@@ -50,19 +51,27 @@ export class Casting {
   }
 
   getCuringStartDate() {
-    return this.curing_start;
+    return this.casting_start;
   }
 
   getCuringDuration() {
     return this.curing_duration;
   }
 
+  getHardeningDuration() {
+    return this.hardening_duration;
+  }
+
   setCuringStartDate(x: number) {
-    this.curing_start = x;
+    this.casting_start = x;
   }
 
   setCuringDuration(x: number) {
     this.curing_duration = x;
+  }
+
+  setHardeningDuration(x: number) {
+    this.hardening_duration = x;
   }
 
   isCuringInProgress() {
