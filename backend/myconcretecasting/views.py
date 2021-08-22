@@ -254,7 +254,10 @@ class calculateCuringTime(APIView):
                 data["startingDate"]) + datetime.timedelta(days=curingDurationDays)
             remainingCuringTime = endingCuringDate - datetime.datetime.now()
 
-            casting["curing_duration"] = curingDurationDays
+            print(curingDurationDays)
+
+            # converting days in seconds
+            casting["curing_duration"] = curingDurationDays * 24 * 60 *60
 
             jobsite.castings[data['casting_index']] = casting
 

@@ -3,6 +3,7 @@ import { Subscription, interval } from 'rxjs';
 
 import { JobsitesService } from '../../services/jobsites.service';
 import { Casting } from '../../models/casting.model';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-casting-viewer',
@@ -14,6 +15,10 @@ export class CastingViewerComponent implements OnInit, OnDestroy {
   @Input() index!: number;
   @Input() coordinates!: number[];
   @Input() jobsiteID!: number;
+
+  datePicker = new FormGroup({
+    startingDate: new FormControl('', [Validators.required]),
+  });
 
   subscription!: Subscription;
 
@@ -34,10 +39,6 @@ export class CastingViewerComponent implements OnInit, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-  }
-
-  getCastingName() {
-    return this.casting.getName();
   }
 
   getCastingDescription() {
@@ -67,15 +68,21 @@ export class CastingViewerComponent implements OnInit, OnDestroy {
   }
 
   onStartCuring() {
+    if (this.datePicker.invalid) {
+      return;
+    }
+
+    let date = this.datePicker.get('startingDate')?.value;
     let x = {
       jobsite_id: this.jobsiteID,
       casting_index: this.index,
+      startingDate: date.getTime() / 1000,
     };
 
     this.jobsiteService.getCastingCuringTime(x).subscribe(
       (res: any) => {
-        this.casting.setCuringStartDate(new Date(res.startCuringDate));
-        this.casting.setCuringEndDate(new Date(res.endCuringDate));
+        this.casting.setCuringStartDate(res.startCuringDate);
+        this.casting.setCuringDuration(res.curingDuration);
 
         this.subscription = interval(1000).subscribe((x) => {
           this.setTimeUnits();
@@ -86,10 +93,12 @@ export class CastingViewerComponent implements OnInit, OnDestroy {
   }
 
   setTimeUnits() {
-    let timeDiff =
-      new Date(this.casting.getCuringEndDate()).getTime() -
-      new Date().getTime();
-    this.hours = Math.floor((timeDiff / (1000 * 60 * 60)) % 24);
-    this.days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+    let ending =
+      this.casting.getCuringStartDate() + this.casting.getCuringDuration();
+
+    let remainingTime = ending - new Date().getTime() / 1000;
+
+    this.hours = Math.floor((remainingTime / (60 * 60)) % 24);
+    this.days = Math.floor(remainingTime / (60 * 60 * 24));
   }
 }

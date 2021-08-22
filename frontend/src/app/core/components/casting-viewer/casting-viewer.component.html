@@ -1,7 +1,7 @@
 <!-- CASTING -->
 <mat-card class="container">
   <mat-card-header>
-    <mat-card-title>{{ getCastingName() }} </mat-card-title>
+    <mat-card-title>{{ casting.getName() }} </mat-card-title>
   </mat-card-header>
 
   <mat-card-content>
@@ -21,9 +21,20 @@
           <span id="days"> {{ days }} </span>Day(s)
           <span id="hours"> {{ hours }} </span>Hrs
         </div>
-        <div></div>
         <div *ngIf="casting.isCuringFinished()">
           <p>Curing done</p>
+        </div>
+        <div>
+          <mat-form-field appearance="fill" [formGroup]="datePicker">
+            <mat-label>Choose a starting date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              formControlName="startingDate"
+            />
+            <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
         </div>
       </div>
     </div>
