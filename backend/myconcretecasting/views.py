@@ -235,7 +235,7 @@ class calculateCuringTime(APIView):
             cementType = "S"
 
         hardening = ConcreteStrength(
-            CementType[cementType], StrengthClass[strengthClass])
+            StrengthClass[strengthClass], CementType[cementType])
         hardening.setTempHistory(list(temp.keys()), list(temp.values()))
         hardening.setCastingTime(casting["casting_start"])
         hardening.computeMaturity()
@@ -262,8 +262,6 @@ class calculateCuringTime(APIView):
             return Response({"startCuringDate": data["startingDate"], "curingDuration": int(curingDurationDays), "hardening_duration": unCastLeft}, status=status.HTTP_200_OK)
         else:
             casting["casting_start"] = data["startingDate"]
-
-            temp, humidity, winds = self.getWeatherDatas(jobsite)
 
             resistanceEvolution = getResistanceEvolution(
                 casting["fcm2_fcm28_ratio"], casting["type2_addition"], casting["rc2_rc28_ratio"], casting["cement_type"])
