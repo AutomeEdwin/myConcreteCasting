@@ -90,7 +90,7 @@ export class NewJobsiteComponent implements OnInit {
     { value: 'C60_75' },
     { value: 'C70_85' },
     { value: 'C80_95' },
-    { value: 'C100_105' },
+    { value: 'C90_105' },
   ];
 
   constructor(
