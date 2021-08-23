@@ -33,10 +33,11 @@ describe('CastingViewerComponent', () => {
       0.2,
       false,
       0.2,
-      'oversulfated cement',
+      'CEM 52.5 N',
       'C20_25',
-      '',
-      ''
+      1629669600,
+      43200,
+      1630101
     );
 
     component.subscription = new Subscription();
@@ -57,10 +58,11 @@ describe('CastingViewerComponent', () => {
       0.2,
       false,
       0.2,
-      'oversulfated cement',
+      'CEM 52.5 N',
       'C20_25',
-      today,
-      new Date(today.getTime() + 1)
+      1629669600,
+      43200,
+      1630101
     );
 
     spyOn(component, 'onStartCuring');
@@ -90,26 +92,35 @@ describe('CastingViewerComponent', () => {
       0.2,
       false,
       0.2,
-      'oversulfated cement',
+      'CEM 52.5 N',
       'C20_25',
-      today,
-      new Date(today.getTime() + 1)
+      1629669600,
+      43200,
+      1630101
     );
 
-    let beginning = new Date().getTime();
-    let ending = new Date(component.casting.getCuringEndDate()).getTime();
-    let seconds = Math.floor(((ending - beginning) / 1000) % 60);
-    let minutes = Math.floor(((ending - beginning) / (1000 * 60)) % 60);
-    let hours = Math.floor(((ending - beginning) / (1000 * 60 * 60)) % 24);
-    let days = Math.floor((ending - beginning) / (1000 * 60 * 60 * 24));
+    let curingEnding =
+      component.casting.getCuringStartDate() +
+      component.casting.getCuringDuration();
+    let hardeningEnding =
+      component.casting.getCuringStartDate() +
+      component.casting.getHardeningDuration();
+
+    let curingRemainingTime = curingEnding - new Date().getTime() / 1000;
+    let hardeningRemainingTime = hardeningEnding - new Date().getTime() / 1000;
+
+    let curinghours = Math.floor((curingRemainingTime / (60 * 60)) % 24);
+    let curingdays = Math.floor(curingRemainingTime / (60 * 60 * 24));
+
+    let hardeninghours = Math.floor((hardeningRemainingTime / (60 * 60)) % 24);
+    let hardeningdays = Math.floor(hardeningRemainingTime / (60 * 60 * 24));
 
     component.setTimeUnits();
 
     setTimeout(() => {}, 1000);
-
-    expect(component.seconds).toEqual(seconds);
-    expect(component.minutes).toEqual(minutes);
-    expect(component.hours).toEqual(hours);
-    expect(component.days).toEqual(days);
+    expect(component.curinghours).toEqual(curinghours);
+    expect(component.curingdays).toEqual(curingdays);
+    expect(component.hardeninghours).toEqual(hardeninghours);
+    expect(component.hardeningdays).toEqual(hardeningdays);
   });
 });

@@ -109,7 +109,7 @@ export class CastingViewerComponent implements OnInit, OnDestroy {
     this.curinghours = Math.floor((curingRemainingTime / (60 * 60)) % 24);
     this.curingdays = Math.floor(curingRemainingTime / (60 * 60 * 24));
 
-    this.hardeningdays = Math.floor(hardeningRemainingTime / (60 * 60 * 24));
     this.hardeninghours = Math.floor((hardeningRemainingTime / (60 * 60)) % 24);
+    this.hardeningdays = Math.floor(hardeningRemainingTime / (60 * 60 * 24));
   }
 }

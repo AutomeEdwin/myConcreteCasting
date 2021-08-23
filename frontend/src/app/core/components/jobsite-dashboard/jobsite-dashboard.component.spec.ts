@@ -19,10 +19,11 @@ describe('JobsiteDashboardComponent', () => {
       0.2,
       false,
       0.2,
-      'oversulfated cement',
+      'CEM 52.5 N',
       'C20_25',
-      new Date(),
-      new Date()
+      1629669600,
+      43200,
+      1630101
     ),
   ];
 

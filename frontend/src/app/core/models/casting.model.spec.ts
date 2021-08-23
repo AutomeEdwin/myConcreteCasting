@@ -11,8 +11,9 @@ describe('Casting', () => {
     0.2,
     'oversulfated cement',
     'C20_25',
-    new Date(),
-    new Date()
+    new Date().getTime(),
+    new Date().getTime(),
+    new Date().getTime()
   );
 
   const today = new Date();
@@ -26,15 +27,15 @@ describe('Casting', () => {
   });
 
   it('should update the curing starting date', () => {
-    testCasting.setCuringStartDate(new Date());
+    testCasting.setCuringStartDate(new Date().getTime());
 
-    expect(testCasting.getCuringStartDate()).toEqual(new Date());
+    expect(testCasting.getCuringStartDate()).toEqual(new Date().getTime());
   });
 
   it('should update the curing ending date', () => {
-    testCasting.setCuringEndDate(tomorrow);
+    testCasting.setCuringDuration(43200);
 
-    expect(testCasting.getCuringEndDate()).toEqual(tomorrow);
+    expect(testCasting.getCuringDuration()).toEqual(43200);
   });
 
   it('should know if curing is still in progress', () => {
@@ -48,8 +49,9 @@ describe('Casting', () => {
       0.2,
       'oversulfated cement',
       'C20_25',
-      yesterday,
-      tomorrow
+      yesterday.getTime(),
+      tomorrow.getTime(),
+      tomorrow.getTime() + 43200
     );
 
     expect(casting.isCuringInProgress()).toBeTruthy();
@@ -66,8 +68,9 @@ describe('Casting', () => {
       0.2,
       'oversulfated cement',
       'C20_25',
-      yesterday,
-      tomorrow
+      yesterday.getTime(),
+      tomorrow.getTime(),
+      tomorrow.getTime() + 43200
     );
     expect(casting.isCuringFinished()).toBeFalse();
   });

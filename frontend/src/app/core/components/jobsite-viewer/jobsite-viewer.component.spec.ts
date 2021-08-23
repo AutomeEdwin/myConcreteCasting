@@ -25,12 +25,14 @@ describe('JobsiteViewerComponent', () => {
       0.2,
       false,
       0.2,
-      'oversulfated cement',
+      'CEM 52.5 N',
       'C20_25',
-      new Date(),
-      new Date()
+      new Date().getTime(),
+      43200,
+      1630101
     ),
   ];
+
   const jobsite: Jobsite = new Jobsite(
     1,
     1,
@@ -50,7 +52,7 @@ describe('JobsiteViewerComponent', () => {
     coordinates: '[4.3665285, 50.8461624]',
     description: 'description jobsite',
     castings:
-      '[{"id": "0f3a4dce-f0fb-4397-8320-08e5119d6c52", "name": "casting 1", "description": "description casting 1", "isClassEI": "True", "fcm2_fcm28_ratio": "None", "type2_addition": "False", "rc2_rc28_ratio": "None", "cement_type": "CEM 2/A-M ou -V 42.5 N ou R ou 32.5 R", "curing_start": "2021-08-15T13:05:28.295000", "curing_end": "2021-08-16T01:05:28.295000"}, {"id": "5971a6bc-16e7-4a27-a835-9ed1591d5316", "name": "casting 2", "description": "descriotppn casting 2", "isClassEI": "False", "fcm2_fcm28_ratio": "None", "type2_addition": "False", "rc2_rc28_ratio": "None", "cement_type": "oversulfated cement", "curing_start": "2021-08-15T16:12:35.260000", "curing_end": "2021-08-25T16:12:35.260000"}]',
+      '[{"id": "fcc3e2ce-0130-489a-a906-bc37ca89bb24", "name": "eazeaz", "description": "eazea", "isClassEI": "True", "fcm2_fcm28_ratio": "None", "type2_addition": "False", "rc2_rc28_ratio": "None", "cement_type": "CEM 52.5 N", "strength_class": "C25_30", "casting_start": "1629669600", "curing_duration": "43200", "hardening_duration": "1630101"}, {"id": "22de2e21-81aa-4c7c-8517-c205b8b1b303", "name": "ezaezaea", "description": "eazeaz", "isClassEI": "False", "fcm2_fcm28_ratio": "None", "type2_addition": "False", "rc2_rc28_ratio": "None", "cement_type": "CEM 42.5 N", "strength_class": "C20_25", "casting_start": "1629756000", "curing_duration": "259200", "hardening_duration": "9016436"}]',
   };
 
   beforeEach(async () => {
@@ -96,8 +98,9 @@ describe('JobsiteViewerComponent', () => {
         castings[j].rc2_rc28_ratio,
         castings[j].cement_type,
         castings[j].strength_class,
-        castings[j].curing_start,
-        castings[j].curing_end
+        Number(castings[j].casting_start),
+        Number(castings[j].curing_duration),
+        Number(castings[j].hardening_duration)
       );
       castingsArray.push(casting);
     }
