@@ -98,13 +98,8 @@ export class CastingViewerComponent implements OnInit, OnDestroy {
   }
 
   setTimeUnits() {
-    let curingEnding =
-      this.casting.getCuringStartDate() + this.casting.getCuringDuration();
-    let hardeningEnding =
-      this.casting.getCuringStartDate() + this.casting.getHardeningDuration();
-
-    let curingRemainingTime = curingEnding - new Date().getTime() / 1000;
-    let hardeningRemainingTime = hardeningEnding - new Date().getTime() / 1000;
+    let curingRemainingTime = this.casting.getCuringRemainingTime();
+    let hardeningRemainingTime = this.casting.getHardeningRemainingTime();
 
     this.curinghours = Math.floor((curingRemainingTime / (60 * 60)) % 24);
     this.curingdays = Math.floor(curingRemainingTime / (60 * 60 * 24));

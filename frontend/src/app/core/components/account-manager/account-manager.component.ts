@@ -93,7 +93,13 @@ export class AccountManagerComponent implements OnInit {
     }
 
     this.accountService.updateUserAccount(this.editAccountForm.value).subscribe(
-      (res) => {
+      (res: any) => {
+        this.localStorageService.set(
+          'user',
+          JSON.stringify(
+            new User(res.id, res.first_name, res.last_name, res.email)
+          )
+        );
         this.submitted = false;
       },
       (err) => {}

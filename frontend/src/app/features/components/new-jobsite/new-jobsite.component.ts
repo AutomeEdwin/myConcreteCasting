@@ -39,6 +39,7 @@ interface Cement {
 }
 
 interface StrengthClass {
+  display: string;
   value: string;
 }
 
@@ -69,28 +70,31 @@ export class NewJobsiteComponent implements OnInit {
   advancedConcreteParameters: Array<boolean> = [false];
 
   cementTypes: Cement[] = [
+    { value: 'CEM 32.5 N' },
+    { value: 'CEM 32.5 R' },
+
     { value: 'CEM 42.5 R' },
+    { value: 'CEM 42.5 N' },
+
     { value: 'CEM 52.5 N' },
     { value: 'CEM 52.5 R' },
 
-    { value: 'CEM 32.5 R' },
-    { value: 'CEM 42.5 N' },
 
-    { value: 'CEM 32.5 N' },
+ 
   ];
 
   strengthClasses: StrengthClass[] = [
-    { value: 'C20_25' },
-    { value: 'C25_30' },
-    { value: 'C30_37' },
-    { value: 'C40_50' },
-    { value: 'C45_55' },
-    { value: 'C50_60' },
-    { value: 'C55_67' },
-    { value: 'C60_75' },
-    { value: 'C70_85' },
-    { value: 'C80_95' },
-    { value: 'C90_105' },
+    { display: 'C20/25', value: 'C20_25' },
+    { display: 'C25/30', value: 'C25_30' },
+    { display: 'C30/37', value: 'C30_37' },
+    { display: 'C40/50', value: 'C40_50' },
+    { display: 'C45/55', value: 'C45_55' },
+    { display: 'C50/60', value: 'C50_60' },
+    { display: 'C55/67', value: 'C55_67' },
+    { display: 'C60/75', value: 'C60_75' },
+    { display: 'C70/85', value: 'C70_85' },
+    { display: 'C80/95', value: 'C80_95' },
+    { display: 'C90/105', value: 'C90_105' },
   ];
 
   constructor(

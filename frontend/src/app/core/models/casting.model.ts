@@ -87,4 +87,18 @@ export class Casting {
       new Date().getTime() / 1000
     );
   }
+
+  getCuringRemainingTime() {
+    let curingEnding = this.casting_start + this.curing_duration;
+    let remainingTime = curingEnding - new Date().getTime() / 1000;
+
+    return remainingTime;
+  }
+
+  getHardeningRemainingTime() {
+    let hardeningEnding = this.casting_start + this.hardening_duration;
+    let remainingTime = hardeningEnding - new Date().getTime() / 1000;
+
+    return remainingTime;
+  }
 }
