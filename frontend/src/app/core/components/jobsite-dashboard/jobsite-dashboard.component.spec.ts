@@ -91,12 +91,10 @@ describe('JobsiteDashboardComponent', () => {
       'button[id="newJobsiteButton"]'
     );
     const refreshButton = compiled.querySelector('button[id="refreshButton"]');
-    const cardsGrid = compiled.querySelector('div[id="cards"]');
 
     expect(navbar).toBeTruthy();
     expect(newJobsiteButton).toBeTruthy();
     expect(refreshButton).toBeTruthy();
-    expect(cardsGrid).toBeTruthy();
   });
 
   it('should fill jobsites array', () => {

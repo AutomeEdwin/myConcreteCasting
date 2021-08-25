@@ -1,9 +1,6 @@
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 1px;
-  max-width: 100%;
-  min-width: 0;
+.jobsite-previews {
+  display: flex;
+  justify-content: center;
 }
 
 button {

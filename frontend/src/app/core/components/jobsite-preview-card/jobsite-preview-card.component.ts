@@ -50,44 +50,14 @@ export class JobsitePreviewCardComponent implements OnInit {
     );
   }
 
-  getJobsiteName() {
-    return this.jobsite.getName();
-  }
-
   getJobsiteDescription() {
-    return this.jobsite.getDescription();
-  }
-
-  getJobsiteAddress() {
-    return this.jobsite.getAddress();
-  }
-
-  getJobsiteCoordinates() {
-    return this.jobsite.getCoordinates();
-  }
-
-  getWeatherDescription() {
-    return this.weather.getDescription();
+    return this.jobsite.getDescription() === ''
+      ? 'There is no description for this jobsite'
+      : this.jobsite.getDescription();
   }
 
   getWeatherIcon() {
     return 'http://openweathermap.org/img/w/' + this.weather.getIcon() + '.png';
-  }
-
-  getWeatherTemperature() {
-    return this.weather.getTemperature();
-  }
-
-  getWeatherHumidity() {
-    return this.weather.getHumidity();
-  }
-
-  getWeatherClouds() {
-    return this.weather.getCloudsPercentage();
-  }
-
-  getWeatherWindSpeed() {
-    return this.weather.getWindSpeed();
   }
 
   onDelete() {

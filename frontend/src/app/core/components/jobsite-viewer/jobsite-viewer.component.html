@@ -1,7 +1,7 @@
 <app-navbar></app-navbar>
 
 <div class="p-2">
-  <div class="d-flex justify-content-between">
+  <div class="d-flex justify-content-between pb-2">
     <button mat-icon-button (click)="onBack()">
       <mat-icon>keyboard_return</mat-icon>
     </button>
@@ -41,14 +41,16 @@
     </mat-card-actions>
   </mat-card>
 
-  <div class="grid">
-    <div *ngFor="let casting of jobsite.getCastings(); let i = index">
-      <app-casting-viewer
-        [casting]="casting"
-        [index]="i"
-        [coordinates]="this.jobsite.getCoordinates()"
-        [jobsiteID]="this.jobsite.getId()"
-      ></app-casting-viewer>
-    </div>
+  <!-- CASTINGS -->
+  <div
+    *ngFor="let casting of jobsite.getCastings(); let i = index"
+    class="pt-2"
+  >
+    <app-casting-viewer
+      [casting]="casting"
+      [index]="i"
+      [coordinates]="this.jobsite.getCoordinates()"
+      [jobsiteID]="this.jobsite.getId()"
+    ></app-casting-viewer>
   </div>
 </div>

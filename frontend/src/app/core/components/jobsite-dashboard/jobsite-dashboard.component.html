@@ -14,12 +14,13 @@
     </button>
   </div>
 
-  <!-- CARDS -->
-  <div class="grid" id="cards">
-    <div *ngFor="let jobsite of jobsiteArray; let i = index" class="pb-2 row">
-      <app-jobsite-preview-card
-        [jobsite]="jobsiteArray[i]"
-      ></app-jobsite-preview-card>
-    </div>
+  <!-- JOBSITES -->
+  <div
+    *ngFor="let jobsite of jobsiteArray; let i = index"
+    class="p-2 jobsite-previews"
+  >
+    <app-jobsite-preview-card
+      [jobsite]="jobsiteArray[i]"
+    ></app-jobsite-preview-card>
   </div>
 </div>

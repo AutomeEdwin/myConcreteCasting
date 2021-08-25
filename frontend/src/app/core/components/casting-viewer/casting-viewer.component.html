@@ -1,13 +1,14 @@
-<!-- CASTING -->
-<mat-card class="container">
-  <mat-card-header>
-    <mat-card-title>{{ casting.getName() }} </mat-card-title>
-  </mat-card-header>
+<mat-accordion>
+  <mat-expansion-panel class="panel">
+    <mat-expansion-panel-header>
+      <mat-panel-title>{{ casting.getName() }}</mat-panel-title>
+      <mat-panel-description>
+        {{ getCastingDescription() }}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
 
-  <mat-card-content>
     <div class="row">
       <div class="col">
-        <p>Description : {{ getCastingDescription() }}</p>
         <p>Classe EI : {{ getCastingClassEI() }}</p>
         <p>Concrete compression Ratio : {{ getCastingConcreteRatio() }}</p>
         <p>Type 2 addition : {{ getCastingAdditions() }}</p>
@@ -54,12 +55,12 @@
         </div>
       </div>
     </div>
-  </mat-card-content>
 
-  <mat-card-actions class="d-flex justify-content-end">
-    <div *ngIf="!casting.isCuringInProgress() && !casting.isCuringFinished()">
+    <mat-action-row>
       <button mat-button>Edit</button>
-    </div>
-    <button id="startCuring" mat-button (click)="onStartCuring()">Start</button>
-  </mat-card-actions>
-</mat-card>
+      <button id="startCuring" mat-button (click)="onStartCuring()">
+        Start
+      </button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>

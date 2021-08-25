@@ -1,30 +1,35 @@
-<mat-card class="m-2 container">
-  <mat-card-header>
-    <mat-card-title> {{ getJobsiteName() }}</mat-card-title>
-    <mat-card-subtitle>{{ getJobsiteAddress() }}</mat-card-subtitle>
-  </mat-card-header>
+<mat-accordion multi>
+  <mat-expansion-panel class="container">
+    <!-- PANEL HEADER -->
+    <mat-expansion-panel-header>
+      <mat-panel-title> {{ jobsite.getName() }} </mat-panel-title>
+      <mat-panel-description>
+        {{ jobsite.getAddress() }}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
 
-  <mat-card-content>
+    <!-- PANEL CONTENT -->
     <div class="row">
       <div class="col">
         <p>{{ getJobsiteDescription() }}</p>
       </div>
       <div class="col border-left border-secondary">
         <p>
-          Weather : {{ getWeatherDescription() }}
+          Weather : {{ weather.getDescription() }}
           <img id="wicon" src="{{ getWeatherIcon() }}" alt="Weather icon" />
         </p>
 
-        <p>Temperature : {{ getWeatherTemperature() }} C°</p>
-        <p>Humidity : {{ getWeatherHumidity() }} %</p>
-        <p>Clouds : {{ getWeatherClouds() }} %</p>
-        <p>Wind speed: {{ getWeatherWindSpeed() }} m/s</p>
+        <p>Temperature : {{ weather.getTemperature() }} C°</p>
+        <p>Humidity : {{ weather.getHumidity() }} %</p>
+        <p>Clouds : {{ weather.getCloudsPercentage() }} %</p>
+        <p>Wind speed: {{ weather.getWindSpeed() }} m/s</p>
       </div>
     </div>
-  </mat-card-content>
 
-  <mat-card-actions class="d-flex justify-content-end">
-    <button mat-button (click)="onDelete()">Delete</button>
-    <button mat-button (click)="onDetail()">Details</button>
-  </mat-card-actions>
-</mat-card>
+    <!-- BUTTONS -->
+    <mat-action-row>
+      <button mat-button (click)="onDelete()">Delete</button>
+      <button mat-button (click)="onDetail()">Details</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>
