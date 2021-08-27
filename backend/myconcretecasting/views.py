@@ -14,6 +14,10 @@ from .concrete_hardening import StrengthClass, CementType, ConcreteStrength
 
 import datetime
 import requests
+import environ
+
+env = environ.Env()
+environ.Env.read_env()
 
 
 class Register(APIView):
@@ -156,7 +160,7 @@ class getJobsiteWeather(APIView):
     def post(self, request, *args, **kwargs):
         data = JSONParser().parse(request)
         r = requests.get(
-            "http://api.openweathermap.org/data/2.5/weather?lat=" + str(data["lon"]) + "&lon="+str(data["lat"])+"&units=metric&appid=1741bc771947d46a2aac130e41db45cf").json()
+            "http://api.openweathermap.org/data/2.5/weather?lat=" + str(data["lon"]) + "&lon="+str(data["lat"])+"&units=metric&appid=" + str(env("OPENWEATHER_KEY"))).json()
 
         weather = {
             'description': r['weather'][0]['description'],
@@ -185,7 +189,7 @@ class calculateCuringTime(APIView):
             averageTemp, averageHumidity, averageWinds = 0, 0, 0
             timestamp = today - datetime.timedelta(days=i)
             previousWeather = requests.get("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=" + str(jobsite.coordinates[0])+"&lon="+str(
-                jobsite.coordinates[1])+"&dt="+str(int(timestamp.timestamp()))+"&units=metric&appid=1741bc771947d46a2aac130e41db45cf").json()
+                jobsite.coordinates[1])+"&dt="+str(int(timestamp.timestamp()))+"&units=metric&appid=" + str(env("OPENWEATHER_KEY"))).json()
 
             for hour in previousWeather["hourly"]:
                 averageTemp += round(hour["temp"], 2)
@@ -204,7 +208,7 @@ class calculateCuringTime(APIView):
 
         # Getting futur weather datas
         futurWeather = requests.get("https://api.openweathermap.org/data/2.5/onecall?lat=" + str(jobsite.coordinates[1])+"&lon="+str(
-            jobsite.coordinates[0])+"&exclude=current,minutely,hourly,alerts&units=metric&appid=1741bc771947d46a2aac130e41db45cf").json()
+            jobsite.coordinates[0])+"&exclude=current,minutely,hourly,alerts&units=metric&appid=" + str(env("OPENWEATHER_KEY"))).json()
 
         for day in futurWeather["daily"]:
             temperatures[str(int(day["dt"]))] = round(
