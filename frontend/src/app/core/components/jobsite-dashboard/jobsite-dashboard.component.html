@@ -15,10 +15,7 @@
   </div>
 
   <!-- JOBSITES -->
-  <div
-    *ngFor="let jobsite of jobsiteArray; let i = index"
-    class="p-2 jobsite-previews"
-  >
+  <div *ngFor="let jobsite of jobsiteArray; let i = index" class="p-2">
     <app-jobsite-preview-card
       [jobsite]="jobsiteArray[i]"
     ></app-jobsite-preview-card>
