@@ -16,6 +16,8 @@ export class CastingViewerComponent implements OnInit, OnDestroy {
   @Input() coordinates!: number[];
   @Input() jobsiteID!: number;
 
+  minCastingDate = new Date();
+
   datePicker = new FormGroup({
     startingDate: new FormControl('', [Validators.required]),
     targetStrength: new FormControl('', [Validators.required]),
@@ -28,7 +30,9 @@ export class CastingViewerComponent implements OnInit, OnDestroy {
   hardeninghours!: number;
   hardeningdays!: number;
 
-  constructor(private jobsiteService: JobsitesService) {}
+  constructor(private jobsiteService: JobsitesService) {
+    this.minCastingDate.setDate(this.minCastingDate.getDate() - 5);
+  }
 
   ngOnInit(): void {
     if (this.casting.isCuringInProgress()) {
@@ -79,7 +83,7 @@ export class CastingViewerComponent implements OnInit, OnDestroy {
     let x = {
       jobsite_id: this.jobsiteID,
       casting_index: this.index,
-      startingDate: date.getTime() / 1000,
+      startingDate: Math.floor(date.getTime() / 1000),
       targetStrength: this.datePicker.get('targetStrength')?.value,
     };
 

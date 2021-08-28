@@ -33,14 +33,15 @@
             <mat-label>Choose a starting date</mat-label>
             <input
               matInput
-              [matDatepicker]="picker"
+              [ngxMatDatetimePicker]="picker"
               formControlName="startingDate"
+              [min]="minCastingDate"
             />
             <mat-datepicker-toggle
               matSuffix
-              [for]="picker"
+              [for]="$any(picker)"
             ></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
+            <ngx-mat-datetime-picker #picker> </ngx-mat-datetime-picker>
           </mat-form-field>
           <mat-form-field appearance="fill" [formGroup]="datePicker">
             <mat-label>Choose a target strength (MPa)</mat-label>

@@ -15,6 +15,12 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 
+// https://www.npmjs.com/package/@angular-material-components/datetime-picker
+import {
+  NgxMatDatetimePickerModule,
+  NgxMatNativeDateModule,
+} from '@angular-material-components/datetime-picker';
+
 import { AccountService } from './services/account.service';
 import { AuthguardService } from './services/authguard.service';
 import { JobsitesService } from './services/jobsites.service';
@@ -52,6 +58,8 @@ import { JobsiteViewerComponent } from './components/jobsite-viewer/jobsite-view
     MatDatepickerModule,
     MatNativeDateModule,
     MatExpansionModule,
+    NgxMatNativeDateModule,
+    NgxMatDatetimePickerModule,
   ],
   providers: [
     AccountService,
