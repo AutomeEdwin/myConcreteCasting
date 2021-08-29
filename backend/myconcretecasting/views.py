@@ -256,19 +256,18 @@ class calculateCuringTime(APIView):
         if casting['isClassEI']:
             casting["casting_start"] = data["startingDate"]
 
-            curingDurationDays = 43200
+            curingDurationDays = 43200  # seconds
 
             endCuringDate = datetime.datetime.fromtimestamp(
                 data["startingDate"]) + datetime.timedelta(hours=12)
-            remainingCuringTime = endCuringDate - datetime.datetime.now()
 
             # 43200 seconds = 12 hours
-            casting["curing_duration"] = curingDurationDays
+            casting["curing_duration"] = endCuringDate.timestamp()
             casting["target_strength"] = data["targetStrength"]
             jobsite.castings[data['casting_index']] = casting
             jobsite.save()
 
-            return Response({"targetStrength": data["targetStrength"], "startCuringDate": data["startingDate"], "curingDuration": int(curingDurationDays), "hardening_duration": hardeningEndingDate}, status=status.HTTP_200_OK)
+            return Response({"targetStrength": data["targetStrength"], "startCuringDate": data["startingDate"], "curingDuration": endCuringDate.timestamp(), "hardening_duration": hardeningEndingDate}, status=status.HTTP_200_OK)
         else:
             casting["casting_start"] = data["startingDate"]
 
@@ -282,11 +281,11 @@ class calculateCuringTime(APIView):
                 data["startingDate"]) + datetime.timedelta(days=curingDurationDays)
 
             # converting days in seconds
-            casting["curing_duration"] = int(curingDurationDays * 24 * 60 * 60)
+            casting["curing_duration"] = endingCuringDate.timestamp()
             casting["target_strength"] = data["targetStrength"]
             jobsite.castings[data['casting_index']] = casting
             jobsite.save()
 
-            return Response({"targetStrength": data["targetStrength"], "startCuringDate": data["startingDate"], "curingDuration": int(curingDurationDays * 24 * 60 * 60), "hardening_duration": hardeningEndingDate}, status=status.HTTP_200_OK)
+            return Response({"targetStrength": data["targetStrength"], "startCuringDate": data["startingDate"], "curingDuration": endingCuringDate.timestamp(), "hardening_duration": hardeningEndingDate}, status=status.HTTP_200_OK)
 
         return Response(status=status.HTTP_400_BAD_REQUEST)

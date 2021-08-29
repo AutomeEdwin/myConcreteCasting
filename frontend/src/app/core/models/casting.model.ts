@@ -108,8 +108,7 @@ export class Casting {
   }
 
   getCuringRemainingTime() {
-    let curingEnding = this.casting_start + this.curing_duration;
-    let remainingTime = curingEnding - new Date().getTime() / 1000;
+    let remainingTime = this.curing_duration * 1000 - new Date().getTime();
 
     return remainingTime;
   }
