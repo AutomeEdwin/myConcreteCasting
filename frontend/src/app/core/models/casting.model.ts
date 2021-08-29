@@ -115,8 +115,7 @@ export class Casting {
   }
 
   getHardeningRemainingTime() {
-    let hardeningEnding = this.casting_start + this.hardening_duration;
-    let remainingTime = hardeningEnding - new Date().getTime() / 1000;
+    let remainingTime = this.hardening_duration * 1000 - new Date().getTime();
 
     return remainingTime;
   }

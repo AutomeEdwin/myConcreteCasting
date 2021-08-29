@@ -11,6 +11,7 @@ from .models import Jobsite, User
 from .calculations import *
 from .concrete_hardening import StrengthClass, CementType, ConcreteStrength
 
+import numpy as np
 
 import datetime
 import requests
@@ -179,7 +180,7 @@ class calculateCuringTime(APIView):
     def getWeatherDatas(self, jobsite):
         today = datetime.datetime.today().replace(
             hour=10, minute=00, second=00, microsecond=00)
-        temperatures = {}  # day_timestamp: avg_temp
+        temperatures = {}
         humidities = {}
         winds = {}
 
@@ -240,14 +241,17 @@ class calculateCuringTime(APIView):
 
         hardening = ConcreteStrength(
             StrengthClass[strengthClass], CementType[cementType])
-        hardening.setTempHistory(list(temp.keys()), list(temp.values()))
+        hardening.setTempHistory(np.array(list(temp.keys())).astype(
+            int), np.array(list(temp.values())))
         hardening.setCastingTime(casting["casting_start"])
         hardening.computeMaturity()
 
         t = hardening.getTimeStrength(data["targetStrength"])
-        unCastLeft = t.x[0] / 1000
+        hardeningEndingDate = t.x[0]
 
-        casting["hardening_duration"] = unCastLeft
+        print(datetime.datetime.fromtimestamp(hardeningEndingDate))
+
+        casting["hardening_duration"] = hardeningEndingDate
 
         if casting['isClassEI']:
             casting["casting_start"] = data["startingDate"]
@@ -264,7 +268,7 @@ class calculateCuringTime(APIView):
             jobsite.castings[data['casting_index']] = casting
             jobsite.save()
 
-            return Response({"targetStrength": data["targetStrength"], "startCuringDate": data["startingDate"], "curingDuration": int(curingDurationDays), "hardening_duration": unCastLeft}, status=status.HTTP_200_OK)
+            return Response({"targetStrength": data["targetStrength"], "startCuringDate": data["startingDate"], "curingDuration": int(curingDurationDays), "hardening_duration": hardeningEndingDate}, status=status.HTTP_200_OK)
         else:
             casting["casting_start"] = data["startingDate"]
 
@@ -283,6 +287,6 @@ class calculateCuringTime(APIView):
             jobsite.castings[data['casting_index']] = casting
             jobsite.save()
 
-            return Response({"targetStrength": data["targetStrength"], "startCuringDate": data["startingDate"], "curingDuration": int(curingDurationDays * 24 * 60 * 60), "hardening_duration": unCastLeft}, status=status.HTTP_200_OK)
+            return Response({"targetStrength": data["targetStrength"], "startCuringDate": data["startingDate"], "curingDuration": int(curingDurationDays * 24 * 60 * 60), "hardening_duration": hardeningEndingDate}, status=status.HTTP_200_OK)
 
         return Response(status=status.HTTP_400_BAD_REQUEST)

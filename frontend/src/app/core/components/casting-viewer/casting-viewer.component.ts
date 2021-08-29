@@ -19,6 +19,7 @@ export class CastingViewerComponent implements OnInit, OnDestroy {
   subscription!: Subscription;
 
   minCastingDate = new Date();
+  maxCastingDate = new Date();
   targetStrength!: number;
   castingStartDate!: Date;
 
@@ -38,7 +39,7 @@ export class CastingViewerComponent implements OnInit, OnDestroy {
       this.casting.getTargetStrength().toString() === 'NaN'
         ? 1
         : this.casting.getTargetStrength();
-    this.castingStartDate = new Date(this.casting.getCuringStartDate()*1000);
+    this.castingStartDate = new Date(this.casting.getCuringStartDate() * 1000);
 
     this.datePicker = new FormGroup({
       startingDate: new FormControl(new Date()),
@@ -71,8 +72,6 @@ export class CastingViewerComponent implements OnInit, OnDestroy {
       targetStrength: this.datePicker.get('targetStrength')?.value,
     };
 
-    console.log(x);
-
     this.jobsiteService.getCastingTime(x).subscribe(
       (res: any) => {
         this.casting.setTargetStrength(res.targetStrength);
@@ -89,13 +88,17 @@ export class CastingViewerComponent implements OnInit, OnDestroy {
   }
 
   setTimeUnits() {
-    let curingRemainingTime = this.casting.getCuringRemainingTime();
-    let hardeningRemainingTime = this.casting.getHardeningRemainingTime();
+    let curingRemainingTime = this.casting.getCuringRemainingTime() / 1000;
+    let hardeningEndingDate = this.casting.getHardeningRemainingTime();
 
     this.curinghours = Math.floor((curingRemainingTime / (60 * 60)) % 24);
     this.curingdays = Math.floor(curingRemainingTime / (60 * 60 * 24));
 
-    this.hardeninghours = Math.floor((hardeningRemainingTime / (60 * 60)) % 24);
-    this.hardeningdays = Math.floor(hardeningRemainingTime / (60 * 60 * 24));
+    this.hardeninghours = Math.floor(
+      (hardeningEndingDate / (1000 * 60 * 60)) % 24
+    );
+    this.hardeningdays = Math.floor(
+      hardeningEndingDate / (1000 * 60 * 60 * 24)
+    );
   }
 }

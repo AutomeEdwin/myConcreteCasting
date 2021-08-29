@@ -114,7 +114,7 @@ class ConcreteStrength():
     def setCastingTime(self, t):
         self.tCast = t
 
-    def fcm(self, t): # f_cm(t) = Beta_cc(t) * f_cm
+    def fcm(self, t):  # f_cm(t) = Beta_cc(t) * f_cm
         age = self.getMaturity(t)
         return self.__Beta_cc__(age) * (self.f_ck + 8.0)
 
