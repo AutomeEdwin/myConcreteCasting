@@ -3,34 +3,75 @@
     <mat-expansion-panel-header>
       <mat-panel-title>{{ casting.getName() }}</mat-panel-title>
       <mat-panel-description>
-        {{ getCastingDescription() }}
+        {{
+          casting.getDescription() === ""
+            ? "There is no description for this casting"
+            : casting.getDescription()
+        }}
       </mat-panel-description>
     </mat-expansion-panel-header>
 
     <div class="row">
       <div class="col">
-        <p>Classe EI : {{ getCastingClassEI() }}</p>
-        <p>Concrete compression Ratio : {{ getCastingConcreteRatio() }}</p>
-        <p>Type 2 addition : {{ getCastingAdditions() }}</p>
-        <p>Cement compression Ratio : {{ getCastingCementRatio() }}</p>
-        <p>Strength class : {{ casting.getStrengthClass() }}</p>
+        <p>
+          Classe EI :
+          {{ casting.getIsClassEI().toString() === "True" ? "Yes" : "No" }}
+        </p>
+        <p>
+          Concrete compression Ratio :
+          {{
+            casting.getfcm2_fcm28_ratio().toString() === "None"
+              ? "N/A"
+              : this.casting.getfcm2_fcm28_ratio().toString()
+          }}
+        </p>
+        <p>
+          Type 2 addition :
+          {{ casting.getType2Addition().toString() === "True" ? "Yes" : "No" }}
+        </p>
+        <p>
+          Cement compression Ratio :
+          {{
+            casting.getrc2_rc28_ratio().toString() === "None"
+              ? "N/A"
+              : this.casting.getrc2_rc28_ratio().toString()
+          }}
+        </p>
         <p>Cement type : {{ casting.getCementType() }}</p>
+        <p>
+          Strength class : {{ casting.getStrengthClass().replace("_", "/") }}
+        </p>
+        <p>
+          Target Strength :
+          {{
+            casting.getTargetStrength().toString() === "NaN"
+              ? "N/A"
+              : casting.getTargetStrength()
+          }}
+        </p>
       </div>
       <div class="col">
+        <p>Starting date : {{ castingStartDate | date: "long" }}</p>
         <div class="timer" *ngIf="casting.isCuringInProgress()">
           <p>Curing finished in</p>
           <span id="days"> {{ curingdays }} </span>Day(s)
           <span id="hours"> {{ curinghours }} </span>Hrs <br /><br />
-          <p>Hardening finished in</p>
-          <span id="days"> {{ hardeningdays }} </span>Day(s)
-          <span id="hours"> {{ hardeninghours }} </span>Hrs
         </div>
         <div *ngIf="casting.isCuringFinished()">
           <p>Curing done</p>
         </div>
+        <div class="timer" *ngIf="casting.isHardeningInProgress()">
+          <p>Hardening finished in</p>
+          <span id="days"> {{ hardeningdays }} </span>Day(s)
+          <span id="hours"> {{ hardeninghours }} </span>Hrs
+        </div>
+        <div *ngIf="casting.isHardeningFinished()">
+          <p>Hardening done</p>
+        </div>
+
         <div class="row">
           <mat-form-field appearance="fill" [formGroup]="datePicker">
-            <mat-label>Choose a starting date</mat-label>
+            <mat-label>Choose a new starting date</mat-label>
             <input
               matInput
               [ngxMatDatetimePicker]="picker"
@@ -44,10 +85,11 @@
             <ngx-mat-datetime-picker #picker> </ngx-mat-datetime-picker>
           </mat-form-field>
           <mat-form-field appearance="fill" [formGroup]="datePicker">
-            <mat-label>Choose a target strength (MPa)</mat-label>
+            <mat-label>Choose a target strength</mat-label>
             <input
               matInput
               type="number"
+              [value]="targetStrength"
               min="0"
               max="50"
               formControlName="targetStrength"
@@ -58,9 +100,8 @@
     </div>
 
     <mat-action-row>
-      <button mat-button>Edit</button>
-      <button id="startCuring" mat-button (click)="onStartCuring()">
-        Start
+      <button id="startCuring" mat-button (click)="onRefreshTime()">
+        Refresh
       </button>
     </mat-action-row>
   </mat-expansion-panel>

@@ -9,6 +9,7 @@ export class Casting {
     private rc2_rc28_ratio: number,
     private cement_type: string,
     private strength_class: string,
+    private target_strength: number,
     private casting_start: number,
     private curing_duration: number,
     private hardening_duration: number
@@ -50,6 +51,10 @@ export class Casting {
     return this.strength_class;
   }
 
+  getTargetStrength() {
+    return this.target_strength;
+  }
+
   getCuringStartDate() {
     return this.casting_start;
   }
@@ -60,6 +65,10 @@ export class Casting {
 
   getHardeningDuration() {
     return this.hardening_duration;
+  }
+
+  setTargetStrength(x: number) {
+    this.target_strength = x;
   }
 
   setCuringStartDate(x: number) {
@@ -76,15 +85,25 @@ export class Casting {
 
   isCuringInProgress() {
     return (
-      new Date().getTime() / 1000 <
-      this.getCuringStartDate() + this.getCuringDuration()
+      new Date().getTime() / 1000 < this.casting_start + this.curing_duration
     );
   }
 
   isCuringFinished() {
     return (
-      this.getCuringStartDate() + this.getCuringDuration() <
-      new Date().getTime() / 1000
+      this.casting_start + this.curing_duration < new Date().getTime() / 1000
+    );
+  }
+
+  isHardeningInProgress() {
+    return (
+      new Date().getTime() / 1000 < this.casting_start + this.hardening_duration
+    );
+  }
+
+  isHardeningFinished() {
+    return (
+      this.casting_start + this.hardening_duration < new Date().getTime() / 1000
     );
   }
 

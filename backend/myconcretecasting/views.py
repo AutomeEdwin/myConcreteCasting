@@ -260,10 +260,11 @@ class calculateCuringTime(APIView):
 
             # 43200 seconds = 12 hours
             casting["curing_duration"] = curingDurationDays
+            casting["target_strength"] = data["targetStrength"]
             jobsite.castings[data['casting_index']] = casting
             jobsite.save()
 
-            return Response({"startCuringDate": data["startingDate"], "curingDuration": int(curingDurationDays), "hardening_duration": unCastLeft}, status=status.HTTP_200_OK)
+            return Response({"targetStrength": data["targetStrength"], "startCuringDate": data["startingDate"], "curingDuration": int(curingDurationDays), "hardening_duration": unCastLeft}, status=status.HTTP_200_OK)
         else:
             casting["casting_start"] = data["startingDate"]
 
@@ -278,9 +279,10 @@ class calculateCuringTime(APIView):
 
             # converting days in seconds
             casting["curing_duration"] = int(curingDurationDays * 24 * 60 * 60)
+            casting["target_strength"] = data["targetStrength"]
             jobsite.castings[data['casting_index']] = casting
             jobsite.save()
 
-            return Response({"startCuringDate": data["startingDate"], "curingDuration": int(curingDurationDays * 24 * 60 * 60), "hardening_duration": unCastLeft}, status=status.HTTP_200_OK)
+            return Response({"targetStrength": data["targetStrength"], "startCuringDate": data["startingDate"], "curingDuration": int(curingDurationDays * 24 * 60 * 60), "hardening_duration": unCastLeft}, status=status.HTTP_200_OK)
 
         return Response(status=status.HTTP_400_BAD_REQUEST)

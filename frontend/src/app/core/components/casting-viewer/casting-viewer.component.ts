@@ -16,14 +16,13 @@ export class CastingViewerComponent implements OnInit, OnDestroy {
   @Input() coordinates!: number[];
   @Input() jobsiteID!: number;
 
-  minCastingDate = new Date();
-
-  datePicker = new FormGroup({
-    startingDate: new FormControl('', [Validators.required]),
-    targetStrength: new FormControl('', [Validators.required]),
-  });
-
   subscription!: Subscription;
+
+  minCastingDate = new Date();
+  targetStrength!: number;
+  castingStartDate!: Date;
+
+  datePicker!: FormGroup;
 
   curinghours!: number;
   curingdays!: number;
@@ -35,6 +34,17 @@ export class CastingViewerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.targetStrength =
+      this.casting.getTargetStrength().toString() === 'NaN'
+        ? 1
+        : this.casting.getTargetStrength();
+    this.castingStartDate = new Date(this.casting.getCuringStartDate()*1000);
+
+    this.datePicker = new FormGroup({
+      startingDate: new FormControl(new Date()),
+      targetStrength: new FormControl(this.casting.getTargetStrength()),
+    });
+
     if (this.casting.isCuringInProgress()) {
       this.subscription = interval(1000).subscribe((x) => {
         this.setTimeUnits();
@@ -48,33 +58,7 @@ export class CastingViewerComponent implements OnInit, OnDestroy {
     }
   }
 
-  getCastingDescription() {
-    return this.casting.getDescription() === ''
-      ? 'There is no description for this casting'
-      : this.casting.getDescription();
-  }
-
-  getCastingClassEI() {
-    return this.casting.getIsClassEI().toString() === 'True' ? 'Yes' : 'No';
-  }
-
-  getCastingConcreteRatio() {
-    return this.casting.getfcm2_fcm28_ratio().toString() === 'None'
-      ? 'N/A'
-      : this.casting.getfcm2_fcm28_ratio().toString();
-  }
-
-  getCastingCementRatio() {
-    return this.casting.getrc2_rc28_ratio().toString() === 'None'
-      ? 'N/A'
-      : this.casting.getrc2_rc28_ratio().toString();
-  }
-
-  getCastingAdditions() {
-    return this.casting.getType2Addition().toString() === 'True' ? 'Yes' : 'No';
-  }
-
-  onStartCuring() {
+  onRefreshTime() {
     if (this.datePicker.invalid) {
       return;
     }
@@ -87,8 +71,11 @@ export class CastingViewerComponent implements OnInit, OnDestroy {
       targetStrength: this.datePicker.get('targetStrength')?.value,
     };
 
-    this.jobsiteService.getCastingCuringTime(x).subscribe(
+    console.log(x);
+
+    this.jobsiteService.getCastingTime(x).subscribe(
       (res: any) => {
+        this.casting.setTargetStrength(res.targetStrength);
         this.casting.setCuringStartDate(res.startCuringDate);
         this.casting.setCuringDuration(res.curingDuration);
         this.casting.setHardeningDuration(res.hardening_duration);

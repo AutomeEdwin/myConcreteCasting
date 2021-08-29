@@ -65,7 +65,7 @@ export class JobsitesService {
     );
   }
 
-  getCastingCuringTime(body: any) {
+  getCastingTime(body: any) {
     return this.httpClient.post(this.serverURL + 'calculateCuringTime/', body, {
       headers: new HttpHeaders({
         Authorization: 'Token ' + this.localStorageService.get('token'),
