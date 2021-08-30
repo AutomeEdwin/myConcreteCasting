@@ -9,3 +9,5 @@ djongo
 gunicorn
 requests
 django-environ
+numpy
+scipy
