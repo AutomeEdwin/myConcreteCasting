@@ -249,8 +249,6 @@ class calculateCuringTime(APIView):
         t = hardening.getTimeStrength(data["targetStrength"])
         hardeningEndingDate = t.x[0]
 
-        print(datetime.datetime.fromtimestamp(hardeningEndingDate))
-
         casting["hardening_duration"] = hardeningEndingDate
 
         if casting['isClassEI']:

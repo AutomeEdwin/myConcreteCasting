@@ -74,7 +74,6 @@ export class CastingViewerComponent implements OnInit, OnDestroy {
 
     this.jobsiteService.getCastingTime(x).subscribe(
       (res: any) => {
-        console.log(res);
         this.casting.setTargetStrength(res.targetStrength);
         this.casting.setCuringStartDate(res.startCuringDate);
         this.casting.setCuringDuration(res.curingDuration);

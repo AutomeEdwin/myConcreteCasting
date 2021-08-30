@@ -27,6 +27,7 @@ describe('JobsiteViewerComponent', () => {
       0.2,
       'CEM 52.5 N',
       'C20_25',
+      25,
       new Date().getTime(),
       43200,
       1630101
@@ -98,6 +99,7 @@ describe('JobsiteViewerComponent', () => {
         castings[j].rc2_rc28_ratio,
         castings[j].cement_type,
         castings[j].strength_class,
+        Number(castings[j].target_strength),
         Number(castings[j].casting_start),
         Number(castings[j].curing_duration),
         Number(castings[j].hardening_duration)
