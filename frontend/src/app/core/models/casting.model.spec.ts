@@ -11,6 +11,7 @@ describe('Casting', () => {
     0.2,
     'oversulfated cement',
     'C20_25',
+    25,
     new Date().getTime(),
     new Date().getTime(),
     new Date().getTime()
@@ -49,6 +50,7 @@ describe('Casting', () => {
       0.2,
       'oversulfated cement',
       'C20_25',
+      25,
       yesterday.getTime(),
       tomorrow.getTime(),
       tomorrow.getTime() + 43200
@@ -68,6 +70,7 @@ describe('Casting', () => {
       0.2,
       'oversulfated cement',
       'C20_25',
+      25,
       yesterday.getTime(),
       tomorrow.getTime(),
       tomorrow.getTime() + 43200

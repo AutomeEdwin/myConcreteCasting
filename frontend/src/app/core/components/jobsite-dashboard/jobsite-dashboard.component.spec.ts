@@ -21,6 +21,7 @@ describe('JobsiteDashboardComponent', () => {
       0.2,
       'CEM 52.5 N',
       'C20_25',
+      25,
       1629669600,
       43200,
       1630101

@@ -35,6 +35,7 @@ describe('CastingViewerComponent', () => {
       0.2,
       'CEM 52.5 N',
       'C20_25',
+      25,
       1629669600,
       43200,
       1630101
@@ -60,19 +61,20 @@ describe('CastingViewerComponent', () => {
       0.2,
       'CEM 52.5 N',
       'C20_25',
+      25,
       1629669600,
       43200,
       1630101
     );
 
-    spyOn(component, 'onStartCuring');
+    spyOn(component, 'onRefreshTime');
 
     let startBtn =
       fixture.debugElement.nativeElement.querySelector('#startCuring');
     startBtn.click();
 
     tick();
-    expect(component.onStartCuring).toHaveBeenCalled();
+    expect(component.onRefreshTime).toHaveBeenCalled();
   }));
 
   it('should unsubscribe when destroyed', () => {
@@ -94,26 +96,22 @@ describe('CastingViewerComponent', () => {
       0.2,
       'CEM 52.5 N',
       'C20_25',
+      25,
       1629669600,
-      43200,
-      1630101
+      1629712800,
+      1629769216
     );
 
-    let curingEnding =
-      component.casting.getCuringStartDate() +
-      component.casting.getCuringDuration();
-    let hardeningEnding =
-      component.casting.getCuringStartDate() +
-      component.casting.getHardeningDuration();
+    let curingRemainingTime = component.casting.getCuringRemainingTime();
+    let hardeningEndingDate = component.casting.getHardeningRemainingTime();
 
-    let curingRemainingTime = curingEnding - new Date().getTime() / 1000;
-    let hardeningRemainingTime = hardeningEnding - new Date().getTime() / 1000;
+    let curinghours = Math.floor((curingRemainingTime / (1000 * 60 * 60)) % 24);
+    let curingdays = Math.floor(curingRemainingTime / (1000 * 60 * 60 * 24));
 
-    let curinghours = Math.floor((curingRemainingTime / (60 * 60)) % 24);
-    let curingdays = Math.floor(curingRemainingTime / (60 * 60 * 24));
-
-    let hardeninghours = Math.floor((hardeningRemainingTime / (60 * 60)) % 24);
-    let hardeningdays = Math.floor(hardeningRemainingTime / (60 * 60 * 24));
+    let hardeninghours = Math.floor(
+      (hardeningEndingDate / (1000 * 60 * 60)) % 24
+    );
+    let hardeningdays = Math.floor(hardeningEndingDate / (1000 * 60 * 60 * 24));
 
     component.setTimeUnits();
 
