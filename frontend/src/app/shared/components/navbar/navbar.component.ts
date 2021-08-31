@@ -22,6 +22,10 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {}
 
   logout() {
+    this.localStorageService.clear();
+    this.router.navigate(['/login']);
+
+    /*
     this.accountService.logoutUser().subscribe(
       (res) => {
         this.localStorageService.clear();
@@ -33,5 +37,6 @@ export class NavbarComponent implements OnInit {
         });
       }
     );
+    */
   }
 }
