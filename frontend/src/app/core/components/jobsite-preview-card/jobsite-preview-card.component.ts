@@ -50,12 +50,6 @@ export class JobsitePreviewCardComponent implements OnInit {
     );
   }
 
-  getJobsiteDescription() {
-    return this.jobsite.getDescription() === ''
-      ? 'There is no description for this jobsite'
-      : this.jobsite.getDescription();
-  }
-
   getWeatherIcon() {
     return 'http://openweathermap.org/img/w/' + this.weather.getIcon() + '.png';
   }
@@ -67,7 +61,7 @@ export class JobsitePreviewCardComponent implements OnInit {
       if (result) {
         this.jobsiteService.deleteJobsite(this.jobsite.getId()).subscribe(
           (res) => {
-            // TODO refresh dahsboard
+            window.location.reload();
           },
           (err) => {}
         );
