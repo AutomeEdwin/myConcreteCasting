@@ -55,7 +55,7 @@ class Login(APIView):
             username=data['email'], password=data["password"])
 
         if user is not None:
-            token = Token.objects.create(user=user)
+            token, created = Token.objects.get_or_create(user=user)
             serialized_user = UserSerializer(user)
             return Response({"token": token.key,
                              "user": serialized_user.data
@@ -64,14 +64,15 @@ class Login(APIView):
             return Response({"message": "Email or password is incorrect"}, status=status.HTTP_400_BAD_REQUEST)
 
 
+"""
 class Logout(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        t = Token.objects.get(
-            key=request.headers['Authorization'].replace('Token ', ""))
+        t = Token.objects.get(key=request.headers['Authorization'].replace('Token ', ""))
         t.delete()
         return Response({"status": status.HTTP_200_OK}, status=status.HTTP_200_OK)
+"""
 
 
 class DeleteUser(APIView):
