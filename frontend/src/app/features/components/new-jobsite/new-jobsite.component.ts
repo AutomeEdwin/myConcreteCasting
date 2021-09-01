@@ -78,9 +78,6 @@ export class NewJobsiteComponent implements OnInit {
 
     { value: 'CEM 52.5 N' },
     { value: 'CEM 52.5 R' },
-
-
- 
   ];
 
   strengthClasses: StrengthClass[] = [

@@ -1,10 +1,7 @@
 cryptography
 Django
 django-cors-headers
-django-rest-knox
 djangorestframework
-djangorestframework-jsonapi
-djangorestframework-jwt
 djongo
 gunicorn
 requests

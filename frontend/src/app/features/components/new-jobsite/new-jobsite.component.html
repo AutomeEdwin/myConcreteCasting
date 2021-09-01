@@ -263,7 +263,14 @@
 
       <div class="d-flex justify-content-around">
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="onSubmit()" id="submit">Create</button>
+        <button
+          mat-button
+          (click)="onSubmit()"
+          id="submit"
+          [disabled]="newJobsiteForm.invalid"
+        >
+          Create
+        </button>
       </div>
     </mat-step>
   </mat-stepper>
