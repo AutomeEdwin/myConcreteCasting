@@ -64,14 +64,15 @@ class Login(APIView):
             return Response({"message": "Email or password is incorrect"}, status=status.HTTP_400_BAD_REQUEST)
 
 
+"""
 class Logout(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        t = Token.objects.get(
-            key=request.headers['Authorization'].replace('Token ', ""))
+        t = Token.objects.get(key=request.headers['Authorization'].replace('Token ', ""))
         t.delete()
         return Response({"status": status.HTTP_200_OK}, status=status.HTTP_200_OK)
+"""
 
 
 class DeleteUser(APIView):

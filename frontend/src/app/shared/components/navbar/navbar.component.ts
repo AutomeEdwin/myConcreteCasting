@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { MatSnackBar } from '@angular/material/snack-bar';
-
-import { AccountService } from '../../../core/services/account.service';
 import { LocalStorageService } from '../../../core/services/localstorage.service';
 
 @Component({
@@ -14,9 +11,7 @@ import { LocalStorageService } from '../../../core/services/localstorage.service
 export class NavbarComponent implements OnInit {
   constructor(
     private router: Router,
-    private accountService: AccountService,
-    private localStorageService: LocalStorageService,
-    private snackBar: MatSnackBar
+    private localStorageService: LocalStorageService
   ) {}
 
   ngOnInit(): void {}
@@ -24,19 +19,5 @@ export class NavbarComponent implements OnInit {
   logout() {
     this.localStorageService.clear();
     this.router.navigate(['/login']);
-
-    /*
-    this.accountService.logoutUser().subscribe(
-      (res) => {
-        this.localStorageService.clear();
-        this.router.navigate(['/login']);
-      },
-      (err) => {
-        this.snackBar.open('Something went wrong !', 'ok', {
-          duration: 5000,
-        });
-      }
-    );
-    */
   }
 }

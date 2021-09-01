@@ -1,5 +1,6 @@
 mat-stepper,
-mat-step {
+mat-step,
+mat-hint {
   margin: 0%;
   padding: 0%;
   width: 100%;
@@ -7,6 +8,7 @@ mat-step {
   max-height: 100%;
   max-width: 100%;
   background-color: #008685;
+  color: white;
 }
 
 mat-label {

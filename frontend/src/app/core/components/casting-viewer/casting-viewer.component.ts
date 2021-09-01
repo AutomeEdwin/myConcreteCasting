@@ -21,7 +21,6 @@ export class CastingViewerComponent implements OnInit, OnDestroy {
   minCastingDate = new Date();
   maxCastingDate = new Date();
   targetStrength!: number;
-  castingStartDate!: Date;
 
   datePicker!: FormGroup;
 
@@ -39,7 +38,6 @@ export class CastingViewerComponent implements OnInit, OnDestroy {
       this.casting.getTargetStrength().toString() === 'NaN'
         ? 1
         : this.casting.getTargetStrength();
-    this.castingStartDate = new Date(this.casting.getCuringStartDate() * 1000);
 
     this.datePicker = new FormGroup({
       startingDate: new FormControl(new Date()),

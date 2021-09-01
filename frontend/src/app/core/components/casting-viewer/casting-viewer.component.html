@@ -22,7 +22,7 @@
           {{
             casting.getfcm2_fcm28_ratio().toString() === "None"
               ? "N/A"
-              : this.casting.getfcm2_fcm28_ratio().toString()
+              : this.casting.getfcm2_fcm28_ratio()
           }}
         </p>
         <p>
@@ -34,7 +34,7 @@
           {{
             casting.getrc2_rc28_ratio().toString() === "None"
               ? "N/A"
-              : this.casting.getrc2_rc28_ratio().toString()
+              : this.casting.getrc2_rc28_ratio()
           }}
         </p>
         <p>Cement type : {{ casting.getCementType() }}</p>
@@ -51,7 +51,10 @@
         </p>
       </div>
       <div class="col">
-        <p>Starting date : {{ castingStartDate | date: "long" }}</p>
+        <p>
+          Starting date :
+          {{ casting.getCuringStartDate() * 1000 | date: "long" }}
+        </p>
         <p>
           Curing ends at
           {{ casting.getCuringDuration() * 1000 | date: "long" }}
@@ -94,7 +97,7 @@
             <ngx-mat-datetime-picker #picker> </ngx-mat-datetime-picker>
           </mat-form-field>
           <mat-form-field appearance="fill" [formGroup]="datePicker">
-            <mat-label>Choose a target strength</mat-label>
+            <mat-label>Choose a target strength (MPa)</mat-label>
             <input
               matInput
               type="number"
