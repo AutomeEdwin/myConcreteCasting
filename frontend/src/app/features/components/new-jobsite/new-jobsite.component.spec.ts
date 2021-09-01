@@ -201,7 +201,7 @@ describe('NewJobsiteComponent', () => {
     expect(casting_cement_typeInput?.valid).toBeTruthy();
   });
 
-  it('should submit the form', fakeAsync(() => {
+  it('should not submit the form', fakeAsync(() => {
     spyOn(component, 'onSubmit');
 
     const button = fixture.debugElement.nativeElement.querySelector(
@@ -209,7 +209,7 @@ describe('NewJobsiteComponent', () => {
     );
     button.click();
     tick();
-    expect(component.onSubmit).toHaveBeenCalled();
+    expect(component.onSubmit).not.toHaveBeenCalled();
   }));
 
   // TEST COMPONENT LOGIC
