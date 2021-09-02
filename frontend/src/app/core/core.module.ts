@@ -14,6 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 // https://www.npmjs.com/package/@angular-material-components/datetime-picker
 import {
@@ -33,6 +34,7 @@ import { ConfirmJobsiteDeleteComponent } from './components/confirm-jobsite-dele
 import { JobsiteDashboardComponent } from './components/jobsite-dashboard/jobsite-dashboard.component';
 import { JobsitePreviewCardComponent } from './components/jobsite-preview-card/jobsite-preview-card.component';
 import { JobsiteViewerComponent } from './components/jobsite-viewer/jobsite-viewer.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -58,6 +60,8 @@ import { JobsiteViewerComponent } from './components/jobsite-viewer/jobsite-view
     MatDatepickerModule,
     MatNativeDateModule,
     MatExpansionModule,
+    MatProgressSpinnerModule,
+    BrowserAnimationsModule,
     NgxMatNativeDateModule,
     NgxMatDatetimePickerModule,
   ],

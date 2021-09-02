@@ -112,6 +112,13 @@
     </div>
 
     <mat-action-row>
+      <div *ngIf="showSpinner">
+        <mat-progress-spinner
+          mode="indeterminate"
+          diameter="35"
+          color="warn"
+        ></mat-progress-spinner>
+      </div>
       <button id="startCuring" mat-button (click)="onRefreshTime()">
         Refresh
       </button>

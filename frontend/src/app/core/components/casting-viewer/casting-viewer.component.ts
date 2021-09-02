@@ -4,6 +4,7 @@ import { Subscription, interval } from 'rxjs';
 import { JobsitesService } from '../../services/jobsites.service';
 import { Casting } from '../../models/casting.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { timeout } from 'rxjs/operators';
 
 @Component({
   selector: 'app-casting-viewer',
@@ -15,6 +16,8 @@ export class CastingViewerComponent implements OnInit, OnDestroy {
   @Input() index!: number;
   @Input() coordinates!: number[];
   @Input() jobsiteID!: number;
+
+  showSpinner!: boolean;
 
   subscription!: Subscription;
 
@@ -31,6 +34,7 @@ export class CastingViewerComponent implements OnInit, OnDestroy {
 
   constructor(private jobsiteService: JobsitesService) {
     this.minCastingDate.setDate(this.minCastingDate.getDate() - 5);
+    this.showSpinner = false;
   }
 
   ngOnInit(): void {
@@ -70,6 +74,12 @@ export class CastingViewerComponent implements OnInit, OnDestroy {
       targetStrength: this.datePicker.get('targetStrength')?.value,
     };
 
+    this.showSpinner = true;
+
+    setTimeout(() => {
+      console.log(this.showSpinner);
+    }, 10000);
+
     this.jobsiteService.getCastingTime(x).subscribe(
       (res: any) => {
         this.casting.setTargetStrength(res.targetStrength);
@@ -80,8 +90,12 @@ export class CastingViewerComponent implements OnInit, OnDestroy {
         this.subscription = interval(1000).subscribe((x) => {
           this.setTimeUnits();
         });
+
+        this.showSpinner = false;
       },
-      (err) => {}
+      (err) => {
+        this.showSpinner = false;
+      }
     );
   }
 
