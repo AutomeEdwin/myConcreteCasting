@@ -16,6 +16,8 @@ import { MatInputModule } from '@angular/material/input';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { NewJobsiteComponent } from './components/new-jobsite/new-jobsite.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [NewJobsiteComponent, RegisterComponent, LoginComponent],
@@ -32,6 +34,8 @@ import { NewJobsiteComponent } from './components/new-jobsite/new-jobsite.compon
     MatIconModule,
     MatButtonModule,
     MatInputModule,
+    MatCardModule,
+    MatExpansionModule
   ],
   exports: [],
 })
