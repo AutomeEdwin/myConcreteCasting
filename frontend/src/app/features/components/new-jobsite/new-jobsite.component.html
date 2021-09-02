@@ -237,31 +237,92 @@
     <mat-step>
       <ng-template matStepLabel>Overview</ng-template>
 
-      <mat-grid-list cols="2" rowHeigth="2:1">
-        <mat-grid-tile [colspan]="2">
-          <mat-grid-tile-header>Jobsite</mat-grid-tile-header>
-          <div class="jobsiteGridContent" id="jobsite_overview">
-            <p>Jobsite name : {{ getJobsite("name") }}</p>
-            <p>Jobsite address : {{ getJobsite("address") }}</p>
-            <p>Jobsite description : {{ getJobsite("description") }}</p>
-            <p>coordinates : [{{ latitude }} , {{ longitude }}]</p>
-          </div>
-        </mat-grid-tile>
-      </mat-grid-list>
+      <mat-card class="jobsite-viewer">
+        <mat-card-header>
+          <mat-card-title>
+            {{
+              getJobsite("name") === ""
+                ? "You didn't provided any name for this jobsite"
+                : getJobsite("name")
+            }}</mat-card-title
+          >
+          <mat-card-subtitle>{{
+            getJobsite("address") === ""
+              ? "You didn't provided any address for this jobsite"
+              : getJobsite("address")
+          }}</mat-card-subtitle>
+        </mat-card-header>
 
-      <mat-grid-list cols="2" rowHeigth="fit" gutterSize="3px">
-        <mat-grid-tile
-          *ngFor="let casting of getCastingsControls.controls; let i = index"
-        >
-          <mat-grid-tile-header>Casting {{ i + 1 }}</mat-grid-tile-header>
-          <div id="castings_overview">
-            <p>Name:{{ getCasting(i, "name") }}</p>
-            <p>Description:{{ getCasting(i, "description") }}</p>
+        <mat-card-content>
+          <div class="row">
+            <p>
+              {{
+                getJobsite("description") === ""
+                  ? "You didn't provided any description for this jobsite"
+                  : getJobsite("description")
+              }}
+            </p>
           </div>
-        </mat-grid-tile>
-      </mat-grid-list>
+        </mat-card-content>
+      </mat-card>
 
-      <div class="d-flex justify-content-around">
+      <div
+        *ngFor="let casting of getCastingsControls.controls; let i = index"
+        class="pt-2"
+      >
+        <mat-accordion>
+          <mat-expansion-panel class="panel">
+            <mat-expansion-panel-header>
+              <mat-panel-title>{{
+                casting.get("name")?.value === ""
+                  ? "You didn't provided any name for this casting"
+                  : casting.get("name")?.value
+              }}</mat-panel-title>
+              <mat-panel-description>
+                {{
+                  casting.get("description")?.value === ""
+                    ? "There is no description for this casting"
+                    : casting.get("description")?.value
+                }}</mat-panel-description
+              >
+            </mat-expansion-panel-header>
+
+            <div>
+              <p>
+                Classe EI:
+                {{ casting.get("isClassEI")?.value === "True" ? "Yes" : "No" }}
+              </p>
+              <p>Cement type : {{ casting.get("cement_type")?.value }}</p>
+              <p>
+                Strength class :
+                {{ casting.get("strength_class")?.value.replace("_", "/") }}
+              </p>
+              <p>
+                Concrete compression Ratio :
+                {{
+                  casting.get("fcm2_fcm28_ratio")?.value === null
+                    ? "N/A"
+                    : casting.get("fcm2_fcm28_ratio")?.value
+                }}
+              </p>
+              <p>
+                Cement compression Ratio :
+                {{
+                  casting.get("rc2_rc28_ratio")?.value === null
+                    ? "N/A"
+                    : this.casting.get("rc2_rc28_ratio")?.value
+                }}
+              </p>
+              <p>
+                Type 2 addition :
+                {{ casting.get("isClassEI")?.value === "True" ? "Yes" : "No" }}
+              </p>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+
+      <div class="d-flex justify-content-around pt-2">
         <button mat-button matStepperPrevious>Back</button>
         <button
           mat-button
