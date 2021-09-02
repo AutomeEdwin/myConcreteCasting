@@ -239,23 +239,44 @@
 
       <mat-card class="jobsite-viewer">
         <mat-card-header>
-          <mat-card-title> name</mat-card-title>
-          <mat-card-subtitle>address</mat-card-subtitle>
+          <mat-card-title>
+            {{
+              getJobsite("name") === ""
+                ? "You didn't provided any name for this jobsite"
+                : getJobsite("name")
+            }}</mat-card-title
+          >
+          <mat-card-subtitle>{{
+            getJobsite("address") === ""
+              ? "You didn't provided any address for this jobsite"
+              : getJobsite("address")
+          }}</mat-card-subtitle>
         </mat-card-header>
 
         <mat-card-content>
           <div class="row">
-            <p>descrition</p>
+            <p>
+              {{
+                getJobsite("description") === ""
+                  ? "You didn't provided any description for this jobsite"
+                  : getJobsite("description")
+              }}
+            </p>
           </div>
         </mat-card-content>
       </mat-card>
 
-      <div *ngFor="let casting of getCastingsControls.controls; let i = index">
+      <div
+        *ngFor="let casting of getCastingsControls.controls; let i = index"
+        class="pt-2"
+      >
         <mat-accordion>
           <mat-expansion-panel class="panel">
             <mat-expansion-panel-header>
               <mat-panel-title>{{
-                casting.get("name")?.value
+                casting.get("name")?.value === ""
+                  ? "You didn't provided any name for this casting"
+                  : casting.get("name")?.value
               }}</mat-panel-title>
               <mat-panel-description>
                 {{
@@ -272,7 +293,10 @@
                 {{ casting.get("isClassEI")?.value === "True" ? "Yes" : "No" }}
               </p>
               <p>Cement type : {{ casting.get("cement_type")?.value }}</p>
-              <p>Strength class : {{ casting.get("strength_class")?.value.replace("_", "/") }}</p>
+              <p>
+                Strength class :
+                {{ casting.get("strength_class")?.value.replace("_", "/") }}
+              </p>
               <p>
                 Concrete compression Ratio :
                 {{
@@ -298,7 +322,7 @@
         </mat-accordion>
       </div>
 
-      <div class="d-flex justify-content-around">
+      <div class="d-flex justify-content-around pt-2">
         <button mat-button matStepperPrevious>Back</button>
         <button
           mat-button
